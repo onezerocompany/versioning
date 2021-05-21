@@ -9,6 +9,22 @@
     "functions": {
       "host": "localhost",
       "port": "9821"
+    },
+    "hosting": {
+      "host": "localhost",
+      "port": "8080"
     }
+  },
+  "hosting": {
+    "rewrites": [
+      {
+        "source": "/verify-message",
+        "function": "verifyMessage"
+      },
+      {
+        "source": "/generate-version",
+        "function": "generateVersion"
+      }
+    ]
   }
 }

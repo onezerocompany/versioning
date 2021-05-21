@@ -1,19 +1,10 @@
-import { ChangeCategory } from './change-categories';
-import { VersionNumber } from './version-number';
-import { Change } from './change';
-import { changelog, ChangelogType } from './changelogs';
-
-export enum VersionTrack {
-  release = 'release',
-  beta = 'beta',
-  alpha = 'alpha'
-}
-
-export interface VersionExport {
-  components: VersionNumber
-  string: string
-  track: VersionTrack
-}
+import {ChangeCategory} from './change-categories';
+import {Change} from './change';
+import {changelog, ChangelogType} from './changelogs';
+import {
+  VersionNumber, VersionBump, bumpOrder,
+} from './version-number';
+import {changesFromMessage, Commit} from './commit';
 
 export interface ChangeExport {
   ref: string
@@ -21,36 +12,56 @@ export interface ChangeExport {
   content: string
 }
 
+export interface VersionInput {
+  lastVersion: string
+  lastRef: string
+  commits: Commit[]
+}
+
+/**
+ * contains all the information
+ */
 export class Version {
 
-  version: VersionExport
+  version: VersionNumber
+  lastRef: string
   changes: Change[]
   changelogs: {
-    internal: string,
+    internal: string
     external: string
   }
-  flags: {
-    release: boolean
-    beta_release: boolean
-    alpha_release: boolean
+
+  /**
+   * creates a version
+   * @param {VersionInput} input input from a version creation request
+   */
+  constructor(
+    input: VersionInput
+  ) {
+
+    let bump = VersionBump.none;
+
+    this.lastRef = input.lastRef;
+    this.changes = input.commits.flatMap((commit) =>
+      changesFromMessage(commit.message, commit.ref)
+    );
+    this.changelogs = {
+      internal: changelog(ChangelogType.internal, this.changes),
+      external: changelog(ChangelogType.external, this.changes),
+    };
+
+    for (const change of this.changes) {
+
+      const oldIndex = bumpOrder.indexOf(bump);
+      const index = bumpOrder.indexOf(change.category.versionBump);
+      if (index > oldIndex) bump = change.category.versionBump;
+
+    }
+
+    this.version = VersionNumber
+      .fromVersionString(input.lastVersion)
+      .bumped(bump);
+
   }
 
-  constructor(track: VersionTrack, version: VersionNumber, changes: Change[]) {
-    this.version = {
-      components: version,
-      string: version.versionString(track),
-      track: track
-    }
-    this.changes = changes
-    this.changelogs = {
-      internal: changelog(ChangelogType.internal, changes),
-      external: changelog(ChangelogType.external, changes),
-    }
-    this.flags = {
-      release: false,
-      beta_release: false,
-      alpha_release: false
-    }
-  }
-  
 }

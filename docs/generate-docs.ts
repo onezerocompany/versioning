@@ -122,10 +122,10 @@ for (let category of categories) {
   html += '<div class="category">'
     html += '<h1>' + category.title + '</h1>'
     html += '<h4>' + category.description + '</h4>'
-    html += `<p class="${category.changelog_type == ChangelogType.external ? 'external' : 'internal'}"><span>CHANGELOG</span> ${category.changelog_type}</p>`
-    html += '<p class="version"><span>VERSION INCREASE</span> ' + category.version_bump + '</p>'
-    html += `<p class="test ${category.run_tests ? '' : 'inactive'}"><span>TRIGGERS TESTS</span> ${category.run_tests ? 'yes' : 'no'}</p>`
-    html += `<p class="release ${category.triggers_release ? '' : 'inactive'}"><span>TRIGGERS RELEASE</span> ${category.triggers_release ? 'yes' : 'no'}</p>`
+    html += `<p class="${category.changelogType == ChangelogType.external ? 'external' : 'internal'}"><span>CHANGELOG</span> ${category.changelogType}</p>`
+    html += '<p class="version"><span>VERSION INCREASE</span> ' + category.versionBump + '</p>'
+    html += `<p class="test ${category.triggers.tests ? '' : 'inactive'}"><span>TRIGGERS TESTS</span> ${category.triggers.tests ? 'yes' : 'no'}</p>`
+    html += `<p class="release ${category.triggers.release ? '' : 'inactive'}"><span>TRIGGERS RELEASE</span> ${category.triggers.release ? 'yes' : 'no'}</p>`
     html += '<pre class="examples">'
       for (let key of category.keys) {
         html += `[${key}]> {{insert your message here}}\n`
