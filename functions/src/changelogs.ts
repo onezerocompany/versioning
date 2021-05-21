@@ -1,5 +1,5 @@
-import {Change} from './change';
-import {categories} from './change-categories';
+import { Change } from './change';
+import { categories } from './change-categories';
 
 /**
  * Defines who gets to see the changelog

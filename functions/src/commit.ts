@@ -1,5 +1,5 @@
-import {Change} from './change';
-import {categories} from './change-categories';
+import { Change } from './change';
+import { categories } from './change-categories';
 
 /**
  * convert commit message to list of changes

@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
-import {categories} from './change-categories';
-import {Version, VersionInput} from './version-item';
+import { categories } from './change-categories';
+import { Version, VersionInput } from './version-item';
 
 const https = functions.region('eur3').https;
 
@@ -17,7 +17,7 @@ export const generateVersion = https.onRequest((request, response) => {
   } else {
 
     response.status(400)
-      .json({error: 'body of request is not application/json'});
+      .json({ error: 'body of request is not application/json' });
 
   }
 
@@ -32,7 +32,7 @@ export const verifyMessage = https.onRequest((request, response) => {
 
     const tags = categories
       .flatMap((category) => category.keys.map((key) => `[${key}]>`));
-    const {title, message} = request.body;
+    const { title, message } = request.body;
     const errors = [];
     if (tags.map((tag) => title.includes(tag)).includes(true)) {
 
@@ -48,18 +48,18 @@ export const verifyMessage = https.onRequest((request, response) => {
     }
     if (errors.length > 0) {
 
-      response.status(400).json({title, message, errors, valid: false});
+      response.status(400).json({ title, message, errors, valid: false });
 
     } else {
 
-      response.status(200).json({title, message, valid: true});
+      response.status(200).json({ title, message, valid: true });
 
     }
 
   } else {
 
     response.status(400)
-      .json({error: 'body of request is not application/json'});
+      .json({ error: 'body of request is not application/json' });
 
   }
 

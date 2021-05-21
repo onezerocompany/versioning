@@ -1,10 +1,10 @@
-import {ChangeCategory} from './change-categories';
-import {Change} from './change';
-import {changelog, ChangelogType} from './changelogs';
+import { ChangeCategory } from './change-categories';
+import { Change } from './change';
+import { changelog, ChangelogType } from './changelogs';
 import {
   VersionNumber, VersionBump, bumpOrder,
 } from './version-number';
-import {changesFromMessage, Commit} from './commit';
+import { changesFromMessage, Commit } from './commit';
 
 export interface ChangeExport {
   ref: string

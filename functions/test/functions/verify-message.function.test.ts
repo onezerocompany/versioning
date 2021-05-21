@@ -1,9 +1,9 @@
-import {describe} from 'mocha';
+import { describe } from 'mocha';
 import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
-const {expect} = chai;
+const { expect } = chai;
 
 describe('verifyMessage', () => {
 
@@ -32,7 +32,7 @@ describe('verifyMessage', () => {
 
     return chai.request('http://localhost:8080')
       .post('/verify-message')
-      .send({title: '[feat]> test title', message: '[feat]> test message'})
+      .send({ title: '[feat]> test title', message: '[feat]> test message' })
       .then((res) => {
 
         expect(res.status).to.equal(400);
@@ -50,7 +50,7 @@ describe('verifyMessage', () => {
 
     return chai.request('http://localhost:8080')
       .post('/verify-message')
-      .send({title: 'test title', message: 'test message'})
+      .send({ title: 'test title', message: 'test message' })
       .then((res) => {
 
         expect(res.status).to.equal(400);

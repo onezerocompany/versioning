@@ -1,8 +1,8 @@
-import {describe, it} from 'mocha';
-import {expect} from 'chai';
-import {categories} from '../src/change-categories';
-import {Change} from '../src/change';
-import {changelog, ChangelogType} from '../src/changelogs';
+import { describe, it } from 'mocha';
+import { expect } from 'chai';
+import { categories } from '../src/change-categories';
+import { Change } from '../src/change';
+import { changelog, ChangelogType } from '../src/changelogs';
 
 describe('Changelogs', () => {
 

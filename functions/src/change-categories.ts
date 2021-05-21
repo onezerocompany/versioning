@@ -1,5 +1,5 @@
-import {ChangelogType} from './changelogs';
-import {VersionBump} from './version-number';
+import { ChangelogType } from './changelogs';
+import { VersionBump } from './version-number';
 
 export interface ChangeCategory {
   title: string

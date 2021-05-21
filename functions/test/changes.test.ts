@@ -1,7 +1,7 @@
-import {describe, it} from 'mocha';
-import {expect} from 'chai';
-import {categories} from '../src/change-categories';
-import {VersionBump} from '../src/version-number';
+import { describe, it } from 'mocha';
+import { expect } from 'chai';
+import { categories } from '../src/change-categories';
+import { VersionBump } from '../src/version-number';
 
 describe('Change Categories', () => {
 

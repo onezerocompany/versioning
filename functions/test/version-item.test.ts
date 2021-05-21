@@ -1,5 +1,5 @@
-import {expect} from 'chai';
-import {Version} from '../src/version-item';
+import { expect } from 'chai';
+import { Version } from '../src/version-item';
 
 describe('Version Item', () => {
 
