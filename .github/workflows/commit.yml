@@ -5,11 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd functions
-      - run: yarn
-      - run: yarn lint
-      - run: yarn coverage
-      - run: yarn test
+      - name: perform checks
+        run: |
+          cd functions
+          yarn
+          yarn lint
+          yarn coverage
+          yarn test
       - uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
