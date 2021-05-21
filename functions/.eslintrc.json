@@ -38,7 +38,11 @@
     ],
     "padded-blocks": [
       "error",
-      "always"
+      {
+        "blocks": "never",
+        "classes": "always",
+        "switches": "always"
+      }
     ],
     "no-multiple-empty-lines": "error",
     "object-curly-spacing": [
