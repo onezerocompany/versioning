@@ -38,7 +38,6 @@ export class Version {
   constructor(
     input: VersionInput
   ) {
-
     let bump = VersionBump.none;
 
     this.lastRef = input.lastRef;
@@ -51,17 +50,14 @@ export class Version {
     };
 
     for (const change of this.changes) {
-
       const oldIndex = bumpOrder.indexOf(bump);
       const index = bumpOrder.indexOf(change.category.versionBump);
       if (index > oldIndex) bump = change.category.versionBump;
-
     }
 
     this.version = VersionNumber
       .fromVersionString(input.lastVersion)
       .bumped(bump);
-
   }
 
 }

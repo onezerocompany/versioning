@@ -16,7 +16,6 @@ export enum ChangelogType {
  * @return {string} the generated changelog
  */
 export function changelog(type: ChangelogType, changes: Change[]): string {
-
   const filteredChanges = changes
     .filter((change) => change.category.changelogType == type);
   const filteredCategories = categories.filter(
@@ -27,18 +26,13 @@ export function changelog(type: ChangelogType, changes: Change[]): string {
 
   let changelog = '';
   for (const category of filteredCategories) {
-
     changelog += category.title + ':\n';
     const categoryChanges = filteredChanges
       .filter((change) => change.category.keys[0] == category.keys[0]);
     for (const change of categoryChanges) {
-
       changelog += '- ' + change.content + '\n';
-
     }
     changelog += '\n';
-
   }
   return changelog.trim();
-
 }

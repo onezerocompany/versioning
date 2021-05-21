@@ -17,11 +17,9 @@ export class Change {
    * @param {string} commit commit ref for this change
    */
   constructor(content: string, category: ChangeCategory, commit: string) {
-
     this.ref = createHash('md5').update(commit + content).digest('base64');
     this.content = content;
     this.category = category;
-
   }
 
 }

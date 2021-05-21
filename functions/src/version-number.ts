@@ -44,7 +44,6 @@ export class VersionNumber {
     major = 1, minor = 0, patch = 0,
     track = VersionTrack.live, build = '1'
   ) {
-
     this.major = major;
     this.minor = minor;
     this.patch = patch;
@@ -59,7 +58,6 @@ export class VersionNumber {
         withoutBuild : `${withoutBuild}/#${this.build}`,
       withoutBuild, onlyNumber,
     };
-
   }
 
   /**
@@ -68,7 +66,6 @@ export class VersionNumber {
    * @return {VersionNumber} bumped version
    */
   public bumped(bump: VersionBump): VersionNumber {
-
     const isMajor = bump == VersionBump.major;
     const isMinor = bump == VersionBump.minor;
     const isPatch = bump == VersionBump.patch;
@@ -79,7 +76,6 @@ export class VersionNumber {
       (isMajor || isMinor) ? 0 : isPatch ? this.patch + 1 : this.patch,
       this.track, this.build
     );
-
   }
 
 
@@ -89,7 +85,6 @@ export class VersionNumber {
    * @return {VersionNumber}
    */
   static fromVersionString(versionString: string): VersionNumber {
-
     const components = versionString.split('.');
     return new VersionNumber(
       Number(components[0]),
@@ -97,7 +92,6 @@ export class VersionNumber {
       Number(components[2].split('-')[0]),
       components[2].split('-')[1] as VersionTrack
     );
-
   }
 
 

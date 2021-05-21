@@ -2,11 +2,8 @@ import { expect } from 'chai';
 import { Version } from '../src/version-item';
 
 describe('Version Item', () => {
-
   describe('creation', () => {
-
     it('live should work', () => {
-
       const version = new Version({
         lastRef: 'last-ref',
         lastVersion: '1.0.0',
@@ -17,7 +14,6 @@ describe('Version Item', () => {
         }],
       });
       expect(version.version.versionString.full).to.equal('1.1.0');
-
     });
 
     // it('beta should work', () => {
@@ -29,7 +25,5 @@ describe('Version Item', () => {
     //   expect(version.version.versionString.full).to.equal('1.1.0-beta/#12');
 
     // });
-
   });
-
 });
