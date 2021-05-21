@@ -12,6 +12,7 @@ jobs:
         run: |
           cd functions
           yarn
+          yarn global add firebase-tools
           yarn lint
           yarn coverage
           yarn test
