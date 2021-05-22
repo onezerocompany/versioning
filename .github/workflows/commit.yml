@@ -54,7 +54,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Setup Firebase
-        run: firebase use {{ secrets.PROJECT_ID }}
+        run: firebase use ${{ secrets.PROJECT_ID }}
       - name: Perform Checks
         run: |
           npm install
