@@ -1,18 +1,20 @@
 on: push
 
 jobs:
-  check:
+  check_and_coverage:
+    name: Checks & Coverage
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: "14"
-      - name: Get yarn cache directory path
+      - name: Get Yarn Cache Directory
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
         working-directory: functions
       - uses: actions/cache@v2
+        name: Yarn Cache
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -29,3 +31,30 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: functions/coverage
+  test:
+    name: Testing
+    runs-on: ubuntu-latest
+    container:
+      image: ioappcompany/firebase-tools
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - name: Get Yarn Cache Directory
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+        working-directory: functions
+      - uses: actions/cache@v2
+        name: Yarn Cache
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Perform Checks
+        run: |
+          npm install
+          npm test
+        working-directory: functions
