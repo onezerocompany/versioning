@@ -1,5 +1,6 @@
 # versioning-api
 
+[![CodeQL](https://github.com/appcompany/versioning-api/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/appcompany/versioning-api/actions/workflows/codeql-analysis.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/appcompany/versioning-api/branch/main/graph/badge.svg?token=STRSZT7U4K)](https://codecov.io/gh/appcompany/versioning-api)
 
