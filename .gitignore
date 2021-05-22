@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/firebase,macos,windows,linux,node
-# Edit at https://www.toptal.com/developers/gitignore?templates=firebase,macos,windows,linux,node
+# Created by https://www.toptal.com/developers/gitignore/api/yarn,firebase,macos,windows,linux,node
+# Edit at https://www.toptal.com/developers/gitignore?templates=yarn,firebase,macos,windows,linux,node
 
 ### Firebase ###
 .idea
@@ -206,4 +206,20 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/firebase,macos,windows,linux,node
+### yarn ###
+# https://yarnpkg.com/advanced/qa#which-files-should-be-gitignored
+
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
+# if you are NOT using Zero-installs, then:
+# comment the following lines
+!.yarn/cache
+
+# and uncomment the following lines
+# .pnp.*
+
+# End of https://www.toptal.com/developers/gitignore/api/yarn,firebase,macos,windows,linux,node
