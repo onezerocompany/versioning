@@ -6,4 +6,6 @@
 
 Our internal API for providing versioning to all our projects
 
+## Always develop on a branch and then merge into 'main'
+
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fappcompany%2Fversioning-api.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fappcompany%2Fversioning-api?ref=badge_large)
