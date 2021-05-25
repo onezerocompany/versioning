@@ -47,6 +47,33 @@ describe('Version Number', () => {
       expect(version.patch).to.equal(6);
     });
 
+    it('should still work with empty string', () => {
+      const version = VersionNumber.fromVersionString('');
+      expect(version.major).to.equal(1);
+      expect(version.minor).to.equal(0);
+      expect(version.patch).to.equal(0);
+      expect(version.track).to.equal(VersionTrack.live);
+      expect(version.iteration).to.equal(1);
+    });
+
+    it('should still work only dots', () => {
+      const version = VersionNumber.fromVersionString('..');
+      expect(version.major).to.equal(1);
+      expect(version.minor).to.equal(0);
+      expect(version.patch).to.equal(0);
+      expect(version.track).to.equal(VersionTrack.live);
+      expect(version.iteration).to.equal(1);
+    });
+
+    it('should still work with no string', () => {
+      const version = VersionNumber.fromVersionString();
+      expect(version.major).to.equal(1);
+      expect(version.minor).to.equal(0);
+      expect(version.patch).to.equal(0);
+      expect(version.track).to.equal(VersionTrack.live);
+      expect(version.iteration).to.equal(1);
+    });
+
     it('should work with track and no build', () => {
       const version = VersionNumber.fromVersionString('3.1.6-track');
       expect(version.major).to.equal(3);

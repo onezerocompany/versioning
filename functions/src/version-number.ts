@@ -38,7 +38,7 @@ export class VersionNumber {
    * @param {number} minor minor section of the version number
    * @param {number} patch patch section of the version number
    * @param {VersionTrack} track type of version
-   * @param {string} iteration how many times this version has been build
+   * @param {number} iteration how many times this version has been build
    */
   constructor(
     major = 1, minor = 0, patch = 0,
@@ -83,26 +83,24 @@ export class VersionNumber {
    * converts a version string to a VersionNumber object
    * @param {string} versionString version string to convert
    * @param {VersionTrack} track set the track for this version
-   * @param {number} build set the build for this version
+   * @param {number} iteration set the build for this version
    * @return {VersionNumber}
    */
   static fromVersionString(
-    versionString: string,
+    versionString: string | undefined = undefined,
     track: VersionTrack | undefined = undefined,
-    build: number | undefined = undefined
+    iteration: number | undefined = undefined
   ): VersionNumber {
     const components = (versionString ?? '').split('.')
-      .flatMap((component) => component ? (component ?? '').split('-')
-        .flatMap((subComponent) =>
-          subComponent ? (subComponent ?? '').split('/') : undefined
-        ) : undefined
+      .flatMap((component: string) => component.split('-')
+        .flatMap((subComponent: string) => subComponent.split('/'))
       );
     return new VersionNumber(
-      Number(components[0]),
-      Number(components[1]),
-      Number(components[2]),
-      track ?? components[3] as VersionTrack,
-      build ?? Number((components[4] ?? '').replace( /[^0-9]/, ''))
+      Number(components[0] != '' ? components[0] : '1'),
+      Number((components[1] != '' ? components[1] : '0') ?? '0'),
+      Number((components[2] != '' ? components[2] : '0') ?? '0'),
+      (track ?? components[3] as VersionTrack) ?? VersionTrack.live,
+      iteration ?? Number((components[4] ?? '1').replace( /[^0-9]/, ''))
     );
   }
 
