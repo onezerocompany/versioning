@@ -14,7 +14,6 @@ export interface ChangeExport {
 
 export interface VersionInput {
   version: string
-  reference: string
   track: VersionTrack
   build: number
   commits: Commit[]
@@ -26,11 +25,14 @@ export interface VersionInput {
 export class Version {
 
   version: VersionNumber
-  reference: string
   changes: Change[]
   changelogs: {
     internal: string
     external: string
+  }
+  triggers: {
+    release: boolean
+    tests: boolean
   }
 
   /**
@@ -42,7 +44,6 @@ export class Version {
   ) {
     let bump = VersionBump.none;
 
-    this.reference = input.reference;
     this.changes = input.commits.flatMap((commit) =>
       changesFromMessage(commit.message, commit.ref)
     );
@@ -51,11 +52,20 @@ export class Version {
       external: changelog(ChangelogType.external, this.changes),
     };
 
+    let triggersRelease = false;
+    let triggersTests = false;
     for (const change of this.changes) {
       const oldIndex = bumpOrder.indexOf(bump);
       const index = bumpOrder.indexOf(change.category.versionBump);
       if (index > oldIndex) bump = change.category.versionBump;
+      if (change.category.triggers.release) triggersRelease = true;
+      if (change.category.triggers.tests) triggersTests = true;
     }
+
+    this.triggers = {
+      release: triggersRelease,
+      tests: triggersTests,
+    };
 
     this.version = VersionNumber
       .fromVersionString(input.version, input.track, input.build)

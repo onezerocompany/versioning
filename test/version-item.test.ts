@@ -7,13 +7,12 @@ describe('Version Item', () => {
   describe('creation', () => {
     it('live should work', () => {
       const version = new Version({
-        reference: 'last-ref',
         version: '1.0.0',
         track: VersionTrack.live,
         build: 1,
         commits: [{
           title: 'this is a title',
-          message: '[feat]> new feature\n[fix]> a fix',
+          message: '[feat]> new feature\n[fix]> a fix\n[doc]> added a doc',
           ref: 'commit-ref',
         }],
       });
@@ -22,7 +21,6 @@ describe('Version Item', () => {
 
     it('beta should work', () => {
       const version = new Version({
-        reference: 'last-ref',
         version: '1.0.0-beta/#42',
         track: VersionTrack.beta,
         build: 51,
@@ -37,7 +35,6 @@ describe('Version Item', () => {
 
     it('alpha should work', () => {
       const version = new Version({
-        reference: 'last-ref',
         version: '1.0.0-alpha/#22',
         track: VersionTrack.alpha,
         build: 72,
