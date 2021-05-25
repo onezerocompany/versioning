@@ -24,7 +24,7 @@ export class VersionNumber {
   minor: number
   patch: number
   track: VersionTrack
-  build: string
+  iteration: number
 
   versionString : {
     full: string
@@ -38,24 +38,24 @@ export class VersionNumber {
    * @param {number} minor minor section of the version number
    * @param {number} patch patch section of the version number
    * @param {VersionTrack} track type of version
-   * @param {string} build how many times this version has been build
+   * @param {string} iteration how many times this version has been build
    */
   constructor(
     major = 1, minor = 0, patch = 0,
-    track = VersionTrack.live, build = '1'
+    track = VersionTrack.live, iteration = 1
   ) {
     this.major = major;
     this.minor = minor;
     this.patch = patch;
     this.track = track;
-    this.build = build;
+    this.iteration = iteration;
 
     const onlyNumber = `${this.major}.${this.minor}.${this.patch}`;
     const trackLabel = this.track == VersionTrack.live ? '' : `-${this.track}`;
     const withoutBuild = `${onlyNumber}${trackLabel}`;
     this.versionString = {
       full: this.track == VersionTrack.live ?
-        withoutBuild : `${withoutBuild}/#${this.build}`,
+        withoutBuild : `${withoutBuild}/#${this.iteration}`,
       withoutBuild, onlyNumber,
     };
   }
@@ -74,7 +74,7 @@ export class VersionNumber {
       isMajor ? this.major + 1 : this.major,
       isMajor ? 0 : isMinor ? this.minor + 1 : this.minor,
       (isMajor || isMinor) ? 0 : isPatch ? this.patch + 1 : this.patch,
-      this.track, this.build
+      this.track, this.iteration
     );
   }
 
@@ -82,15 +82,27 @@ export class VersionNumber {
   /**
    * converts a version string to a VersionNumber object
    * @param {string} versionString version string to convert
+   * @param {VersionTrack} track set the track for this version
+   * @param {number} build set the build for this version
    * @return {VersionNumber}
    */
-  static fromVersionString(versionString: string): VersionNumber {
-    const components = versionString.split('.');
+  static fromVersionString(
+    versionString: string,
+    track: VersionTrack | undefined = undefined,
+    build: number | undefined = undefined
+  ): VersionNumber {
+    const components = (versionString ?? '').split('.')
+      .flatMap((component) => component ? (component ?? '').split('-')
+        .flatMap((subComponent) =>
+          subComponent ? (subComponent ?? '').split('/') : undefined
+        ) : undefined
+      );
     return new VersionNumber(
       Number(components[0]),
       Number(components[1]),
-      Number(components[2].split('-')[0]),
-      components[2].split('-')[1] as VersionTrack
+      Number(components[2]),
+      track ?? components[3] as VersionTrack,
+      build ?? Number((components[4] ?? '').replace( /[^0-9]/, ''))
     );
   }
 

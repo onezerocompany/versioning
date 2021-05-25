@@ -37,35 +37,27 @@ describe('verifyMessage', () => {
       });
   });
 
-  it('should fail when all lines are missing a changelog tag', () => {
+  it('should fail when title is missing', () => {
     return chai.request('http://localhost:8080')
       .post('/verify-message')
-      .send({ title: 'test title', message: 'test message' })
+      .send({ message: 'test message' })
       .then((res) => {
         expect(res.status).to.equal(400);
         expect(res.body.valid).to.equal(false);
         expect(res.body.errors).to.have.length(1).and.to
-          .contain('some lines in the message are missing changelog tags');
-        expect(res.body.title).to.equal('test title');
-        expect(res.body.message).to.equal('test message');
+          .contain('missing title');
       });
   });
 
-  it('should fail when not all lines contain a changelog tag', () => {
+  it('should fail when message is missing', () => {
     return chai.request('http://localhost:8080')
       .post('/verify-message')
-      .send({
-        title: 'test title',
-        message: '[feat]>test message\nthis is a line without a tag',
-      })
+      .send({ title: 'this is the title' })
       .then((res) => {
         expect(res.status).to.equal(400);
         expect(res.body.valid).to.equal(false);
         expect(res.body.errors).to.have.length(1).and.to
-          .contain('some lines in the message are missing changelog tags');
-        expect(res.body.title).to.equal('test title');
-        expect(res.body.message).to
-          .equal('[feat]>test message\nthis is a line without a tag');
+          .contain('missing message body');
       });
   });
 });

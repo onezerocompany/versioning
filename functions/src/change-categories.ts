@@ -70,7 +70,7 @@ export const categories : ChangeCategory[] = [
       'lang-update', 'language-update', 'lang-change',
       'language-changes', 'updated-language', 'update-lang',
     ],
-    versionBump: VersionBump.minor,
+    versionBump: VersionBump.patch,
     triggers: {
       tests: true,
       release: true,

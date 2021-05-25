@@ -2,7 +2,7 @@ import { ChangeCategory } from './change-categories';
 import { Change } from './change';
 import { changelog, ChangelogType } from './changelogs';
 import {
-  VersionNumber, VersionBump, bumpOrder,
+  VersionNumber, VersionBump, bumpOrder, VersionTrack,
 } from './version-number';
 import { changesFromMessage, Commit } from './commit';
 
@@ -13,8 +13,10 @@ export interface ChangeExport {
 }
 
 export interface VersionInput {
-  lastVersion: string
-  lastRef: string
+  version: string
+  reference: string
+  track: VersionTrack
+  build: number
   commits: Commit[]
 }
 
@@ -24,7 +26,7 @@ export interface VersionInput {
 export class Version {
 
   version: VersionNumber
-  lastRef: string
+  reference: string
   changes: Change[]
   changelogs: {
     internal: string
@@ -40,7 +42,7 @@ export class Version {
   ) {
     let bump = VersionBump.none;
 
-    this.lastRef = input.lastRef;
+    this.reference = input.reference;
     this.changes = input.commits.flatMap((commit) =>
       changesFromMessage(commit.message, commit.ref)
     );
@@ -56,7 +58,7 @@ export class Version {
     }
 
     this.version = VersionNumber
-      .fromVersionString(input.lastVersion)
+      .fromVersionString(input.version, input.track, input.build)
       .bumped(bump);
   }
 

@@ -1,3 +1,4 @@
+name: Commit Workflow
 on: push
 
 jobs:

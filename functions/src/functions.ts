@@ -8,7 +8,7 @@ const https = functions.region('eur3').https;
  * Cloud Function that generates a version.json for a release
  */
 export const generateVersion = https.onRequest((request, response) => {
-  if (request.get('content-type') == 'application/json') {
+  if ((request.get('content-type')?.indexOf('application/json') ?? -1) > -1) {
     const input: VersionInput = request.body;
     response.json(new Version(input));
   } else {
@@ -21,18 +21,22 @@ export const generateVersion = https.onRequest((request, response) => {
  * Cloud Function that verifies a commit title and message
  */
 export const verifyMessage = https.onRequest((request, response) => {
-  if (request.get('content-type') == 'application/json') {
-    const tags = categories
-      .flatMap((category) => category.keys.map((key) => `[${key}]>`));
-    const { title, message } = request.body;
+  if ((request.get('content-type')?.indexOf('application/json') ?? -1) > -1) {
     const errors = [];
-    if (tags.map((tag) => title.includes(tag)).includes(true)) {
-      errors.push('title contains changelog tags');
-    }
-    if (message.split('\n').map((line: string) =>
-      tags.map((tag) => line.includes(tag)).includes(true)
-    ).includes(false)) {
-      errors.push('some lines in the message are missing changelog tags');
+    const { title, message } = request.body;
+    if (message == undefined) errors.push('missing message body');
+    if (title == undefined) errors.push('missing title');
+    if (errors.length == 0) {
+      const tags = categories
+        .flatMap((category) => category.keys.map((key) => `[${key}]>`));
+      if (tags.map((tag) => title.includes(tag)).includes(true)) {
+        errors.push('title contains changelog tags');
+      }
+      if (message.split('\n').map((line: string) =>
+        tags.map((tag) => line.includes(tag)).includes(true)
+      ).includes(false)) {
+        errors.push('some lines in the message are missing changelog tags');
+      }
     }
     if (errors.length > 0) {
       response.status(400).json({ title, message, errors, valid: false });
