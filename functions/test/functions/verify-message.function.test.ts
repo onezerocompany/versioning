@@ -51,7 +51,7 @@ describe('verifyMessage', () => {
 
   it('should fail when message is missing', () => {
     return chai.request('http://localhost:8080')
-      .post('/verify-message')
+      .post('/verify-message-v2')
       .send({ title: 'this is the title' })
       .then((res) => {
         expect(res.status).to.equal(400);
