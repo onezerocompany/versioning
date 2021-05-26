@@ -137,4 +137,4 @@ for (let category of categories) {
 
 html += '</body>';
 
-writeFileSync('index.html', html);
+writeFileSync('docs/index.html', html);
