@@ -13,7 +13,6 @@ inputs:
   track:
     description: The version track to use for this version
     required: true
-
 outputs:
   version:
     description: JSON with version information

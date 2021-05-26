@@ -6,7 +6,7 @@ import { categories } from './change-categories';
  */
 export enum ChangelogType {
   internal = 'internal',
-  external = 'external'
+  external = 'external',
 }
 
 /**
