@@ -21,4 +21,4 @@ jobs:
         with:
           name: version.json
           path: version.json
-          retention_days: 1
+          retention-days: 1
