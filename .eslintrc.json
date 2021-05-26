@@ -21,7 +21,8 @@
     "sourceType": "module"
   },
   "ignorePatterns": [
-    "/lib/**/*"
+    "/lib/**/*",
+    "/docs/**/*"
   ],
   "plugins": [
     "@typescript-eslint",

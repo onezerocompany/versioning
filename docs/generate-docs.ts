@@ -1,6 +1,6 @@
 import { writeFileSync } from 'fs';
-import { categories } from '../functions/src/change-categories';
-import { ChangelogType } from '../functions/src/changelogs';
+import { categories } from '../src/change-categories';
+import { ChangelogType } from '../src/changelogs';
 
 const style = `
 @import url('https://fonts.googleapis.com/css2?family=Merriweather&family=Open+Sans&family=Source+Code+Pro&display=swap');
@@ -103,38 +103,38 @@ pre {
     color: #cdcdcd;
   }
 }
-`
+`;
 
-var html = `<html><head><title>Changelog Categories</title><style>${style}</style></head><body>`
+var html = `<html><head><title>Changelog Categories</title><style>${style}</style></head><body>`;
 
-html += '<div class="rules">'
-html += '<h1>The 5 commandments of commiting.</h1>'
-html += '<p class="commit-rule">1. The title shall not contain any changelog tags'
-html += '<p class="commit-rule">2. Every line in the message shall contain a tag'
-html += '<p class="commit-rule">3. Only one change per line, and try to keep them short!'
-html += '<p class="commit-rule">4. Everything except names shall be lowercased'
-html += '<p class="commit-rule">5. Follow rules 1, 2, 3 and 4 religously'
-html += '</div>'
+html += '<div class="rules">';
+html += '<h1>The 5 commandments of commiting.</h1>';
+html += '<p class="commit-rule">1. The title shall not contain any changelog tags';
+html += '<p class="commit-rule">2. Every line in the message shall contain a tag';
+html += '<p class="commit-rule">3. Only one change per line, and try to keep them short!';
+html += '<p class="commit-rule">4. Everything except names shall be lowercased';
+html += '<p class="commit-rule">5. Follow rules 1, 2, 3 and 4 religously';
+html += '</div>';
 
 // html += '<h2 class="categories-title">Changelog Categories</h2>'
 for (let category of categories) {
 
-  html += '<div class="category">'
-    html += '<h1>' + category.title + '</h1>'
-    html += '<h4>' + category.description + '</h4>'
-    html += `<p class="${category.changelogType == ChangelogType.external ? 'external' : 'internal'}"><span>CHANGELOG</span> ${category.changelogType}</p>`
-    html += '<p class="version"><span>VERSION INCREASE</span> ' + category.versionBump + '</p>'
-    html += `<p class="test ${category.triggers.tests ? '' : 'inactive'}"><span>TRIGGERS TESTS</span> ${category.triggers.tests ? 'yes' : 'no'}</p>`
-    html += `<p class="release ${category.triggers.release ? '' : 'inactive'}"><span>TRIGGERS RELEASE</span> ${category.triggers.release ? 'yes' : 'no'}</p>`
-    html += '<pre class="examples">'
-      for (let key of category.keys) {
-        html += `[${key}]> {{insert your message here}}\n`
-      }
-    html += '</pre>'
-  html += '</div>'
+  html += '<div class="category">';
+  html += '<h1>' + category.title + '</h1>';
+  html += '<h4>' + category.description + '</h4>';
+  html += `<p class="${category.changelogType == ChangelogType.external ? 'external' : 'internal'}"><span>CHANGELOG</span> ${category.changelogType}</p>`;
+  html += '<p class="version"><span>VERSION INCREASE</span> ' + category.versionBump + '</p>';
+  html += `<p class="test ${category.triggers.tests ? '' : 'inactive'}"><span>TRIGGERS TESTS</span> ${category.triggers.tests ? 'yes' : 'no'}</p>`;
+  html += `<p class="release ${category.triggers.release ? '' : 'inactive'}"><span>TRIGGERS RELEASE</span> ${category.triggers.release ? 'yes' : 'no'}</p>`;
+  html += '<pre class="examples">';
+  for (let key of category.keys) {
+    html += `[${key}]> {{insert your message here}}\n`;
+  }
+  html += '</pre>';
+  html += '</div>';
 
 }
 
-html += '</body>'
+html += '</body>';
 
-writeFileSync('index.html', html)
+writeFileSync('index.html', html);

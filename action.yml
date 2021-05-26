@@ -1,0 +1,22 @@
+name: Versioning
+description: Generates usefull versioning info
+inputs:
+  version:
+    description: Version to increment on
+    required: true
+  commits:
+    description: List of commits to generate changelogs from
+    required: true
+  build:
+    description: Build number to use for this version
+    required: true
+  track:
+    description: The version track to use for this version
+    required: true
+
+outputs:
+  version:
+    description: JSON with version information
+runs:
+  using: node12
+  main: "lib/index.js"
