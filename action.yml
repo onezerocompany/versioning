@@ -19,4 +19,4 @@ outputs:
     description: JSON with version information
 runs:
   using: node12
-  main: "lib/index.js"
+  main: "dist/index.js"
