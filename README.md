@@ -1,10 +1,10 @@
-# Versioning API
+# Versioning Action
 
 [![CodeQL](https://github.com/appcompany/versioning-api/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/appcompany/versioning-api/actions/workflows/codeql-analysis.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/appcompany/versioning/branch/main/graph/badge.svg?token=STRSZT7U4K)](https://codecov.io/gh/appcompany/versioning)
 
-Our internal API for providing versioning to all our projects
+This action helps us version our apps, websites and other projects
 
 ## Always develop on a branch and then merge into 'main'
 
