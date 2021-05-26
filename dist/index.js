@@ -2,14 +2,14 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 923:
+/***/ 111:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.categories = void 0;
-const changelogs_1 = __nccwpck_require__(111);
-const version_number_1 = __nccwpck_require__(242);
+const changelogs_1 = __nccwpck_require__(82);
+const version_number_1 = __nccwpck_require__(601);
 exports.categories = [
     {
         title: 'New Features',
@@ -167,7 +167,7 @@ exports.categories = [
 
 /***/ }),
 
-/***/ 797:
+/***/ 484:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -195,13 +195,13 @@ exports.Change = Change;
 
 /***/ }),
 
-/***/ 111:
+/***/ 82:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.changelog = exports.ChangelogType = void 0;
-const change_categories_1 = __nccwpck_require__(923);
+const change_categories_1 = __nccwpck_require__(111);
 /**
  * Defines who gets to see the changelog
  */
@@ -237,14 +237,14 @@ exports.changelog = changelog;
 
 /***/ }),
 
-/***/ 257:
+/***/ 873:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.changesFromMessage = void 0;
-const change_1 = __nccwpck_require__(797);
-const change_categories_1 = __nccwpck_require__(923);
+const change_1 = __nccwpck_require__(484);
+const change_categories_1 = __nccwpck_require__(111);
 /**
  * convert commit message to list of changes
  * @param {string} message message to convert to changes
@@ -271,15 +271,15 @@ exports.changesFromMessage = changesFromMessage;
 
 /***/ }),
 
-/***/ 784:
+/***/ 263:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Version = void 0;
-const changelogs_1 = __nccwpck_require__(111);
-const version_number_1 = __nccwpck_require__(242);
-const commit_1 = __nccwpck_require__(257);
+const changelogs_1 = __nccwpck_require__(82);
+const version_number_1 = __nccwpck_require__(601);
+const commit_1 = __nccwpck_require__(873);
 /**
  * contains all the information
  */
@@ -321,7 +321,7 @@ exports.Version = Version;
 
 /***/ }),
 
-/***/ 242:
+/***/ 601:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -401,7 +401,7 @@ exports.VersionNumber = VersionNumber;
 
 /***/ }),
 
-/***/ 215:
+/***/ 351:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -427,7 +427,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.issue = exports.issueCommand = void 0;
 const os = __importStar(__nccwpck_require__(87));
-const utils_1 = __nccwpck_require__(835);
+const utils_1 = __nccwpck_require__(278);
 /**
  * Commands
  *
@@ -499,7 +499,7 @@ function escapeProperty(s) {
 
 /***/ }),
 
-/***/ 20:
+/***/ 186:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -533,9 +533,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getState = exports.saveState = exports.group = exports.endGroup = exports.startGroup = exports.info = exports.warning = exports.error = exports.debug = exports.isDebug = exports.setFailed = exports.setCommandEcho = exports.setOutput = exports.getBooleanInput = exports.getInput = exports.addPath = exports.setSecret = exports.exportVariable = exports.ExitCode = void 0;
-const command_1 = __nccwpck_require__(215);
-const file_command_1 = __nccwpck_require__(746);
-const utils_1 = __nccwpck_require__(835);
+const command_1 = __nccwpck_require__(351);
+const file_command_1 = __nccwpck_require__(717);
+const utils_1 = __nccwpck_require__(278);
 const os = __importStar(__nccwpck_require__(87));
 const path = __importStar(__nccwpck_require__(622));
 /**
@@ -784,7 +784,7 @@ exports.getState = getState;
 
 /***/ }),
 
-/***/ 746:
+/***/ 717:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -814,7 +814,7 @@ exports.issueCommand = void 0;
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const fs = __importStar(__nccwpck_require__(747));
 const os = __importStar(__nccwpck_require__(87));
-const utils_1 = __nccwpck_require__(835);
+const utils_1 = __nccwpck_require__(278);
 function issueCommand(command, message) {
     const filePath = process.env[`GITHUB_${command}`];
     if (!filePath) {
@@ -832,7 +832,7 @@ exports.issueCommand = issueCommand;
 
 /***/ }),
 
-/***/ 835:
+/***/ 278:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -928,8 +928,8 @@ var __webpack_exports__ = {};
 var exports = __webpack_exports__;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core_1 = __nccwpck_require__(20);
-const version_item_1 = __nccwpck_require__(784);
+const core_1 = __nccwpck_require__(186);
+const version_item_1 = __nccwpck_require__(263);
 const input = {
     version: core_1.getInput('version'),
     commits: JSON.parse(core_1.getInput('commits')),
