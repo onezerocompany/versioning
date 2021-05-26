@@ -1,5 +1,8 @@
 name: Commit Workflow
-on: push
+on:
+  push:
+    branches-ignore:
+      - main
 
 jobs:
   check_and_coverage:
@@ -13,7 +16,6 @@ jobs:
       - name: Get Yarn Cache Directory
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-        working-directory: functions
       - uses: actions/cache@v2
         name: Yarn Cache
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
@@ -27,11 +29,10 @@ jobs:
           npm install
           npm run lint
           npm run coverage
-        working-directory: functions
       - uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          directory: functions/coverage
+          directory: coverage
   test:
     name: Testing
     runs-on: ubuntu-latest
@@ -45,7 +46,6 @@ jobs:
       - name: Get Yarn Cache Directory
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-        working-directory: functions
       - uses: actions/cache@v2
         name: Yarn Cache
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
@@ -61,4 +61,3 @@ jobs:
         run: |
           npm install
           npm test
-        working-directory: functions
