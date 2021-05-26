@@ -2,405 +2,6 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 111:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.categories = void 0;
-const changelogs_1 = __nccwpck_require__(82);
-const version_number_1 = __nccwpck_require__(601);
-exports.categories = [
-    {
-        title: 'New Features',
-        description: 'Features that were not in the product yet',
-        keys: [
-            'feat', 'feature', 'features', 'new',
-            'new-feature', 'added', 'added-feature',
-        ],
-        versionBump: version_number_1.VersionBump.minor,
-        triggers: {
-            tests: true,
-            release: true,
-        },
-        changelogType: changelogs_1.ChangelogType.external,
-    },
-    {
-        title: 'Changes',
-        // eslint-disable-next-line max-len
-        description: 'Changes made to previously released features or feature removals',
-        keys: ['change', 'changes', 'feat-update'],
-        versionBump: version_number_1.VersionBump.minor,
-        triggers: {
-            tests: true,
-            release: true,
-        },
-        changelogType: changelogs_1.ChangelogType.external,
-    },
-    {
-        title: 'Bug Fixes',
-        description: 'A fix that resolves a previously found bug',
-        keys: ['bug', 'bugs', 'fix', 'bug-fix'],
-        versionBump: version_number_1.VersionBump.patch,
-        triggers: {
-            tests: true,
-            release: true,
-        },
-        changelogType: changelogs_1.ChangelogType.external,
-    },
-    {
-        title: 'Added Languages',
-        description: 'Adding a new supported language to the app or website',
-        keys: ['lang', 'language', 'added-language', 'add-lang'],
-        versionBump: version_number_1.VersionBump.minor,
-        triggers: {
-            tests: true,
-            release: true,
-        },
-        changelogType: changelogs_1.ChangelogType.external,
-    },
-    {
-        title: 'Language Changes',
-        // eslint-disable-next-line max-len
-        description: 'Fixes or improvements to translations and/or removals of languages',
-        keys: [
-            'lang-update', 'language-update', 'lang-change',
-            'language-changes', 'updated-language', 'update-lang',
-        ],
-        versionBump: version_number_1.VersionBump.patch,
-        triggers: {
-            tests: true,
-            release: true,
-        },
-        changelogType: changelogs_1.ChangelogType.external,
-    },
-    {
-        title: 'CI/CD Changes',
-        description: 'Changes made to the CI and/or CD system',
-        keys: [
-            'ci', 'ci/cd', 'cd', 'continuous-integration', 'continuous-deployment',
-        ],
-        versionBump: version_number_1.VersionBump.none,
-        triggers: {
-            tests: true,
-            release: false,
-        },
-        changelogType: changelogs_1.ChangelogType.internal,
-    },
-    {
-        title: 'Added Tests',
-        // eslint-disable-next-line max-len
-        description: 'Adding a new test to either UI, unit or integration test suites',
-        keys: [
-            'tests', 'testing', 'test', 'tst',
-            'unit-test', 'ui-test', 'integration-test',
-        ],
-        versionBump: version_number_1.VersionBump.none,
-        triggers: {
-            tests: true,
-            release: false,
-        },
-        changelogType: changelogs_1.ChangelogType.internal,
-    },
-    {
-        title: 'Changed Tests',
-        // eslint-disable-next-line max-len
-        description: 'Changes made to tests or removals of tests in either UI, unit or integration test suites',
-        keys: [
-            'changed-tests', 'testing-change', 'test-change', 'tst-change',
-            'unit-test-change', 'ui-test-change', 'integration-test-change',
-        ],
-        versionBump: version_number_1.VersionBump.none,
-        triggers: {
-            tests: true,
-            release: false,
-        },
-        changelogType: changelogs_1.ChangelogType.internal,
-    },
-    {
-        title: 'Documentation Changes',
-        description: 'Changes made to documentation',
-        keys: ['documentation', 'doc', 'docs'],
-        versionBump: version_number_1.VersionBump.none,
-        triggers: {
-            tests: false,
-            release: false,
-        },
-        changelogType: changelogs_1.ChangelogType.internal,
-    },
-    {
-        title: 'Metadata Changes',
-        description: 'Changes made to the application metadata',
-        keys: ['meta', 'metadata', 'meta-changes'],
-        versionBump: version_number_1.VersionBump.patch,
-        triggers: {
-            tests: true,
-            release: true,
-        },
-        changelogType: changelogs_1.ChangelogType.internal,
-    },
-    {
-        title: 'Refactored Code',
-        description: 'Changes made to code that do not change functionality',
-        keys: ['refactor', 'refactoring', 'refactored-code'],
-        versionBump: version_number_1.VersionBump.none,
-        triggers: {
-            tests: true,
-            release: false,
-        },
-        changelogType: changelogs_1.ChangelogType.internal,
-    },
-    {
-        title: 'Miscellaneous Changes',
-        // eslint-disable-next-line max-len
-        description: 'Changes made to a repository that do not change anything relating to the code and do not fit any other description',
-        keys: ['miscellaneous', 'misc', 'chore'],
-        versionBump: version_number_1.VersionBump.none,
-        triggers: {
-            tests: false,
-            release: false,
-        },
-        changelogType: changelogs_1.ChangelogType.internal,
-    },
-];
-//# sourceMappingURL=change-categories.js.map
-
-/***/ }),
-
-/***/ 484:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Change = void 0;
-const crypto_1 = __nccwpck_require__(417);
-/**
- * Represents a single change in a changlog
- */
-class Change {
-    /**
-     * Creates a change
-     * @param {string} content content of this change
-     * @param {ChangeCategory} category category for this change
-     * @param {string} commit commit ref for this change
-     */
-    constructor(content, category, commit) {
-        this.ref = crypto_1.createHash('md5').update(commit + content).digest('base64');
-        this.content = content;
-        this.category = category;
-    }
-}
-exports.Change = Change;
-//# sourceMappingURL=change.js.map
-
-/***/ }),
-
-/***/ 82:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.changelog = exports.ChangelogType = void 0;
-const change_categories_1 = __nccwpck_require__(111);
-/**
- * Defines who gets to see the changelog
- */
-var ChangelogType;
-(function (ChangelogType) {
-    ChangelogType["internal"] = "internal";
-    ChangelogType["external"] = "external";
-})(ChangelogType = exports.ChangelogType || (exports.ChangelogType = {}));
-/**
- * Generates a changelog for a list of changes
- * @param {ChangelogType} type the type of this changelog
- * @param {Change[]} changes a list of changes to include in this changelog
- * @return {string} the generated changelog
- */
-function changelog(type, changes) {
-    const filteredChanges = changes
-        .filter((change) => change.category.changelogType == type);
-    const filteredCategories = change_categories_1.categories.filter((category) => filteredChanges.some((change) => change.category.keys[0] == category.keys[0]));
-    let changelog = '';
-    for (const category of filteredCategories) {
-        changelog += category.title + ':\n';
-        const categoryChanges = filteredChanges
-            .filter((change) => change.category.keys[0] == category.keys[0]);
-        for (const change of categoryChanges) {
-            changelog += '- ' + change.content + '\n';
-        }
-        changelog += '\n';
-    }
-    return changelog.trim();
-}
-exports.changelog = changelog;
-//# sourceMappingURL=changelogs.js.map
-
-/***/ }),
-
-/***/ 873:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.changesFromMessage = void 0;
-const change_1 = __nccwpck_require__(484);
-const change_categories_1 = __nccwpck_require__(111);
-/**
- * convert commit message to list of changes
- * @param {string} message message to convert to changes
- * @param {string} ref reference for the commit this message is from
- * @return {Change[]}
- */
-function changesFromMessage(message, ref) {
-    return message.split('\n').map((line) => {
-        let change = undefined;
-        for (const category of change_categories_1.categories) {
-            for (const key of category.keys) {
-                const keyMarker = `[${key}]>`;
-                if (line.includes(keyMarker)) {
-                    const content = line.replace(keyMarker, '').trim();
-                    change = new change_1.Change(content, category, ref);
-                }
-            }
-        }
-        return change;
-    }).filter((change) => change);
-}
-exports.changesFromMessage = changesFromMessage;
-//# sourceMappingURL=commit.js.map
-
-/***/ }),
-
-/***/ 263:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Version = void 0;
-const changelogs_1 = __nccwpck_require__(82);
-const version_number_1 = __nccwpck_require__(601);
-const commit_1 = __nccwpck_require__(873);
-/**
- * contains all the information
- */
-class Version {
-    /**
-     * creates a version
-     * @param {VersionInput} input input from a version creation request
-     */
-    constructor(input) {
-        let bump = version_number_1.VersionBump.none;
-        this.changes = input.commits.flatMap((commit) => commit_1.changesFromMessage(commit.message, commit.ref));
-        this.changelogs = {
-            internal: changelogs_1.changelog(changelogs_1.ChangelogType.internal, this.changes),
-            external: changelogs_1.changelog(changelogs_1.ChangelogType.external, this.changes),
-        };
-        let triggersRelease = false;
-        let triggersTests = false;
-        for (const change of this.changes) {
-            const oldIndex = version_number_1.bumpOrder.indexOf(bump);
-            const index = version_number_1.bumpOrder.indexOf(change.category.versionBump);
-            if (index > oldIndex)
-                bump = change.category.versionBump;
-            if (change.category.triggers.release)
-                triggersRelease = true;
-            if (change.category.triggers.tests)
-                triggersTests = true;
-        }
-        this.triggers = {
-            release: triggersRelease,
-            tests: triggersTests,
-        };
-        this.version = version_number_1.VersionNumber
-            .fromVersionString(input.version, input.track, input.build)
-            .bumped(bump);
-    }
-}
-exports.Version = Version;
-//# sourceMappingURL=version-item.js.map
-
-/***/ }),
-
-/***/ 601:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.VersionNumber = exports.VersionTrack = exports.bumpOrder = exports.VersionBump = void 0;
-var VersionBump;
-(function (VersionBump) {
-    VersionBump["patch"] = "patch";
-    VersionBump["minor"] = "minor";
-    VersionBump["major"] = "major";
-    VersionBump["none"] = "none";
-})(VersionBump = exports.VersionBump || (exports.VersionBump = {}));
-exports.bumpOrder = [
-    VersionBump.none, VersionBump.patch, VersionBump.minor, VersionBump.major,
-];
-var VersionTrack;
-(function (VersionTrack) {
-    VersionTrack["live"] = "live";
-    VersionTrack["beta"] = "beta";
-    VersionTrack["alpha"] = "alpha";
-})(VersionTrack = exports.VersionTrack || (exports.VersionTrack = {}));
-/**
- * Reflects a version number and provides methods to alter it
- */
-class VersionNumber {
-    /**
-     * creates a {VersionNumber} from individual version number components
-     * @param {number} major major section of the version number
-     * @param {number} minor minor section of the version number
-     * @param {number} patch patch section of the version number
-     * @param {VersionTrack} track type of version
-     * @param {number} iteration how many times this version has been build
-     */
-    constructor(major = 1, minor = 0, patch = 0, track = VersionTrack.live, iteration = 1) {
-        this.major = major;
-        this.minor = minor;
-        this.patch = patch;
-        this.track = track;
-        this.iteration = iteration;
-        const onlyNumber = `${this.major}.${this.minor}.${this.patch}`;
-        const trackLabel = this.track == VersionTrack.live ? '' : `-${this.track}`;
-        const withoutBuild = `${onlyNumber}${trackLabel}`;
-        this.versionString = {
-            full: this.track == VersionTrack.live ?
-                withoutBuild : `${withoutBuild}/#${this.iteration}`,
-            withoutBuild, onlyNumber,
-        };
-    }
-    /**
-     * bumps a version by a specified amount
-     * @param {VersionBump} bump amount to bump the version by
-     * @return {VersionNumber} bumped version
-     */
-    bumped(bump) {
-        const isMajor = bump == VersionBump.major;
-        const isMinor = bump == VersionBump.minor;
-        const isPatch = bump == VersionBump.patch;
-        return new VersionNumber(isMajor ? this.major + 1 : this.major, isMajor ? 0 : isMinor ? this.minor + 1 : this.minor, (isMajor || isMinor) ? 0 : isPatch ? this.patch + 1 : this.patch, this.track, this.iteration);
-    }
-    /**
-     * converts a version string to a VersionNumber object
-     * @param {string} versionString version string to convert
-     * @param {VersionTrack} track set the track for this version
-     * @param {number} iteration set the build for this version
-     * @return {VersionNumber}
-     */
-    static fromVersionString(versionString = undefined, track = undefined, iteration = undefined) {
-        var _a, _b, _c, _d;
-        const components = (versionString !== null && versionString !== void 0 ? versionString : '').split('.')
-            .flatMap((component) => component.split('-')
-            .flatMap((subComponent) => subComponent.split('/')));
-        return new VersionNumber(Number(components[0] != '' ? components[0] : '1'), Number((_a = (components[1] != '' ? components[1] : '0')) !== null && _a !== void 0 ? _a : '0'), Number((_b = (components[2] != '' ? components[2] : '0')) !== null && _b !== void 0 ? _b : '0'), (_c = (track !== null && track !== void 0 ? track : components[3])) !== null && _c !== void 0 ? _c : VersionTrack.live, iteration !== null && iteration !== void 0 ? iteration : Number(((_d = components[4]) !== null && _d !== void 0 ? _d : '1').replace(/[^0-9]/, '')));
-    }
-}
-exports.VersionNumber = VersionNumber;
-//# sourceMappingURL=version-number.js.map
-
-/***/ }),
-
 /***/ 351:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -858,13 +459,6 @@ exports.toCommandValue = toCommandValue;
 
 /***/ }),
 
-/***/ 417:
-/***/ ((module) => {
-
-module.exports = require("crypto");;
-
-/***/ }),
-
 /***/ 747:
 /***/ ((module) => {
 
@@ -919,25 +513,386 @@ module.exports = require("path");;
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__nccwpck_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";/************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-var exports = __webpack_exports__;
+// ESM COMPAT FLAG
+__nccwpck_require__.r(__webpack_exports__);
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core_1 = __nccwpck_require__(186);
-const version_item_1 = __nccwpck_require__(263);
+// EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
+var core = __nccwpck_require__(186);
+;// CONCATENATED MODULE: ./src/version-number.ts
+var VersionBump;
+(function (VersionBump) {
+    VersionBump["patch"] = "patch";
+    VersionBump["minor"] = "minor";
+    VersionBump["major"] = "major";
+    VersionBump["none"] = "none";
+})(VersionBump || (VersionBump = {}));
+const bumpOrder = [
+    VersionBump.none, VersionBump.patch, VersionBump.minor, VersionBump.major,
+];
+var VersionTrack;
+(function (VersionTrack) {
+    VersionTrack["live"] = "live";
+    VersionTrack["beta"] = "beta";
+    VersionTrack["alpha"] = "alpha";
+})(VersionTrack || (VersionTrack = {}));
+/**
+ * Reflects a version number and provides methods to alter it
+ */
+class VersionNumber {
+    /**
+     * creates a {VersionNumber} from individual version number components
+     * @param {number} major major section of the version number
+     * @param {number} minor minor section of the version number
+     * @param {number} patch patch section of the version number
+     * @param {VersionTrack} track type of version
+     * @param {number} iteration how many times this version has been build
+     */
+    constructor(major = 1, minor = 0, patch = 0, track = VersionTrack.live, iteration = 1) {
+        this.major = major;
+        this.minor = minor;
+        this.patch = patch;
+        this.track = track;
+        this.iteration = iteration;
+        const onlyNumber = `${this.major}.${this.minor}.${this.patch}`;
+        const trackLabel = this.track == VersionTrack.live ? '' : `-${this.track}`;
+        const withoutBuild = `${onlyNumber}${trackLabel}`;
+        this.versionString = {
+            full: this.track == VersionTrack.live ?
+                withoutBuild : `${withoutBuild}/#${this.iteration}`,
+            withoutBuild, onlyNumber,
+        };
+    }
+    /**
+     * bumps a version by a specified amount
+     * @param {VersionBump} bump amount to bump the version by
+     * @return {VersionNumber} bumped version
+     */
+    bumped(bump) {
+        const isMajor = bump == VersionBump.major;
+        const isMinor = bump == VersionBump.minor;
+        const isPatch = bump == VersionBump.patch;
+        return new VersionNumber(isMajor ? this.major + 1 : this.major, isMajor ? 0 : isMinor ? this.minor + 1 : this.minor, (isMajor || isMinor) ? 0 : isPatch ? this.patch + 1 : this.patch, this.track, this.iteration);
+    }
+    /**
+     * converts a version string to a VersionNumber object
+     * @param {string} versionString version string to convert
+     * @param {VersionTrack} track set the track for this version
+     * @param {number} iteration set the build for this version
+     * @return {VersionNumber}
+     */
+    static fromVersionString(versionString = undefined, track = undefined, iteration = undefined) {
+        var _a, _b, _c, _d;
+        const components = (versionString !== null && versionString !== void 0 ? versionString : '').split('.')
+            .flatMap((component) => component.split('-')
+            .flatMap((subComponent) => subComponent.split('/')));
+        return new VersionNumber(Number(components[0] != '' ? components[0] : '1'), Number((_a = (components[1] != '' ? components[1] : '0')) !== null && _a !== void 0 ? _a : '0'), Number((_b = (components[2] != '' ? components[2] : '0')) !== null && _b !== void 0 ? _b : '0'), (_c = (track !== null && track !== void 0 ? track : components[3])) !== null && _c !== void 0 ? _c : VersionTrack.live, iteration !== null && iteration !== void 0 ? iteration : Number(((_d = components[4]) !== null && _d !== void 0 ? _d : '1').replace(/[^0-9]/, '')));
+    }
+}
+
+;// CONCATENATED MODULE: ./src/change-categories.ts
+
+
+const categories = [
+    {
+        title: 'New Features',
+        description: 'Features that were not in the product yet',
+        keys: [
+            'feat', 'feature', 'features', 'new',
+            'new-feature', 'added', 'added-feature',
+        ],
+        versionBump: VersionBump.minor,
+        triggers: {
+            tests: true,
+            release: true,
+        },
+        changelogType: ChangelogType.external,
+    },
+    {
+        title: 'Changes',
+        // eslint-disable-next-line max-len
+        description: 'Changes made to previously released features or feature removals',
+        keys: ['change', 'changes', 'feat-update'],
+        versionBump: VersionBump.minor,
+        triggers: {
+            tests: true,
+            release: true,
+        },
+        changelogType: ChangelogType.external,
+    },
+    {
+        title: 'Bug Fixes',
+        description: 'A fix that resolves a previously found bug',
+        keys: ['bug', 'bugs', 'fix', 'bug-fix'],
+        versionBump: VersionBump.patch,
+        triggers: {
+            tests: true,
+            release: true,
+        },
+        changelogType: ChangelogType.external,
+    },
+    {
+        title: 'Added Languages',
+        description: 'Adding a new supported language to the app or website',
+        keys: ['lang', 'language', 'added-language', 'add-lang'],
+        versionBump: VersionBump.minor,
+        triggers: {
+            tests: true,
+            release: true,
+        },
+        changelogType: ChangelogType.external,
+    },
+    {
+        title: 'Language Changes',
+        // eslint-disable-next-line max-len
+        description: 'Fixes or improvements to translations and/or removals of languages',
+        keys: [
+            'lang-update', 'language-update', 'lang-change',
+            'language-changes', 'updated-language', 'update-lang',
+        ],
+        versionBump: VersionBump.patch,
+        triggers: {
+            tests: true,
+            release: true,
+        },
+        changelogType: ChangelogType.external,
+    },
+    {
+        title: 'CI/CD Changes',
+        description: 'Changes made to the CI and/or CD system',
+        keys: [
+            'ci', 'ci/cd', 'cd', 'continuous-integration', 'continuous-deployment',
+        ],
+        versionBump: VersionBump.none,
+        triggers: {
+            tests: true,
+            release: false,
+        },
+        changelogType: ChangelogType.internal,
+    },
+    {
+        title: 'Added Tests',
+        // eslint-disable-next-line max-len
+        description: 'Adding a new test to either UI, unit or integration test suites',
+        keys: [
+            'tests', 'testing', 'test', 'tst',
+            'unit-test', 'ui-test', 'integration-test',
+        ],
+        versionBump: VersionBump.none,
+        triggers: {
+            tests: true,
+            release: false,
+        },
+        changelogType: ChangelogType.internal,
+    },
+    {
+        title: 'Changed Tests',
+        // eslint-disable-next-line max-len
+        description: 'Changes made to tests or removals of tests in either UI, unit or integration test suites',
+        keys: [
+            'changed-tests', 'testing-change', 'test-change', 'tst-change',
+            'unit-test-change', 'ui-test-change', 'integration-test-change',
+        ],
+        versionBump: VersionBump.none,
+        triggers: {
+            tests: true,
+            release: false,
+        },
+        changelogType: ChangelogType.internal,
+    },
+    {
+        title: 'Documentation Changes',
+        description: 'Changes made to documentation',
+        keys: ['documentation', 'doc', 'docs'],
+        versionBump: VersionBump.none,
+        triggers: {
+            tests: false,
+            release: false,
+        },
+        changelogType: ChangelogType.internal,
+    },
+    {
+        title: 'Metadata Changes',
+        description: 'Changes made to the application metadata',
+        keys: ['meta', 'metadata', 'meta-changes'],
+        versionBump: VersionBump.patch,
+        triggers: {
+            tests: true,
+            release: true,
+        },
+        changelogType: ChangelogType.internal,
+    },
+    {
+        title: 'Refactored Code',
+        description: 'Changes made to code that do not change functionality',
+        keys: ['refactor', 'refactoring', 'refactored-code'],
+        versionBump: VersionBump.none,
+        triggers: {
+            tests: true,
+            release: false,
+        },
+        changelogType: ChangelogType.internal,
+    },
+    {
+        title: 'Miscellaneous Changes',
+        // eslint-disable-next-line max-len
+        description: 'Changes made to a repository that do not change anything relating to the code and do not fit any other description',
+        keys: ['miscellaneous', 'misc', 'chore'],
+        versionBump: VersionBump.none,
+        triggers: {
+            tests: false,
+            release: false,
+        },
+        changelogType: ChangelogType.internal,
+    },
+];
+
+;// CONCATENATED MODULE: ./src/changelogs.ts
+
+/**
+ * Defines who gets to see the changelog
+ */
+var ChangelogType;
+(function (ChangelogType) {
+    ChangelogType["internal"] = "internal";
+    ChangelogType["external"] = "external";
+})(ChangelogType || (ChangelogType = {}));
+/**
+ * Generates a changelog for a list of changes
+ * @param {ChangelogType} type the type of this changelog
+ * @param {Change[]} changes a list of changes to include in this changelog
+ * @return {string} the generated changelog
+ */
+function changelog(type, changes) {
+    const filteredChanges = changes
+        .filter((change) => change.category.changelogType == type);
+    const filteredCategories = categories.filter((category) => filteredChanges.some((change) => change.category.keys[0] == category.keys[0]));
+    let changelog = '';
+    for (const category of filteredCategories) {
+        changelog += category.title + ':\n';
+        const categoryChanges = filteredChanges
+            .filter((change) => change.category.keys[0] == category.keys[0]);
+        for (const change of categoryChanges) {
+            changelog += '- ' + change.content + '\n';
+        }
+        changelog += '\n';
+    }
+    return changelog.trim();
+}
+
+;// CONCATENATED MODULE: external "crypto"
+const external_crypto_namespaceObject = require("crypto");;
+;// CONCATENATED MODULE: ./src/change.ts
+
+/**
+ * Represents a single change in a changlog
+ */
+class Change {
+    /**
+     * Creates a change
+     * @param {string} content content of this change
+     * @param {ChangeCategory} category category for this change
+     * @param {string} commit commit ref for this change
+     */
+    constructor(content, category, commit) {
+        this.ref = (0,external_crypto_namespaceObject.createHash)('md5').update(commit + content).digest('base64');
+        this.content = content;
+        this.category = category;
+    }
+}
+
+;// CONCATENATED MODULE: ./src/commit.ts
+
+
+/**
+ * convert commit message to list of changes
+ * @param {string} message message to convert to changes
+ * @param {string} ref reference for the commit this message is from
+ * @return {Change[]}
+ */
+function changesFromMessage(message, ref) {
+    return message.split('\n').map((line) => {
+        let change = undefined;
+        for (const category of categories) {
+            for (const key of category.keys) {
+                const keyMarker = `[${key}]>`;
+                if (line.includes(keyMarker)) {
+                    const content = line.replace(keyMarker, '').trim();
+                    change = new Change(content, category, ref);
+                }
+            }
+        }
+        return change;
+    }).filter((change) => change);
+}
+
+;// CONCATENATED MODULE: ./src/version-item.ts
+
+
+
+/**
+ * contains all the information
+ */
+class Version {
+    /**
+     * creates a version
+     * @param {VersionInput} input input from a version creation request
+     */
+    constructor(input) {
+        let bump = VersionBump.none;
+        this.changes = input.commits.flatMap((commit) => changesFromMessage(commit.message, commit.ref));
+        this.changelogs = {
+            internal: changelog(ChangelogType.internal, this.changes),
+            external: changelog(ChangelogType.external, this.changes),
+        };
+        let triggersRelease = false;
+        let triggersTests = false;
+        for (const change of this.changes) {
+            const oldIndex = bumpOrder.indexOf(bump);
+            const index = bumpOrder.indexOf(change.category.versionBump);
+            if (index > oldIndex)
+                bump = change.category.versionBump;
+            if (change.category.triggers.release)
+                triggersRelease = true;
+            if (change.category.triggers.tests)
+                triggersTests = true;
+        }
+        this.triggers = {
+            release: triggersRelease,
+            tests: triggersTests,
+        };
+        this.version = VersionNumber.fromVersionString(input.version, input.track, input.build)
+            .bumped(bump);
+    }
+}
+
+;// CONCATENATED MODULE: ./src/index.ts
+
+
 const input = {
-    version: core_1.getInput('version'),
-    commits: JSON.parse(core_1.getInput('commits')),
-    track: core_1.getInput('track'),
-    build: Number(core_1.getInput('build')),
+    version: (0,core.getInput)('version'),
+    commits: JSON.parse((0,core.getInput)('commits')),
+    track: (0,core.getInput)('track'),
+    build: Number((0,core.getInput)('build')),
 };
-core_1.setOutput('version', JSON.stringify(new version_item_1.Version(input)));
-//# sourceMappingURL=index.js.map
+(0,core.setOutput)('version', JSON.stringify(new Version(input)));
+
 })();
 
 module.exports = __webpack_exports__;
