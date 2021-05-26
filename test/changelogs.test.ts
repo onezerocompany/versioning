@@ -29,6 +29,10 @@ describe('Changelogs', () => {
       expect(external[external.length - 1]).to.not
         .equal('\n').and.to.not.equal('\r');
     });
+    it('should have correct empty response', () => {
+      expect(changelog(ChangelogType.external, []))
+        .to.equal('Bug Fixes:\n- minor bug fixes');
+    });
   });
 
   describe('internal', () => {
@@ -45,6 +49,10 @@ describe('Changelogs', () => {
       expect(internal[0]).to.not.equal('\n').and.to.not.equal('\r');
       expect(internal[internal.length - 1]).to.not
         .equal('\n').and.to.not.equal('\r');
+    });
+    it('should have correct empty response', () => {
+      expect(changelog(ChangelogType.internal, []))
+        .to.equal('- no changes');
     });
   });
 });
