@@ -535,6 +535,48 @@ __nccwpck_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
 var core = __nccwpck_require__(186);
+// EXTERNAL MODULE: external "fs"
+var external_fs_ = __nccwpck_require__(747);
+// EXTERNAL MODULE: external "path"
+var external_path_ = __nccwpck_require__(622);
+;// CONCATENATED MODULE: ./src/change-categories.ts
+
+
+const categories = JSON.parse((0,external_fs_.readFileSync)(__nccwpck_require__.ab + "categories.json").toString());
+
+;// CONCATENATED MODULE: ./src/changelogs.ts
+
+/**
+ * Defines who gets to see the changelog
+ */
+var ChangelogType;
+(function (ChangelogType) {
+    ChangelogType["internal"] = "internal";
+    ChangelogType["external"] = "external";
+})(ChangelogType || (ChangelogType = {}));
+/**
+ * Generates a changelog for a list of changes
+ * @param {ChangelogType} type the type of this changelog
+ * @param {Change[]} changes a list of changes to include in this changelog
+ * @return {string} the generated changelog
+ */
+function changelog(type, changes) {
+    const filteredChanges = changes
+        .filter((change) => change.category.changelogType == type);
+    const filteredCategories = categories.filter((category) => filteredChanges.some((change) => change.category.keys[0] == category.keys[0]));
+    let changelog = '';
+    for (const category of filteredCategories) {
+        changelog += category.title + ':\n';
+        const categoryChanges = filteredChanges
+            .filter((change) => change.category.keys[0] == category.keys[0]);
+        for (const change of categoryChanges) {
+            changelog += '- ' + change.content + '\n';
+        }
+        changelog += '\n';
+    }
+    return changelog.trim();
+}
+
 ;// CONCATENATED MODULE: ./src/version-number.ts
 var VersionBump;
 (function (VersionBump) {
@@ -604,196 +646,6 @@ class VersionNumber {
             .flatMap((subComponent) => subComponent.split('/')));
         return new VersionNumber(Number(components[0] != '' ? components[0] : '1'), Number((_a = (components[1] != '' ? components[1] : '0')) !== null && _a !== void 0 ? _a : '0'), Number((_b = (components[2] != '' ? components[2] : '0')) !== null && _b !== void 0 ? _b : '0'), (_c = (track !== null && track !== void 0 ? track : components[3])) !== null && _c !== void 0 ? _c : VersionTrack.live, iteration !== null && iteration !== void 0 ? iteration : Number(((_d = components[4]) !== null && _d !== void 0 ? _d : '1').replace(/[^0-9]/, '')));
     }
-}
-
-;// CONCATENATED MODULE: ./src/change-categories.ts
-
-
-const categories = [
-    {
-        title: 'New Features',
-        description: 'Features that were not in the product yet',
-        keys: [
-            'feat', 'feature', 'features', 'new',
-            'new-feature', 'added', 'added-feature',
-        ],
-        versionBump: VersionBump.minor,
-        triggers: {
-            tests: true,
-            release: true,
-        },
-        changelogType: ChangelogType.external,
-    },
-    {
-        title: 'Changes',
-        // eslint-disable-next-line max-len
-        description: 'Changes made to previously released features or feature removals',
-        keys: ['change', 'changes', 'feat-update'],
-        versionBump: VersionBump.minor,
-        triggers: {
-            tests: true,
-            release: true,
-        },
-        changelogType: ChangelogType.external,
-    },
-    {
-        title: 'Bug Fixes',
-        description: 'A fix that resolves a previously found bug',
-        keys: ['bug', 'bugs', 'fix', 'bug-fix'],
-        versionBump: VersionBump.patch,
-        triggers: {
-            tests: true,
-            release: true,
-        },
-        changelogType: ChangelogType.external,
-    },
-    {
-        title: 'Added Languages',
-        description: 'Adding a new supported language to the app or website',
-        keys: ['lang', 'language', 'added-language', 'add-lang'],
-        versionBump: VersionBump.minor,
-        triggers: {
-            tests: true,
-            release: true,
-        },
-        changelogType: ChangelogType.external,
-    },
-    {
-        title: 'Language Changes',
-        // eslint-disable-next-line max-len
-        description: 'Fixes or improvements to translations and/or removals of languages',
-        keys: [
-            'lang-update', 'language-update', 'lang-change',
-            'language-changes', 'updated-language', 'update-lang',
-        ],
-        versionBump: VersionBump.patch,
-        triggers: {
-            tests: true,
-            release: true,
-        },
-        changelogType: ChangelogType.external,
-    },
-    {
-        title: 'CI/CD Changes',
-        description: 'Changes made to the CI and/or CD system',
-        keys: [
-            'ci', 'ci/cd', 'cd', 'continuous-integration', 'continuous-deployment',
-        ],
-        versionBump: VersionBump.none,
-        triggers: {
-            tests: true,
-            release: false,
-        },
-        changelogType: ChangelogType.internal,
-    },
-    {
-        title: 'Added Tests',
-        // eslint-disable-next-line max-len
-        description: 'Adding a new test to either UI, unit or integration test suites',
-        keys: [
-            'tests', 'testing', 'test', 'tst',
-            'unit-test', 'ui-test', 'integration-test',
-        ],
-        versionBump: VersionBump.none,
-        triggers: {
-            tests: true,
-            release: false,
-        },
-        changelogType: ChangelogType.internal,
-    },
-    {
-        title: 'Changed Tests',
-        // eslint-disable-next-line max-len
-        description: 'Changes made to tests or removals of tests in either UI, unit or integration test suites',
-        keys: [
-            'changed-tests', 'testing-change', 'test-change', 'tst-change',
-            'unit-test-change', 'ui-test-change', 'integration-test-change',
-        ],
-        versionBump: VersionBump.none,
-        triggers: {
-            tests: true,
-            release: false,
-        },
-        changelogType: ChangelogType.internal,
-    },
-    {
-        title: 'Documentation Changes',
-        description: 'Changes made to documentation',
-        keys: ['documentation', 'doc', 'docs'],
-        versionBump: VersionBump.none,
-        triggers: {
-            tests: false,
-            release: false,
-        },
-        changelogType: ChangelogType.internal,
-    },
-    {
-        title: 'Metadata Changes',
-        description: 'Changes made to the application metadata',
-        keys: ['meta', 'metadata', 'meta-changes'],
-        versionBump: VersionBump.patch,
-        triggers: {
-            tests: true,
-            release: true,
-        },
-        changelogType: ChangelogType.internal,
-    },
-    {
-        title: 'Refactored Code',
-        description: 'Changes made to code that do not change functionality',
-        keys: ['refactor', 'refactoring', 'refactored-code'],
-        versionBump: VersionBump.none,
-        triggers: {
-            tests: true,
-            release: false,
-        },
-        changelogType: ChangelogType.internal,
-    },
-    {
-        title: 'Miscellaneous Changes',
-        // eslint-disable-next-line max-len
-        description: 'Changes made to a repository that do not change anything relating to the code and do not fit any other description',
-        keys: ['miscellaneous', 'misc', 'chore'],
-        versionBump: VersionBump.none,
-        triggers: {
-            tests: false,
-            release: false,
-        },
-        changelogType: ChangelogType.internal,
-    },
-];
-
-;// CONCATENATED MODULE: ./src/changelogs.ts
-
-/**
- * Defines who gets to see the changelog
- */
-var ChangelogType;
-(function (ChangelogType) {
-    ChangelogType["internal"] = "internal";
-    ChangelogType["external"] = "external";
-})(ChangelogType || (ChangelogType = {}));
-/**
- * Generates a changelog for a list of changes
- * @param {ChangelogType} type the type of this changelog
- * @param {Change[]} changes a list of changes to include in this changelog
- * @return {string} the generated changelog
- */
-function changelog(type, changes) {
-    const filteredChanges = changes
-        .filter((change) => change.category.changelogType == type);
-    const filteredCategories = categories.filter((category) => filteredChanges.some((change) => change.category.keys[0] == category.keys[0]));
-    let changelog = '';
-    for (const category of filteredCategories) {
-        changelog += category.title + ':\n';
-        const categoryChanges = filteredChanges
-            .filter((change) => change.category.keys[0] == category.keys[0]);
-        for (const change of categoryChanges) {
-            changelog += '- ' + change.content + '\n';
-        }
-        changelog += '\n';
-    }
-    return changelog.trim();
 }
 
 ;// CONCATENATED MODULE: external "crypto"
@@ -886,10 +738,10 @@ class Version {
 
 
 const input = {
-    version: (0,core.getInput)('version'),
-    commits: JSON.parse((0,core.getInput)('commits')),
-    track: (0,core.getInput)('track'),
-    build: Number((0,core.getInput)('build')),
+    version: (0,core.getInput)('version', { required: true }),
+    commits: JSON.parse((0,core.getInput)('commits', { required: true })),
+    track: (0,core.getInput)('track', { required: true }),
+    build: Number((0,core.getInput)('build', { required: true })),
 };
 (0,core.setOutput)('version', JSON.stringify(new Version(input)));
 

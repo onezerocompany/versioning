@@ -3,10 +3,10 @@ import { VersionInput, Version } from './version-item';
 import { VersionTrack } from './version-number';
 
 const input : VersionInput = {
-  version: getInput('version'),
-  commits: JSON.parse(getInput('commits')),
-  track: getInput('track') as VersionTrack,
-  build: Number(getInput('build')),
+  version: getInput('version', { required: true }),
+  commits: JSON.parse(getInput('commits', { required: true })),
+  track: getInput('track', { required: true }) as VersionTrack,
+  build: Number(getInput('build', { required: true })),
 };
 
 setOutput('version', JSON.stringify(new Version(input)));
