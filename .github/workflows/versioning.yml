@@ -1,0 +1,19 @@
+name: Versioning
+on:
+  push:
+    branches: main
+jobs:
+  generate_version:
+    runs-on: ubuntu-latest
+    steps:
+      - id: generate_version
+        name: Generate Version.json
+        uses: appcompany/versioning@v1
+      - run: ${{ steps.generate_version.outputs.version }} > version.json
+      - name: Upload Version.json
+        uses: actions/upload-artifact@v2
+        with:
+          name: version.json
+          path: version.json
+          retetion_days: 1
+        
