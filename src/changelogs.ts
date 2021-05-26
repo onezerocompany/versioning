@@ -34,5 +34,14 @@ export function changelog(type: ChangelogType, changes: Change[]): string {
     }
     changelog += '\n';
   }
+
+  if (changelog.length == 0 && type == ChangelogType.external) {
+    changelog = 'Bug Fixes:\n- minor bug fixes';
+  }
+
+  if (changelog.length == 0 && type == ChangelogType.internal) {
+    changelog = '- no changes';
+  }
+
   return changelog.trim();
 }
