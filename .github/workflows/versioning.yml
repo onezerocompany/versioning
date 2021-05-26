@@ -9,11 +9,15 @@ jobs:
       - id: generate_version
         name: Generate Version.json
         uses: appcompany/versioning@v1
+        with:
+          version: "1.0.0"
+          commits: "[]"
+          build: $GITHUB_RUN_ID
+          track: live
       - run: ${{ steps.generate_version.outputs.version }} > version.json
       - name: Upload Version.json
         uses: actions/upload-artifact@v2
         with:
           name: version.json
           path: version.json
-          retetion_days: 1
-        
+          retention_days: 1
