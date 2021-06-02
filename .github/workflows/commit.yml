@@ -1,8 +1,15 @@
 name: Commit Workflow
 on:
+  pull_request:
+    branches:
+      - release
+      - beta
+      - alpha
   push:
     branches-ignore:
-      - main
+      - release
+      - beta
+      - alpha
 
 jobs:
   check_and_coverage:

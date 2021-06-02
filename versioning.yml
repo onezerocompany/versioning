@@ -1,0 +1,12 @@
+releaseTrack: release
+tracks:
+  - release
+  - beta
+  - alpha
+changelogs:
+  external:
+    enabled: true
+    empty: "Bug Fixes:\n- minor bug fixes"
+  internal:
+    enabled: true
+    empty: "- no changes"

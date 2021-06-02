@@ -30,6 +30,5 @@ export interface Commit {
 
   ref: string
   message: string
-  title: string
 
 }

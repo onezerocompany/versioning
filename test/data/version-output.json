@@ -1,0 +1,107 @@
+{
+  "changes": [
+    {
+      "ref": "7Hq1aicQG9crKr+KGDlB1g==",
+      "content": "added a feature",
+      "category": {
+        "title": "New Features",
+        "description": "Features that were not in the product yet",
+        "keys": [
+          "feat",
+          "feature",
+          "features",
+          "new",
+          "new-feature",
+          "added",
+          "added-feature"
+        ],
+        "versionBump": "minor",
+        "triggers": {
+          "tests": true,
+          "release": true
+        },
+        "changelogType": "external"
+      }
+    },
+    {
+      "ref": "BRcByjsFdp+jGMo22HIk4A==",
+      "content": "fixed a nasty bug",
+      "category": {
+        "title": "Bug Fixes",
+        "description": "A fix that resolves a previously found bug",
+        "keys": [
+          "bug",
+          "bugs",
+          "fix",
+          "bug-fix"
+        ],
+        "versionBump": "patch",
+        "triggers": {
+          "tests": true,
+          "release": true
+        },
+        "changelogType": "external"
+      }
+    },
+    {
+      "ref": "zM16DhZzhKwRP2ldIyPSCg==",
+      "content": "fixed a nasty bug",
+      "category": {
+        "title": "Bug Fixes",
+        "description": "A fix that resolves a previously found bug",
+        "keys": [
+          "bug",
+          "bugs",
+          "fix",
+          "bug-fix"
+        ],
+        "versionBump": "patch",
+        "triggers": {
+          "tests": true,
+          "release": true
+        },
+        "changelogType": "external"
+      }
+    },
+    {
+      "ref": "BRcByjsFdp+jGMo22HIk4A==",
+      "content": "fixed a nasty bug",
+      "category": {
+        "title": "Bug Fixes",
+        "description": "A fix that resolves a previously found bug",
+        "keys": [
+          "bug",
+          "bugs",
+          "fix",
+          "bug-fix"
+        ],
+        "versionBump": "patch",
+        "triggers": {
+          "tests": true,
+          "release": true
+        },
+        "changelogType": "external"
+      }
+    }
+  ],
+  "changelogs": {
+    "internal": "- no changes",
+    "external": "New Features:\n- added a feature\n\nBug Fixes:\n- fixed a nasty bug"
+  },
+  "triggers": {
+    "release": true,
+    "tests": true
+  },
+  "version": {
+    "major": 1,
+    "minor": 1,
+    "patch": 0,
+    "track": "release",
+    "iteration": 1,
+    "versionString": {
+      "full": "1.1.0-release/#1",
+      "withoutBuild": "1.1.0-release",
+      "onlyNumber": "1.1.0"
+    }
+  }
+}
