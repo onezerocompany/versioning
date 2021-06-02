@@ -2,7 +2,9 @@ name: Versioning
 on:
   push:
     branches:
-      - main
+      - release
+      - beta
+      - alpha
 jobs:
   generate_version:
     runs-on: ubuntu-latest
