@@ -12822,7 +12822,8 @@ var lib_github = __nccwpck_require__(5438);
 async function reportRateLimits() {
     const github = (0,lib_github.getOctokit)((0,core.getInput)('token') || 'test');
     const rateLimits = (await github.rest.rateLimit.get()).data.rate;
-    const output = `Rate Limit Status: ${rateLimits.remaining}/${rateLimits.limit} (resets: ${new Date(rateLimits.reset * 1000)})`;
+    const date = new Date(rateLimits.reset * 1000);
+    const output = `Rate Limit Status: ${rateLimits.remaining}/${rateLimits.limit} (resets: ${date.getUTCHours()}:${date.getUTCMinutes()}:${date.getUTCSeconds()} UTC)`;
     (0,core.info)(output);
     return output;
 }

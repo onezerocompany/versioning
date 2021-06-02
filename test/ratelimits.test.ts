@@ -31,6 +31,6 @@ describe('Rate Limit Reporting', () => {
     setupRateLimitMock();
     expect(await reportRateLimits())
       .to.contain('Rate Limit Status: 4998/5000')
-      .and.to.contain('Mon Jul 01 2013 19:47:53');
+      .and.to.contain('17:47:53 UTC');
   });
 });
