@@ -1,4 +1,10 @@
 {
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2019"
+  },
+  "compileOnSave": true,
   "include": [
     ".eslintrc.js",
     "test/**/*.ts",

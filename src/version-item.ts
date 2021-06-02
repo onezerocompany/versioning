@@ -2,7 +2,7 @@ import { ChangeCategory } from './change-categories';
 import { Change } from './change';
 import { changelog, ChangelogType } from './changelogs';
 import {
-  VersionNumber, VersionBump, bumpOrder, VersionTrack,
+  VersionNumber, VersionBump, bumpOrder,
 } from './version-number';
 import { changesFromMessage, Commit } from './commit';
 
@@ -14,7 +14,7 @@ export interface ChangeExport {
 
 export interface VersionInput {
   version: string
-  track: VersionTrack
+  track: string
   build: number
   commits: Commit[]
 }

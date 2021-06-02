@@ -30,7 +30,10 @@ export function changelog(type: ChangelogType, changes: Change[]): string {
     const categoryChanges = filteredChanges
       .filter((change) => change.category.keys[0] == category.keys[0]);
     for (const change of categoryChanges) {
-      changelog += '- ' + change.content + '\n';
+      const toAdd = '- ' + change.content + '\n';
+      if (changelog.indexOf(toAdd) == -1) {
+        changelog += toAdd;
+      }
     }
     changelog += '\n';
   }
