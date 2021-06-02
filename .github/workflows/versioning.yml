@@ -9,6 +9,7 @@ jobs:
   generate_version:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - id: generate_version
         name: Generate Version.json
         uses: ./
