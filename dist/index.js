@@ -13135,8 +13135,9 @@ async function commitsFrom(track, commitSha) {
 /**
  * run the main program
  * @param {string} track track to walk
+ * @param {number} build build iteration
  */
-async function run(track) {
+async function run(track, build) {
     (0,core.info)(`available tracks: ${settings().tracks.join(', ')}`);
     // startup
     if (track.length < 1)
@@ -13158,12 +13159,12 @@ async function run(track) {
     await reportRateLimits();
     const version = JSON.stringify(new Version({
         version: tag.versionNumber.versionString.full,
-        build: Number(lib_github.context.runId || '1'), track, commits,
+        build, track, commits,
     }));
     (0,core.setOutput)('version', version);
     return version;
 }
-run((0,core.getInput)('track') || '');
+run((0,core.getInput)('track') || '', Number(lib_github.context.runId || '1'));
 
 })();
 

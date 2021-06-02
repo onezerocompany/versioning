@@ -9,8 +9,9 @@ import { commitsFrom } from './commits';
 /**
  * run the main program
  * @param {string} track track to walk
+ * @param {number} build build iteration
  */
-export async function run(track: string): Promise<string> {
+export async function run(track: string, build: number): Promise<string> {
   info(`available tracks: ${settings().tracks.join(', ')}`);
 
   // startup
@@ -37,9 +38,9 @@ export async function run(track: string): Promise<string> {
   await reportRateLimits();
   const version = JSON.stringify(new Version({
     version: tag.versionNumber.versionString.full,
-    build: Number(context.runId || '1'), track, commits,
+    build, track, commits,
   }));
   setOutput('version', version);
   return version;
 }
-run(getInput('track') || '');
+run(getInput('track') || '', Number(context.runId || '1'));

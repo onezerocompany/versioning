@@ -15,7 +15,7 @@ describe('Main Run', () => {
     setupLatestTagsMock();
   });
   it('should have correct output for release track', async () => {
-    const version = await run('release');
+    const version = await run('release', 1);
     expect(version).to.equal(JSON.stringify(JSON.parse(
       readFileSync(
         resolve(__dirname, 'data', 'version-output.json')
@@ -23,6 +23,6 @@ describe('Main Run', () => {
     )));
   });
   it('should have correct response for non existent track', async () => {
-    expect(run('non_existent')).to.throw;
+    expect(run('non_existent', 1)).to.throw;
   });
 });
