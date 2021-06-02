@@ -1,18 +1,14 @@
 name: Versioning
 description: Generates usefull versioning info
 inputs:
-  version:
-    description: Version to increment on
-    required: true
-  commits:
-    description: List of commits to generate changelogs from
-    required: true
-  build:
-    description: Build number to use for this version
-    required: true
   track:
     description: The version track to use for this version
     required: true
+    default: ${{ github.ref.split('/').last }}
+  token:
+    description: Token to use for Authentication
+    required: true
+    default: ${{ github.token }}
 outputs:
   version:
     description: JSON with version information

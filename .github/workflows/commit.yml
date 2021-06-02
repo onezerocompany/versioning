@@ -2,7 +2,9 @@ name: Commit Workflow
 on:
   push:
     branches-ignore:
-      - main
+      - release
+      - beta
+      - alpha
 
 jobs:
   check_and_coverage:

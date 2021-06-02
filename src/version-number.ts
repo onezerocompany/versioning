@@ -1,3 +1,5 @@
+import { settings } from './settings';
+
 export enum VersionBump {
   patch = 'patch',
   minor = 'minor',
@@ -9,12 +11,6 @@ export const bumpOrder : VersionBump[] = [
   VersionBump.none, VersionBump.patch, VersionBump.minor, VersionBump.major,
 ];
 
-export enum VersionTrack {
-  live = 'live',
-  beta = 'beta',
-  alpha = 'alpha'
-}
-
 /**
  * Reflects a version number and provides methods to alter it
  */
@@ -23,7 +19,7 @@ export class VersionNumber {
   major: number
   minor: number
   patch: number
-  track: VersionTrack
+  track: string
   iteration: number
 
   versionString : {
@@ -42,7 +38,7 @@ export class VersionNumber {
    */
   constructor(
     major = 1, minor = 0, patch = 0,
-    track = VersionTrack.live, iteration = 1
+    track = settings().releaseTrack, iteration = 1
   ) {
     this.major = major;
     this.minor = minor;
@@ -51,12 +47,10 @@ export class VersionNumber {
     this.iteration = iteration;
 
     const onlyNumber = `${this.major}.${this.minor}.${this.patch}`;
-    const trackLabel = this.track == VersionTrack.live ? '' : `-${this.track}`;
-    const withoutBuild = `${onlyNumber}${trackLabel}`;
     this.versionString = {
-      full: this.track == VersionTrack.live ?
-        withoutBuild : `${withoutBuild}/#${this.iteration}`,
-      withoutBuild, onlyNumber,
+      full: `${onlyNumber}-${track}/#${this.iteration}`,
+      withoutBuild: `${onlyNumber}-${track}`,
+      onlyNumber,
     };
   }
 
@@ -82,13 +76,13 @@ export class VersionNumber {
   /**
    * converts a version string to a VersionNumber object
    * @param {string} versionString version string to convert
-   * @param {VersionTrack} track set the track for this version
+   * @param {string} track set the track for this version
    * @param {number} iteration set the build for this version
    * @return {VersionNumber}
    */
   static fromVersionString(
     versionString: string | undefined = undefined,
-    track: VersionTrack | undefined = undefined,
+    track: string | undefined = undefined,
     iteration: number | undefined = undefined
   ): VersionNumber {
     const components = (versionString ?? '').split('.')
@@ -99,7 +93,7 @@ export class VersionNumber {
       Number(components[0] != '' ? components[0] : '1'),
       Number((components[1] != '' ? components[1] : '0') ?? '0'),
       Number((components[2] != '' ? components[2] : '0') ?? '0'),
-      (track ?? components[3] as VersionTrack) ?? VersionTrack.live,
+      (track ?? components[3]) ?? settings().releaseTrack,
       iteration ?? Number((components[4] ?? '1').replace( /[^0-9]/, ''))
     );
   }
