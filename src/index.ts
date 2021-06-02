@@ -43,4 +43,5 @@ export async function run(track: string, build: number): Promise<string> {
   setOutput('version', version);
   return version;
 }
+/* istanbul ignore next */
 run(getInput('track') || '', Number(context.runId || '1'));

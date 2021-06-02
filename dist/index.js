@@ -13165,6 +13165,7 @@ async function run(track, build) {
     (0,core.setOutput)('version', version);
     return version;
 }
+/* istanbul ignore next */
 run((0,core.getInput)('track') || '', Number(lib_github.context.runId || '1'));
 
 })();
