@@ -1,11 +1,5 @@
-name: Commit Workflow
-on:
-  pull_request:
-    branches:
-      - live
-  push:
-    branches-ignore:
-      - live
+name: Testing & Coverage
+on: push
 
 jobs:
   check_and_coverage:
