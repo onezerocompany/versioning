@@ -10,9 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - id: generate_version
         name: Generate Version.json
         uses: ./
+        with:
+          track: ${{ steps.extract_branch.outputs.branch }}
       - run: echo '${{ steps.generate_version.outputs.version }}' > version.json
       - name: Upload Version.json
         uses: actions/upload-artifact@v2
