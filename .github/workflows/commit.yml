@@ -2,14 +2,10 @@ name: Commit Workflow
 on:
   pull_request:
     branches:
-      - release
-      - beta
-      - alpha
+      - live
   push:
     branches-ignore:
-      - release
-      - beta
-      - alpha
+      - live
 
 jobs:
   check_and_coverage:
