@@ -10,18 +10,18 @@ describe('Version Number', () => {
       expect(version.minor).to.equal(0);
       expect(version.patch).to.equal(0);
       expect(version.iteration).to.equal(1);
-      expect(version.track).to.equal('release');
+      expect(version.track).to.equal('live');
     });
-    it('should have correct release versionString', () => {
+    it('should have correct live versionString', () => {
       const version = new VersionNumber();
-      expect(version.versionString.full).to.equal('1.0.0-release/#1');
-      expect(version.versionString.withoutBuild).to.equal('1.0.0-release');
+      expect(version.versionString.full).to.equal('1.0.0-live/#1');
+      expect(version.versionString.withoutBuild).to.equal('1.0.0-live');
       expect(version.versionString.onlyNumber).to.equal('1.0.0');
     });
-    it('should have correct explicit release versionString', () => {
-      const version = new VersionNumber(1, 0, 0, 'release');
-      expect(version.versionString.full).to.equal('1.0.0-release/#1');
-      expect(version.versionString.withoutBuild).to.equal('1.0.0-release');
+    it('should have correct explicit live versionString', () => {
+      const version = new VersionNumber(1, 0, 0, 'live');
+      expect(version.versionString.full).to.equal('1.0.0-live/#1');
+      expect(version.versionString.withoutBuild).to.equal('1.0.0-live');
       expect(version.versionString.onlyNumber).to.equal('1.0.0');
     });
     it('should have correct beta versionString', () => {
@@ -39,12 +39,21 @@ describe('Version Number', () => {
   });
 
   describe('version from version string', () => {
+    it('should work with v in string', () => {
+      const version = VersionNumber.fromVersionString('v3.1.6-alpha/#87');
+      expect(version.major).to.equal(3);
+      expect(version.minor).to.equal(1);
+      expect(version.patch).to.equal(6);
+      expect(version.track).to.equal('alpha');
+      expect(version.iteration).to.equal(87);
+    });
+
     it('should work with no track and build', () => {
       const version = VersionNumber.fromVersionString('3.1.6');
       expect(version.major).to.equal(3);
       expect(version.minor).to.equal(1);
       expect(version.patch).to.equal(6);
-      expect(version.track).to.equal('release');
+      expect(version.track).to.equal('live');
       expect(version.iteration).to.equal(1);
     });
 
@@ -53,7 +62,7 @@ describe('Version Number', () => {
       expect(version.major).to.equal(1);
       expect(version.minor).to.equal(0);
       expect(version.patch).to.equal(0);
-      expect(version.track).to.equal('release');
+      expect(version.track).to.equal('live');
       expect(version.iteration).to.equal(1);
     });
 
@@ -62,7 +71,7 @@ describe('Version Number', () => {
       expect(version.major).to.equal(1);
       expect(version.minor).to.equal(0);
       expect(version.patch).to.equal(0);
-      expect(version.track).to.equal('release');
+      expect(version.track).to.equal('live');
       expect(version.iteration).to.equal(1);
     });
 
@@ -71,7 +80,7 @@ describe('Version Number', () => {
       expect(version.major).to.equal(1);
       expect(version.minor).to.equal(0);
       expect(version.patch).to.equal(0);
-      expect(version.track).to.equal('release');
+      expect(version.track).to.equal('live');
       expect(version.iteration).to.equal(1);
     });
 
@@ -82,9 +91,9 @@ describe('Version Number', () => {
       expect(version.patch).to.equal(6);
     });
 
-    it('should work with release track and build', () => {
-      const version = VersionNumber.fromVersionString('3.1.6-release/#647');
-      expect(version.track).to.equal('release');
+    it('should work with live track and build', () => {
+      const version = VersionNumber.fromVersionString('3.1.6-live/#647');
+      expect(version.track).to.equal('live');
       expect(version.major).to.equal(3);
       expect(version.minor).to.equal(1);
       expect(version.patch).to.equal(6);
@@ -111,50 +120,50 @@ describe('Version Number', () => {
   });
 
   describe('track translations', () => {
-    it('should translate release -> beta', () => {
+    it('should translate live -> beta', () => {
       const version = VersionNumber
         .fromVersionString('1.0.0', 'beta', 1);
       expect(version.versionString.full).to.equal('1.0.0-beta/#1');
     });
-    it('should translate beta -> release', () => {
+    it('should translate beta -> live', () => {
       const version = VersionNumber
-        .fromVersionString('1.0.0-beta/#31', 'release', 1);
-      expect(version.versionString.full).to.equal('1.0.0-release/#1');
+        .fromVersionString('1.0.0-beta/#31', 'live', 1);
+      expect(version.versionString.full).to.equal('1.0.0-live/#1');
     });
-    it('should translate release -> alpha', () => {
+    it('should translate live -> alpha', () => {
       const version = VersionNumber
         .fromVersionString('2.5.1', 'alpha', 1);
       expect(version.versionString.full).to.equal('2.5.1-alpha/#1');
     });
-    it('should translate alpha -> release', () => {
+    it('should translate alpha -> live', () => {
       const version = VersionNumber
-        .fromVersionString('2.5.1-alpha/#41', 'release', 1);
-      expect(version.versionString.full).to.equal('2.5.1-release/#1');
+        .fromVersionString('2.5.1-alpha/#41', 'live', 1);
+      expect(version.versionString.full).to.equal('2.5.1-live/#1');
     });
   });
 
   describe('bumping versions', () => {
-    describe('release track', () => {
-      const version = new VersionNumber(1, 1, 1, 'release', 1);
+    describe('live track', () => {
+      const version = new VersionNumber(1, 1, 1, 'live', 1);
 
       it('major bump', () => {
         const bumped = version.bumped(VersionBump.major);
-        expect(bumped.versionString.full).to.equal('2.0.0-release/#1');
+        expect(bumped.versionString.full).to.equal('2.0.0-live/#1');
       });
 
       it('minor bump', () => {
         const bumped = version.bumped(VersionBump.minor);
-        expect(bumped.versionString.full).to.equal('1.2.0-release/#1');
+        expect(bumped.versionString.full).to.equal('1.2.0-live/#1');
       });
 
       it('patch bump', () => {
         const bumped = version.bumped(VersionBump.patch);
-        expect(bumped.versionString.full).to.equal('1.1.2-release/#1');
+        expect(bumped.versionString.full).to.equal('1.1.2-live/#1');
       });
 
       it('none bump', () => {
         const bumped = version.bumped(VersionBump.none);
-        expect(bumped.versionString.full).to.equal('1.1.1-release/#1');
+        expect(bumped.versionString.full).to.equal('1.1.1-live/#1');
       });
     });
 
