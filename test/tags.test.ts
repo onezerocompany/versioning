@@ -41,7 +41,7 @@ describe('Tags', () => {
 
   it('getting latest tags', async () => {
     setupLatestTagsMock();
-    expect((await latestTag('release')).commit)
+    expect((await latestTag('live')).commit)
       .to.equal('01F70VNMB8F0TFKQJ0X1A56DK4');
   });
 
@@ -50,7 +50,7 @@ describe('Tags', () => {
     nock('https://api.github.com')
       .get('/repos/appcompany/test/tags?page=1')
       .reply(200, []);
-    expect((await latestTag('release')))
+    expect((await latestTag('live')))
       .to.be.undefined;
   });
 });

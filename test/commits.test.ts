@@ -10,7 +10,7 @@ import { commitsFrom } from '../src/commits';
 export function setupCommitsMock(): void {
   nock('https://api.github.com')
     .persist()
-    .get('/repos/appcompany/test/commits?per_page=100&sha=release')
+    .get('/repos/appcompany/test/commits?per_page=100&sha=live')
     .reply(200, JSON.parse(readFileSync(
       resolve(__dirname, 'data', 'list-commits.json')).toString()
     ));
@@ -28,7 +28,7 @@ describe('Commits List', () => {
   it('should fetch correctly', async () => {
     setupCommitsMock();
     const commits = await commitsFrom(
-      'release', '01F71A53VQAPJ11M1YV7CA4M48'
+      'live', '01F71A53VQAPJ11M1YV7CA4M48'
     );
     expect(commits).to.have.length(2);
     expect(commits[0].ref).to.equal('01F73JR3N31A5YAP89A8NVMTWG');

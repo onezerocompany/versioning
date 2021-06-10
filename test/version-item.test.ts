@@ -4,17 +4,17 @@ import { describe } from 'mocha';
 
 describe('Version Item', () => {
   describe('creation', () => {
-    it('release should work', () => {
+    it('live should work', () => {
       const version = new Version({
         version: '1.0.0',
-        track: 'release',
+        track: 'live',
         build: 1,
         commits: [{
           message: '[feat]> new feature\n[fix]> a fix\n[doc]> added a doc',
           ref: 'commit-ref',
         }],
       });
-      expect(version.version.versionString.full).to.equal('1.1.0-release/#1');
+      expect(version.version.versionString.full).to.equal('1.1.0-live/#1');
     });
 
     it('beta should work', () => {

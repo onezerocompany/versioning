@@ -1,5 +1,5 @@
 name: Versioning
-description: Generates usefull versioning info
+description: Generates a JSON file
 inputs:
   track:
     description: The version track to use for this version
@@ -9,6 +9,10 @@ inputs:
     description: Token to use for Authentication
     required: true
     default: ${{ github.token }}
+  create:
+    description: Create github release and add Version.json
+    required: false
+    default: "true"
 outputs:
   version:
     description: JSON with version information

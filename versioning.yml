@@ -1,8 +1,6 @@
-releaseTrack: release
+releaseTrack: live
 tracks:
-  - release
-  - beta
-  - alpha
+  - live
 changelogs:
   external:
     enabled: true

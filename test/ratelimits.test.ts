@@ -9,7 +9,7 @@ export function setupRateLimitMock(): void {
   nock('https://api.github.com')
     .persist()
     .get('/rate_limit')
-    .reply(200, {
+    .reply(201, {
       'rate': {
         'limit': 5000,
         'remaining': 4998,

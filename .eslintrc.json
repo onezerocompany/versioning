@@ -29,6 +29,13 @@
     "import"
   ],
   "rules": {
+    "semi": [
+      "error",
+      "always",
+      {
+        "omitLastInOneLineBlock": true
+      }
+    ],
     "quotes": [
       "error",
       "single"

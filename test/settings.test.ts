@@ -18,14 +18,14 @@ describe('Settings', () => {
   it('works with versioning.yml', () => {
     const path = resolve(__dirname, '..', 'versioning.yml');
     writeFileSync(path, original);
-    expect(settings().releaseTrack).to.equal('release');
+    expect(settings().releaseTrack).to.equal('live');
     rmSync(path);
   });
 
   it('works with versioning.yaml', () => {
     const path = resolve(__dirname, '..', 'versioning.yaml');
     writeFileSync(path, original);
-    expect(settings().releaseTrack).to.equal('release');
+    expect(settings().releaseTrack).to.equal('live');
     rmSync(path);
   });
 });
