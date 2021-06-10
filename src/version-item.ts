@@ -17,6 +17,7 @@ export interface VersionInput {
   track: string
   build: number
   commits: Commit[]
+  major: number
 }
 
 /**
@@ -42,6 +43,8 @@ export class Version {
   constructor(
     input: VersionInput
   ) {
+    const inputVersion = VersionNumber
+      .fromVersionString(input.version, input.track, input.build);
     let bump = VersionBump.none;
 
     this.changes = input.commits.flatMap((commit) =>
@@ -62,14 +65,16 @@ export class Version {
       if (change.category.triggers.tests) triggersTests = true;
     }
 
+    if (input.major > inputVersion.major) {
+      bump = VersionBump.major;
+    }
+
     this.triggers = {
       release: triggersRelease,
       tests: triggersTests,
     };
 
-    this.version = VersionNumber
-      .fromVersionString(input.version, input.track, input.build)
-      .bumped(bump);
+    this.version = inputVersion.bumped(bump);
   }
 
 }

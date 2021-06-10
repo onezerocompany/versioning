@@ -8,6 +8,7 @@ export class Settings {
 
   releaseTrack: string
   tracks: string[]
+  majorVersion: number
   changelogs: {
     external: {
       enabled: boolean

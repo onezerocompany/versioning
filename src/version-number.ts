@@ -62,14 +62,14 @@ export class VersionNumber {
   public bumped(bump: VersionBump): VersionNumber {
     const isMajor = bump == VersionBump.major;
     const isMinor = bump == VersionBump.minor;
+    const isPatch = bump == VersionBump.patch;
     return new VersionNumber(
       isMajor ? this.major + 1 : this.major,
       isMajor ? 0 : isMinor ? this.minor + 1 : this.minor,
-      (isMajor || isMinor) ? 0 : this.patch + 1,
+      (isMajor || isMinor) ? 0 : (isPatch ? this.patch + 1 : this.patch),
       this.track, this.iteration
     );
   }
-
 
   /**
    * converts a version string to a VersionNumber object
