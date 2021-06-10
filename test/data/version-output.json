@@ -96,11 +96,11 @@
     "major": 1,
     "minor": 1,
     "patch": 0,
-    "track": "release",
+    "track": "live",
     "iteration": 1,
     "versionString": {
-      "full": "1.1.0-release/#1",
-      "withoutBuild": "1.1.0-release",
+      "full": "1.1.0-live/#1",
+      "withoutBuild": "1.1.0-live",
       "onlyNumber": "1.1.0"
     }
   }

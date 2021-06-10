@@ -91,13 +91,13 @@ export class VersionNumber {
       );
     return new VersionNumber(
       Number(components[0] != '' ?
-        (components[0] || '1').replace(/[^0-9]/, '') : '1'
+        (components[0]).replace(/[^0-9]/, '') : '1'
       ),
       Number((components[1] != '' ?
-        (components[1] || '0').replace(/[^0-9]/, '') : '0') ?? '0'
+        (components[1] || '0').replace(/[^0-9]/, '') : '0')
       ),
       Number((components[2] != '' ?
-        (components[2] || '0').replace(/[^0-9]/, '') : '0') ?? '0'
+        (components[2] || '0').replace(/[^0-9]/, '') : '0')
       ),
       (track ?? components[3]) ?? settings().releaseTrack,
       iteration ?? Number((components[4] ?? '1').replace( /[^0-9]/, ''))
