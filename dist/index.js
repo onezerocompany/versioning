@@ -13098,6 +13098,8 @@ class Version {
         }
         if (input.major > inputVersion.major) {
             bump = VersionBump.major;
+            triggersRelease = true;
+            triggersTests = true;
         }
         this.triggers = {
             release: triggersRelease,
@@ -13201,6 +13203,7 @@ async function run(track, build, create) {
     (0,core.setOutput)('version', version);
     // create release
     if (create && version.triggers.release) {
+        (0,core.info)(`creating new release: ${version.version.versionString.full}`);
         await createRelease(version);
     }
     // finish
