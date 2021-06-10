@@ -7,6 +7,7 @@ import { Version } from './version-item';
 import { settings } from './settings';
 import { commitsFrom } from './commits';
 import { createRelease } from './create-release';
+import { VersionNumber } from './version-number';
 
 /**
  * run the main program
@@ -33,23 +34,31 @@ export async function run(
     info(`found tag -> commit: ${tag.commit} version: ${
       tag.versionNumber.versionString.full
     }`);
-  } else {
-    error('failed to get previous release');
-    throw Error('failed to get previous release');
   }
 
-  // fetch list of commits
-  const commits = await commitsFrom(track, tag.commit);
+  let version : Version;
+  if (tag) {
+    // fetch list of commits
+    const commits = await commitsFrom(track, tag.commit);
 
-  // generate version
-  const version = new Version({
-    version: tag.versionNumber.versionString.full,
-    build, track, commits,
-  });
+    // generate version
+    version = new Version({
+      version: tag.versionNumber.versionString.full,
+      build, track, commits,
+    });
+  } else {
+    version = new Version({
+      version: new VersionNumber(0, 0, 0, track, build).versionString.full,
+      build, track, commits: [],
+    });
+  }
+
   setOutput('version', version);
 
   // create release
-  if (create) await createRelease(version);
+  if (create && version.triggers.release) {
+    await createRelease(version);
+  }
 
   // finish
   await reportRateLimits();
