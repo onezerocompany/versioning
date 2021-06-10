@@ -23,8 +23,8 @@ export class Settings {
    * Creates a Settings object
    */
   constructor() {
-    this.releaseTrack = 'release';
-    this.tracks = ['release', 'beta', 'alpha'];
+    this.releaseTrack = 'live';
+    this.tracks = ['live', 'beta', 'alpha'];
     this.changelogs = {
       external: {
         enabled: true,

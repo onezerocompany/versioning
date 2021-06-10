@@ -6,6 +6,7 @@ import { setupLatestTagsMock } from './tags.test';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import * as nock from 'nock';
+import { setupReleaseMock } from './release.test';
 
 describe('Main Run', () => {
   beforeEach(() => {
@@ -13,9 +14,13 @@ describe('Main Run', () => {
     setupCommitsMock();
     setupRateLimitMock();
     setupLatestTagsMock();
+    setupReleaseMock();
+  });
+  after(() => {
+    nock.cleanAll();
   });
   it('should have correct output for release track', async () => {
-    const version = await run('release', 1);
+    const version = await run('live', 1, false);
     expect(version).to.equal(JSON.stringify(JSON.parse(
       readFileSync(
         resolve(__dirname, 'data', 'version-output.json')
@@ -23,6 +28,14 @@ describe('Main Run', () => {
     )));
   });
   it('should have correct response for non existent track', async () => {
-    expect(run('non_existent', 1)).to.throw;
+    expect(run('non_existent', 1, false)).to.throw;
+  });
+  it('should have correct creation flow', async () => {
+    const version = await run('live', 1, true);
+    expect(version).to.equal(JSON.stringify(JSON.parse(
+      readFileSync(
+        resolve(__dirname, 'data', 'version-output.json')
+      ).toString()
+    )));
   });
 });

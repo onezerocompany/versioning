@@ -12843,8 +12843,8 @@ class Settings {
      * Creates a Settings object
      */
     constructor() {
-        this.releaseTrack = 'release';
-        this.tracks = ['release', 'beta', 'alpha'];
+        this.releaseTrack = 'live';
+        this.tracks = ['live', 'beta', 'alpha'];
         this.changelogs = {
             external: {
                 enabled: true,
@@ -12928,11 +12928,14 @@ class VersionNumber {
      * @return {VersionNumber}
      */
     static fromVersionString(versionString = undefined, track = undefined, iteration = undefined) {
-        var _a, _b, _c, _d;
+        var _a, _b;
         const components = (versionString !== null && versionString !== void 0 ? versionString : '').split('.')
             .flatMap((component) => component.split('-')
             .flatMap((subComponent) => subComponent.split('/')));
-        return new VersionNumber(Number(components[0] != '' ? components[0] : '1'), Number((_a = (components[1] != '' ? components[1] : '0')) !== null && _a !== void 0 ? _a : '0'), Number((_b = (components[2] != '' ? components[2] : '0')) !== null && _b !== void 0 ? _b : '0'), (_c = (track !== null && track !== void 0 ? track : components[3])) !== null && _c !== void 0 ? _c : settings().releaseTrack, iteration !== null && iteration !== void 0 ? iteration : Number(((_d = components[4]) !== null && _d !== void 0 ? _d : '1').replace(/[^0-9]/, '')));
+        return new VersionNumber(Number(components[0] != '' ?
+            (components[0]).replace(/[^0-9]/, '') : '1'), Number((components[1] != '' ?
+            (components[1] || '0').replace(/[^0-9]/, '') : '0')), Number((components[2] != '' ?
+            (components[2] || '0').replace(/[^0-9]/, '') : '0')), (_a = (track !== null && track !== void 0 ? track : components[3])) !== null && _a !== void 0 ? _a : settings().releaseTrack, iteration !== null && iteration !== void 0 ? iteration : Number(((_b = components[4]) !== null && _b !== void 0 ? _b : '1').replace(/[^0-9]/, '')));
     }
 }
 
@@ -13125,7 +13128,31 @@ async function commitsFrom(track, commitSha) {
     return commits;
 }
 
+;// CONCATENATED MODULE: ./src/create-release.ts
+
+
+/**
+ * Creates a github release from a Version
+ * @param {Version} version version info to use for the release
+ */
+async function createRelease(version) {
+    const github = (0,lib_github.getOctokit)((0,core.getInput)('token') || 'test');
+    const name = `v${version.version.versionString.full}`;
+    const release = await github.rest.repos.createRelease({
+        ...lib_github.context.repo, name, tag_name: name,
+        body: version.changelogs.external + '\n\n' + version.changelogs.internal,
+        target_commitish: version.version.track,
+    });
+    await github.rest.repos.uploadReleaseAsset({
+        ...lib_github.context.repo,
+        release_id: release.data.id,
+        name: 'version.json',
+        data: JSON.stringify(version),
+    });
+}
+
 ;// CONCATENATED MODULE: ./src/index.ts
+
 
 
 
@@ -13137,8 +13164,9 @@ async function commitsFrom(track, commitSha) {
  * run the main program
  * @param {string} track track to walk
  * @param {number} build build iteration
+ * @param {boolean} create whether to create a github release or not
  */
-async function run(track, build) {
+async function run(track, build, create) {
     (0,core.info)(`available tracks: ${settings().tracks.join(', ')}`);
     // startup
     if (track.length < 1)
@@ -13156,17 +13184,21 @@ async function run(track, build) {
     }
     // fetch list of commits
     const commits = await commitsFrom(track, tag.commit);
-    // finish
-    await reportRateLimits();
-    const version = JSON.stringify(new Version({
+    // generate version
+    const version = new Version({
         version: tag.versionNumber.versionString.full,
         build, track, commits,
-    }));
+    });
     (0,core.setOutput)('version', version);
-    return version;
+    // create release
+    if (create)
+        await createRelease(version);
+    // finish
+    await reportRateLimits();
+    return JSON.stringify(version);
 }
 /* istanbul ignore next */
-run((0,core.getInput)('track') || '', Number(lib_github.context.runId || '1'));
+run((0,core.getInput)('track') || '', Number(lib_github.context.runId || '1'), ['true', 'yes'].indexOf((0,core.getInput)('create').toLowerCase()) > -1 || false);
 
 })();
 
