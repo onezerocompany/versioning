@@ -12,7 +12,7 @@ inputs:
   create:
     description: Create github release and add Version.json
     required: false
-    default: "true"
+    default: "false"
 outputs:
   version:
     description: JSON with version information
