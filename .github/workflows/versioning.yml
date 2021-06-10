@@ -19,6 +19,7 @@ jobs:
         uses: ./
         with:
           track: ${{ steps.extract_branch.outputs.branch }}
+          create: true
       - run: echo '${{ steps.generate_version.outputs.version }}' > version.json
       - name: Upload Version.json
         uses: actions/upload-artifact@v2
