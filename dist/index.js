@@ -12917,7 +12917,8 @@ class VersionNumber {
     bumped(bump) {
         const isMajor = bump == VersionBump.major;
         const isMinor = bump == VersionBump.minor;
-        return new VersionNumber(isMajor ? this.major + 1 : this.major, isMajor ? 0 : isMinor ? this.minor + 1 : this.minor, (isMajor || isMinor) ? 0 : this.patch + 1, this.track, this.iteration);
+        const isPatch = bump == VersionBump.patch;
+        return new VersionNumber(isMajor ? this.major + 1 : this.major, isMajor ? 0 : isMinor ? this.minor + 1 : this.minor, (isMajor || isMinor) ? 0 : (isPatch ? this.patch + 1 : this.patch), this.track, this.iteration);
     }
     /**
      * converts a version string to a VersionNumber object
@@ -13076,6 +13077,7 @@ class Version {
      * @param {VersionInput} input input from a version creation request
      */
     constructor(input) {
+        const inputVersion = VersionNumber.fromVersionString(input.version, input.track, input.build);
         let bump = VersionBump.none;
         this.changes = input.commits.flatMap((commit) => changesFromMessage(commit.message, commit.ref));
         this.changelogs = {
@@ -13094,12 +13096,14 @@ class Version {
             if (change.category.triggers.tests)
                 triggersTests = true;
         }
+        if (input.major > inputVersion.major) {
+            bump = VersionBump.major;
+        }
         this.triggers = {
             release: triggersRelease,
             tests: triggersTests,
         };
-        this.version = VersionNumber.fromVersionString(input.version, input.track, input.build)
-            .bumped(bump);
+        this.version = inputVersion.bumped(bump);
     }
 }
 
@@ -13185,13 +13189,13 @@ async function run(track, build, create) {
         // generate version
         version = new Version({
             version: tag.versionNumber.versionString.full,
-            build, track, commits,
+            build, track, commits, major: settings().majorVersion,
         });
     }
     else {
         version = new Version({
-            version: new VersionNumber(0, 0, 0, track, build).versionString.full,
-            build, track, commits: [],
+            version: new VersionNumber(settings().majorVersion, 0, 0, track, build).versionString.full,
+            build, track, commits: [], major: settings().majorVersion,
         });
     }
     (0,core.setOutput)('version', version);
