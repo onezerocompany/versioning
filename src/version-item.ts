@@ -67,6 +67,8 @@ export class Version {
 
     if (input.major > inputVersion.major) {
       bump = VersionBump.major;
+      triggersRelease = true;
+      triggersTests = true;
     }
 
     this.triggers = {

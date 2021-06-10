@@ -59,6 +59,7 @@ export async function run(
 
   // create release
   if (create && version.triggers.release) {
+    info(`creating new release: ${version.version.versionString.full}`);
     await createRelease(version);
   }
 
