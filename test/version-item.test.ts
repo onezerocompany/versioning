@@ -14,6 +14,7 @@ describe('Version Item', () => {
           ref: 'commit-ref',
         }],
         major: 1,
+        foundTag: true,
       });
       expect(version.version.versionString.full).to.equal('1.1.0-live/#1');
     });
@@ -28,6 +29,7 @@ describe('Version Item', () => {
           ref: 'commit-ref',
         }],
         major: 1,
+        foundTag: true,
       });
       expect(version.version.versionString.full).to.equal('1.1.0-beta/#51');
     });
@@ -42,6 +44,7 @@ describe('Version Item', () => {
           ref: 'commit-ref',
         }],
         major: 1,
+        foundTag: true,
       });
       expect(version.version.versionString.full).to.equal('1.1.0-alpha/#72');
     });
@@ -56,6 +59,7 @@ describe('Version Item', () => {
           ref: 'commit-ref',
         }],
         major: 2,
+        foundTag: true,
       });
       expect(version.version.versionString.full).to.equal('2.0.0-live/#1');
     });
@@ -70,6 +74,7 @@ describe('Version Item', () => {
           ref: 'commit-ref',
         }],
         major: 0,
+        foundTag: true,
       });
       expect(version.version.versionString.full).to.equal('1.1.0-live/#1');
     });
