@@ -13159,6 +13159,7 @@ async function createRelease(version) {
 
 
 
+
 /**
  * run the main program
  * @param {string} track track to walk
@@ -13177,21 +13178,27 @@ async function run(track, build, create) {
     if (tag) {
         (0,core.info)(`found tag -> commit: ${tag.commit} version: ${tag.versionNumber.versionString.full}`);
     }
-    else {
-        (0,core.error)('failed to get previous release');
-        throw Error('failed to get previous release');
+    let version;
+    if (tag) {
+        // fetch list of commits
+        const commits = await commitsFrom(track, tag.commit);
+        // generate version
+        version = new Version({
+            version: tag.versionNumber.versionString.full,
+            build, track, commits,
+        });
     }
-    // fetch list of commits
-    const commits = await commitsFrom(track, tag.commit);
-    // generate version
-    const version = new Version({
-        version: tag.versionNumber.versionString.full,
-        build, track, commits,
-    });
+    else {
+        version = new Version({
+            version: new VersionNumber(0, 0, 0, track, build).versionString.full,
+            build, track, commits: [],
+        });
+    }
     (0,core.setOutput)('version', version);
     // create release
-    if (create)
+    if (create && version.triggers.release) {
         await createRelease(version);
+    }
     // finish
     await reportRateLimits();
     return JSON.stringify(version);
