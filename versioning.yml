@@ -1,6 +1,7 @@
 releaseTrack: live
 tracks:
   - live
+majorVersion: 0
 changelogs:
   external:
     enabled: true

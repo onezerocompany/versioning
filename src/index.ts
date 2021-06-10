@@ -1,4 +1,4 @@
-import { setOutput, getInput, info, error }
+import { setOutput, getInput, info }
   from '@actions/core';
 import { context } from '@actions/github';
 import { reportRateLimits } from './ratelimits';
@@ -44,12 +44,14 @@ export async function run(
     // generate version
     version = new Version({
       version: tag.versionNumber.versionString.full,
-      build, track, commits,
+      build, track, commits, major: settings().majorVersion,
     });
   } else {
     version = new Version({
-      version: new VersionNumber(0, 0, 0, track, build).versionString.full,
-      build, track, commits: [],
+      version: new VersionNumber(
+        settings().majorVersion, 0, 0, track, build
+      ).versionString.full,
+      build, track, commits: [], major: settings().majorVersion,
     });
   }
 
