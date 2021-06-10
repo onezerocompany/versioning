@@ -40,11 +40,11 @@ export async function run(
   if (tag) {
     // fetch list of commits
     const commits = await commitsFrom(track, tag.commit);
-
     // generate version
     version = new Version({
       version: tag.versionNumber.versionString.full,
       build, track, commits, major: settings().majorVersion,
+      foundTag: tag != undefined,
     });
   } else {
     version = new Version({
@@ -52,6 +52,7 @@ export async function run(
         settings().majorVersion, 0, 0, track, build
       ).versionString.full,
       build, track, commits: [], major: settings().majorVersion,
+      foundTag: tag != undefined,
     });
   }
 

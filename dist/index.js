@@ -13096,7 +13096,8 @@ class Version {
             if (change.category.triggers.tests)
                 triggersTests = true;
         }
-        if (input.major > inputVersion.major) {
+        if ((input.major > inputVersion.major) ||
+            (!input.foundTag && input.major == inputVersion.major)) {
             bump = VersionBump.major;
             triggersRelease = true;
             triggersTests = true;
@@ -13192,12 +13193,14 @@ async function run(track, build, create) {
         version = new Version({
             version: tag.versionNumber.versionString.full,
             build, track, commits, major: settings().majorVersion,
+            foundTag: tag != undefined,
         });
     }
     else {
         version = new Version({
             version: new VersionNumber(settings().majorVersion, 0, 0, track, build).versionString.full,
             build, track, commits: [], major: settings().majorVersion,
+            foundTag: tag != undefined,
         });
     }
     (0,core.setOutput)('version', version);

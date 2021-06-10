@@ -18,6 +18,7 @@ export interface VersionInput {
   build: number
   commits: Commit[]
   major: number
+  foundTag: boolean
 }
 
 /**
@@ -65,7 +66,10 @@ export class Version {
       if (change.category.triggers.tests) triggersTests = true;
     }
 
-    if (input.major > inputVersion.major) {
+    if (
+      (input.major > inputVersion.major) ||
+      (!input.foundTag && input.major == inputVersion.major)
+    ) {
       bump = VersionBump.major;
       triggersRelease = true;
       triggersTests = true;
