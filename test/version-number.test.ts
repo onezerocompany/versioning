@@ -163,7 +163,7 @@ describe('Version Number', () => {
 
       it('none bump', () => {
         const bumped = version.bumped(VersionBump.none);
-        expect(bumped.versionString.full).to.equal('1.1.1-live/#1');
+        expect(bumped.versionString.full).to.equal('1.1.2-live/#1');
       });
     });
 
@@ -187,7 +187,7 @@ describe('Version Number', () => {
 
       it('none bump', () => {
         const bumped = version.bumped(VersionBump.none);
-        expect(bumped.versionString.full).to.equal('2.4.1-beta/#123');
+        expect(bumped.versionString.full).to.equal('2.4.2-beta/#123');
       });
     });
 
@@ -211,7 +211,7 @@ describe('Version Number', () => {
 
       it('none bump', () => {
         const bumped = version.bumped(VersionBump.none);
-        expect(bumped.versionString.full).to.equal('4.6.3-alpha/#421');
+        expect(bumped.versionString.full).to.equal('4.6.4-alpha/#421');
       });
     });
   });

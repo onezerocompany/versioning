@@ -12917,8 +12917,7 @@ class VersionNumber {
     bumped(bump) {
         const isMajor = bump == VersionBump.major;
         const isMinor = bump == VersionBump.minor;
-        const isPatch = bump == VersionBump.patch;
-        return new VersionNumber(isMajor ? this.major + 1 : this.major, isMajor ? 0 : isMinor ? this.minor + 1 : this.minor, (isMajor || isMinor) ? 0 : isPatch ? this.patch + 1 : this.patch, this.track, this.iteration);
+        return new VersionNumber(isMajor ? this.major + 1 : this.major, isMajor ? 0 : isMinor ? this.minor + 1 : this.minor, (isMajor || isMinor) ? 0 : this.patch + 1, this.track, this.iteration);
     }
     /**
      * converts a version string to a VersionNumber object
@@ -13198,7 +13197,7 @@ async function run(track, build, create) {
     return JSON.stringify(version);
 }
 /* istanbul ignore next */
-run((0,core.getInput)('track') || '', Number(lib_github.context.runId || '1'), ['true', 'yes'].indexOf((0,core.getInput)('create').toLowerCase()) > -1 || false);
+run((0,core.getInput)('track') || '', Number(lib_github.context.runNumber || '1'), ['true', 'yes'].indexOf((0,core.getInput)('create').toLowerCase()) > -1 || false);
 
 })();
 

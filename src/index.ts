@@ -58,6 +58,6 @@ export async function run(
 /* istanbul ignore next */
 run(
   getInput('track') || '',
-  Number(context.runId || '1'),
+  Number(context.runNumber || '1'),
   ['true', 'yes'].indexOf(getInput('create').toLowerCase()) > -1 || false
 );
