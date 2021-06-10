@@ -13096,9 +13096,13 @@ class Version {
             if (change.category.triggers.tests)
                 triggersTests = true;
         }
-        if ((input.major > inputVersion.major) ||
-            (!input.foundTag && input.major == inputVersion.major)) {
+        if (input.major > inputVersion.major) {
             bump = VersionBump.major;
+            triggersRelease = true;
+            triggersTests = true;
+        }
+        if (!input.foundTag && input.major == inputVersion.major) {
+            bump = VersionBump.minor;
             triggersRelease = true;
             triggersTests = true;
         }
