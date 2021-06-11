@@ -46,7 +46,7 @@ describe('Create Release', () => {
     const requests = setupReleaseMock();
     const version = new Version({
       version: '1.0.0',
-      track: 'live',
+      track: 'main',
       build: 1,
       commits: [{
         message: '[feat]> new feature\n[fix]> a fix\n[doc]> added a doc',

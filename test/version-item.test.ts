@@ -4,10 +4,10 @@ import { describe } from 'mocha';
 
 describe('Version Item', () => {
   describe('creation', () => {
-    it('live should work', () => {
+    it('main should work', () => {
       const version = new Version({
         version: '1.0.0',
-        track: 'live',
+        track: 'main',
         build: 1,
         commits: [{
           message: '[feat]> new feature\n[fix]> a fix\n[doc]> added a doc',
@@ -16,7 +16,7 @@ describe('Version Item', () => {
         major: 1,
         foundTag: true,
       });
-      expect(version.version.versionString.full).to.equal('1.1.0-live/#1');
+      expect(version.version.versionString.full).to.equal('1.1.0-main/#1');
     });
 
     it('beta should work', () => {
@@ -52,7 +52,7 @@ describe('Version Item', () => {
     it('major upgrade should work', () => {
       const version = new Version({
         version: '1.0.0',
-        track: 'live',
+        track: 'main',
         build: 1,
         commits: [{
           message: '[feat]> new feature\n[fix]> a fix\n[doc]> added a doc',
@@ -61,13 +61,13 @@ describe('Version Item', () => {
         major: 2,
         foundTag: true,
       });
-      expect(version.version.versionString.full).to.equal('2.0.0-live/#1');
+      expect(version.version.versionString.full).to.equal('2.0.0-main/#1');
     });
 
     it('major downgrade should should do minor update', () => {
       const version = new Version({
         version: '1.0.0',
-        track: 'live',
+        track: 'main',
         build: 1,
         commits: [{
           message: '[feat]> new feature\n[fix]> a fix\n[doc]> added a doc',
@@ -76,7 +76,7 @@ describe('Version Item', () => {
         major: 0,
         foundTag: true,
       });
-      expect(version.version.versionString.full).to.equal('1.1.0-live/#1');
+      expect(version.version.versionString.full).to.equal('1.1.0-main/#1');
     });
   });
 });

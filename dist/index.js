@@ -12843,8 +12843,8 @@ class Settings {
      * Creates a Settings object
      */
     constructor() {
-        this.releaseTrack = 'live';
-        this.tracks = ['live', 'beta', 'alpha'];
+        this.releaseTrack = 'main';
+        this.tracks = ['main', 'beta', 'alpha'];
         this.changelogs = {
             external: {
                 enabled: true,

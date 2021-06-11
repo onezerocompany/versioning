@@ -1,6 +1,6 @@
-releaseTrack: live
+releaseTrack: main
 tracks:
-  - live
+  - main
 majorVersion: 1
 changelogs:
   external:
