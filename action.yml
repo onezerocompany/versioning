@@ -4,7 +4,7 @@ inputs:
   track:
     description: The version track to use for this version
     required: true
-    default: live
+    default: main
   token:
     description: Token to use for Authentication
     required: true

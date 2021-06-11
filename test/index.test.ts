@@ -20,7 +20,7 @@ describe('Main Run', () => {
     nock.cleanAll();
   });
   it('should have correct output for release track', async () => {
-    const version = await run('live', 1, false);
+    const version = await run('main', 1, false);
     expect(version).to.equal(JSON.stringify(JSON.parse(
       readFileSync(
         resolve(__dirname, 'data', 'version-output.json')
@@ -31,7 +31,7 @@ describe('Main Run', () => {
     expect(run('non_existent', 1, false)).to.throw;
   });
   it('should have correct creation flow', async () => {
-    const version = await run('live', 1, true);
+    const version = await run('main', 1, true);
     expect(version).to.equal(JSON.stringify(JSON.parse(
       readFileSync(
         resolve(__dirname, 'data', 'version-output.json')
