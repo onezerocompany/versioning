@@ -5,52 +5,104 @@ import { parse } from 'yaml';
  * Settings for Versioning
  */
 export class Settings {
-
-  releaseTrack: string
-  tracks: string[]
-  majorVersion: number
-  changelogs: {
-    external: {
-      enabled: boolean
-      empty: string
-    }
-    internal: {
-      enabled: boolean
-      empty: string
-    }
-  }
+  public defaults: {
+    track: string;
+    version: string;
+    changelog: {
+      message: {
+        public: string;
+        private: string;
+      };
+    };
+  };
 
   /**
    * Creates a Settings object
    */
-  constructor() {
-    this.releaseTrack = 'main';
-    this.tracks = ['main', 'beta', 'alpha'];
-    this.changelogs = {
-      external: {
-        enabled: true,
-        empty: 'Bug Fixes:\n- minor bug fixes',
-      },
-      internal: {
-        enabled: true,
-        empty: 'Bug Fixes:\n- minor bug fixes',
+  public constructor() {
+    this.defaults = {
+      track: 'release',
+      version: '1.0.0',
+      changelog: {
+        message: {
+          public: 'Bug Fixes:\n- minor bug fixes',
+          private: '- no changes',
+        },
       },
     };
   }
-
 }
+
+const loadSettings = (): Settings => {
+  if (existsSync('./versioning.yml')) {
+    return parse(readFileSync('./versioning.yml').toString()) as Settings;
+  }
+
+  if (existsSync('./versioning.yaml')) {
+    return parse(readFileSync('./versioning.yaml').toString()) as Settings;
+  }
+
+  return new Settings();
+};
+
+const ensureDefaultsExists = (inputSettings: Settings): void => {
+  // Add default values to settings if they don't exist
+  if (typeof inputSettings.defaults === 'undefined') {
+    inputSettings.defaults = {
+      track: 'release',
+      version: '1.0.0',
+      changelog: {
+        message: {
+          public: 'Bug Fixes:\n- minor bug fixes',
+          private: '- no changes',
+        },
+      },
+    };
+  }
+};
+
+const ensureDefaultValues = (inputSettings: Settings): void => {
+  // Ensure track default is a string and otherwise set it to release
+  if (typeof inputSettings.defaults.track !== 'string') {
+    inputSettings.defaults.track = 'release';
+  }
+
+  // Ensure version default is a string and otherwise set it to 1.0.0
+  if (typeof inputSettings.defaults.version !== 'string') {
+    inputSettings.defaults.version = '1.0.0';
+  }
+};
+
+const ensureChangelogValues = (inputSettings: Settings): void => {
+  if (
+    typeof inputSettings.defaults.changelog === 'undefined' ||
+    typeof inputSettings.defaults.changelog.message === 'undefined'
+  ) {
+    inputSettings.defaults.changelog = {
+      message: {
+        public: 'Bug Fixes:\n- minor bug fixes',
+        private: '- no changes',
+      },
+    };
+  } else {
+    if (typeof inputSettings.defaults.changelog.message.public !== 'string')
+      inputSettings.defaults.changelog.message.public =
+        'Bug Fixes:\n- minor bug fixes';
+    if (typeof inputSettings.defaults.changelog.message.private !== 'string')
+      inputSettings.defaults.changelog.message.private = '- no changes';
+  }
+};
 
 /**
- * Reads Settings fr`om Repository
+ * Reads Settings from Repository
  * @return {Settings}
  */
-export function settings(): Settings {
-  let settings : Settings = new Settings();
-  if (existsSync('./versioning.yml')) {
-    settings = parse(readFileSync('./versioning.yml').toString());
-  }
-  if (existsSync('./versioning.yaml')) {
-    settings = parse(readFileSync('./versioning.yaml').toString());
-  }
-  return settings;
-}
+export const settings = (settingsObject?: Settings): Settings => {
+  const outputSettings: Settings = settingsObject ?? loadSettings();
+
+  ensureDefaultsExists(outputSettings);
+  ensureDefaultValues(outputSettings);
+  ensureChangelogValues(outputSettings);
+
+  return outputSettings;
+};

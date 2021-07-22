@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+message=$(cat $1)
+npm run verify-message -- message="$message"

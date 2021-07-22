@@ -1,0 +1,33 @@
+{
+  "changes": [
+    {
+      "ref": "7Hq1aicQG9crKr+KGDlB1g==",
+      "content": "added a feature",
+      "category": "feat-new"
+    },
+    {
+      "ref": "ke6wCOqf69vOx6jGuvRDig==",
+      "content": "added a feature",
+      "category": "feat-new"
+    },
+    {
+      "ref": "tRSDFynqHNGnHid+Js9oTQ==",
+      "content": "added a feature",
+      "category": "feat-new"
+    }
+  ],
+  "changelogs": {
+    "public": "Added Features:\n- added a feature",
+    "private": "- no changes"
+  },
+  "triggers": { "bump": "minor", "release": true, "tests": true },
+  "version": {
+    "major": 1,
+    "minor": 1,
+    "patch": 0,
+    "track": "main",
+    "build": 1,
+    "template": "<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>",
+    "versionString": "1.1.0-main/#1"
+  }
+}

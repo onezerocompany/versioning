@@ -1,11 +1,4 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "target": "es2019"
-  },
-  "compileOnSave": true,
-  "include": [
-    "src/**/*.ts"
-  ]
+  "extends": "@onezerocompany/tsconfig-node/tsconfig.json",
+  "include": ["src/**/*.ts", "spec/**/*.ts"]
 }

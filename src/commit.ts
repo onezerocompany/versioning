@@ -1,34 +1,50 @@
+import { resolveTag } from './categories/categories';
 import { Change } from './change';
-import { categories } from './change-categories';
+
+export const tagRegex =
+  /^(?<tag>[a-z]*(?:(?:[(]{1}[a-z]*[)]{1})|(?:[-][a-z]*))?)(?: ->)(?<message>.*)/u;
+
+export const breakingRegex = /^BREAKING(?:\.?)$/u;
 
 /**
- * convert commit message to list of changes
- * @param {string} message message to convert to changes
+ * Convert commit message to list of changes
+ * @param {string} content message to convert to changes
  * @param {string} ref reference for the commit this message is from
  * @return {Change[]}
  */
-export function changesFromMessage(message: string, ref: string): Change[] {
-  return message.split('\n').map((line: string) => {
-    let change : Change | undefined = undefined;
-    for (const category of categories) {
-      for (const key of category.keys) {
-        const keyMarker = `[${key}]>`;
-        if (line.includes(keyMarker)) {
-          const content = line.replace(keyMarker, '').trim();
-          change = new Change(content, category, ref);
-        }
+export const changesFromMessage = (
+  content: string,
+  ref: string
+): { changes: Change[]; breaking: boolean } => {
+  let breaking = false;
+  const changes = content
+    .split('\n')
+    .map((line: string) => {
+      if (breakingRegex.exec(line) !== null) {
+        breaking = true;
+
+        return null;
       }
-    }
-    return change;
-  }).filter((change) => change) as Change[];
-}
+
+      const results = tagRegex.exec(line);
+      const category = resolveTag(results?.groups?.tag ?? '');
+      const message = results?.groups?.message.trim();
+
+      if (typeof category !== 'undefined' && typeof message !== 'undefined') {
+        return new Change(message, category.id, ref);
+      }
+
+      return null;
+    })
+    .filter(change => change !== null) as Change[];
+
+  return { changes, breaking };
+};
 
 /**
- * represents a commit in the git history
+ * Represents a commit in the git history
  */
 export interface Commit {
-
-  ref: string
-  message: string
-
+  ref: string;
+  message: string;
 }

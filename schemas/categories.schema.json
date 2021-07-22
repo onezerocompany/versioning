@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "versioning-categories",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "pattern": "[a-z]*",
+        "minLength": 3,
+        "maxLength": 16
+      },
+      "title": {
+        "type": "string",
+        "pattern": "([A-Z][^s]*)"
+      },
+      "description": {
+        "type": "string",
+        "minLength": 8,
+        "maxLength": 62
+      },
+      "color": {
+        "type": "string",
+        "pattern": "^#([0-9A-Fa-f]{6})$"
+      },
+      "label": {
+        "type": "string",
+        "$ref": "#/definitions/label"
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/label"
+        },
+        "uniqueItems": true
+      },
+      "triggers": {
+        "type": "object",
+        "properties": {
+          "test": {
+            "type": "boolean"
+          },
+          "release": {
+            "type": "boolean"
+          }
+        },
+        "required": ["test", "release"]
+      },
+      "bump": {
+        "enum": ["major", "minor", "patch", "none"]
+      },
+      "scope": {
+        "enum": ["public", "private"]
+      }
+    },
+    "required": [
+      "id",
+      "title",
+      "description",
+      "label",
+      "tags",
+      "color",
+      "scope",
+      "triggers"
+    ],
+    "additionalProperties": false
+  },
+  "definitions": {
+    "label": {
+      "type": "string",
+      "pattern": "([a-z]*(([(]{1}[a-z]*[)]{1})|[-])?)",
+      "maxLength": 16,
+      "minLength": 2
+    }
+  }
+}
