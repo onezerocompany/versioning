@@ -55,6 +55,7 @@ const names = [
   'Lenovo',
   'Dell',
   'Acer',
+  'CodeQL',
 ];
 
 // Check if line contains a name and if it matches the expected format
