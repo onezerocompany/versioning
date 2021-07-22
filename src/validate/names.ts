@@ -64,13 +64,13 @@ export const validateNames = (content: string): string[] => {
 
   // Loop through all names
   for (const name of names) {
-    const namePosition = content.toLowerCase().indexOf(name.toLowerCase());
+    const tokens = content.split(' ').map(token => token.trim());
+    const index = tokens
+      .map(token => token.toLowerCase())
+      .indexOf(name.toLowerCase());
 
-    if (namePosition > -1) {
-      const actualName = content.substring(
-        namePosition,
-        namePosition + name.length
-      );
+    if (index > -1) {
+      const actualName = tokens[index];
 
       if (actualName !== name) {
         errors.push(`Expected '${name}' but found '${actualName}'`);

@@ -116,7 +116,7 @@ const validateChange = (line: number, content: string): ValidationError[] => {
       errors.push(`Tag '${tag}' does not exist`);
     }
 
-    const sanitizedMessages = message?.trim() ?? '';
+    const sanitizedMessages = message.trim();
 
     verifyMinimumMessageLength(sanitizedMessages, errors);
     verifyMaximumMessageLength(sanitizedMessages, errors);

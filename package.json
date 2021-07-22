@@ -18,6 +18,9 @@
   },
   "main": "dist/index.js",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-chai-friendly": "^0.7.1",
     "@onezerocompany/eslint-config": "^1.4.0",
     "@onezerocompany/prettier-config": "^1.0.1",
     "@onezerocompany/tsconfig-node": "^1.1.0",
