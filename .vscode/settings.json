@@ -1,5 +1,14 @@
 {
-  "eslint.workingDirectories": [
-    "./"
-  ]
+  "yaml.schemas": {
+    "schemas/categories.schema.json": ["**/categories.yml"]
+  },
+  "prettier.requireConfig": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "editor.formatOnSave": true,
+  "editor.autoClosingBrackets": "always",
+  "mochaExplorer.files": "spec/**/*.spec.ts",
+  "mochaExplorer.require": "ts-node/register",
+  "mochaExplorer.autoload": true
 }

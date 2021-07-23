@@ -1,6 +1,10 @@
 name: Versioning
 description: Generates a JSON file
 inputs:
+  number_template:
+    description: Template for generating version numbers
+    required: true
+    default: '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
   track:
     description: The version track to use for this version
     required: true
@@ -12,10 +16,10 @@ inputs:
   create:
     description: Create github release and add Version.json
     required: false
-    default: "false"
+    default: 'false'
 outputs:
   version:
     description: JSON with version information
 runs:
   using: node12
-  main: "dist/index.js"
+  main: 'dist/action/index.js'

@@ -1,106 +1,138 @@
+import { CategoryBump } from './categories/categories';
 import { settings } from './settings';
 
-export enum VersionBump {
-  patch = 'patch',
-  minor = 'minor',
-  major = 'major',
-  none = 'none'
+export interface VersionNumberParameters {
+  major: number;
+  minor: number;
+  patch: number;
+  track?: string;
+  build?: number;
+  template?: string;
 }
-
-export const bumpOrder : VersionBump[] = [
-  VersionBump.none, VersionBump.patch, VersionBump.minor, VersionBump.major,
-];
 
 /**
  * Reflects a version number and provides methods to alter it
  */
 export class VersionNumber {
-
-  major: number
-  minor: number
-  patch: number
-  track: string
-  iteration: number
-
-  versionString : {
-    full: string
-    withoutBuild: string
-    onlyNumber: string
-  }
+  public major: number;
+  public minor: number;
+  public patch: number;
+  public track: string;
+  public build: number;
+  public template: string;
+  public versionString: string;
 
   /**
-   * creates a {VersionNumber} from individual version number components
+   * Creates a {VersionNumber} from individual version number components
    * @param {number} major major section of the version number
    * @param {number} minor minor section of the version number
    * @param {number} patch patch section of the version number
    * @param {VersionTrack} track type of version
-   * @param {number} iteration how many times this version has been build
+   * @param {number} build how many times this version has been build
    */
-  constructor(
-    major = 1, minor = 0, patch = 0,
-    track = settings().releaseTrack, iteration = 1
-  ) {
-    this.major = major;
-    this.minor = minor;
-    this.patch = patch;
-    this.track = track;
-    this.iteration = iteration;
+  public constructor(params: VersionNumberParameters) {
+    this.major = params.major;
+    this.minor = params.minor;
+    this.patch = params.patch;
+    this.track = params.track ?? settings().defaults.track;
+    this.build = params.build ?? 1;
+    this.template =
+      params.template ?? '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>';
+    this.versionString = this.template
+      .replace(
+        '<<VERSION_STRING>>',
+        `${params.major}.${params.minor}.${params.patch}`
+      )
+      .replace('<<TRACK>>', this.track.toString())
+      .replace('<<BUILD>>', this.build.toString());
+  }
 
-    const onlyNumber = `${this.major}.${this.minor}.${this.patch}`;
-    this.versionString = {
-      full: `${onlyNumber}-${track}/#${this.iteration}`,
-      withoutBuild: `${onlyNumber}-${track}`,
-      onlyNumber,
-    };
+  // Extract components from a version string
+  public static extractComponents(versionString: string): string[] {
+    return versionString
+      .split('.')
+      .flatMap((component: string) =>
+        component
+          .split('-')
+          .flatMap((subComponent: string) => subComponent.split('/'))
+      );
+  }
+
+  // Version digit from string
+  public static digitFromString(
+    component: string | undefined,
+    fallback: number
+  ): number {
+    return parseInt(
+      ((component ?? fallback.toString()).length > 0
+        ? component ?? fallback.toString()
+        : fallback.toString()
+      ).replace(/[^0-9]/u, ''),
+      10
+    );
   }
 
   /**
-   * bumps a version by a specified amount
+   * Converts a version string to a VersionNumber object
+   * @param {string} versionString version string to convert
+   * @param {string} track set the track for this version
+   * @param {number} build set the build for this version
+   * @return {VersionNumber}
+   */
+  public static fromVersionString(
+    versionString: string | null = null,
+    track: string | null = null,
+    build: number | null = null,
+    template = '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
+  ): VersionNumber {
+    const components = VersionNumber.extractComponents(versionString ?? '');
+    const fallbackTrack =
+      components[3]?.length > 0 ? components[3] : settings().defaults.track;
+
+    return new VersionNumber({
+      major: VersionNumber.digitFromString(components[0], 1),
+      minor: VersionNumber.digitFromString(components[1], 0),
+      patch: VersionNumber.digitFromString(components[2], 0),
+      track: track ?? fallbackTrack,
+      build: build ?? VersionNumber.digitFromString(components[4], 1),
+      template,
+    });
+  }
+
+  /**
+   * Bumps a version by a specified amount
    * @param {VersionBump} bump amount to bump the version by
    * @return {VersionNumber} bumped version
    */
-  public bumped(bump: VersionBump): VersionNumber {
-    const isMajor = bump == VersionBump.major;
-    const isMinor = bump == VersionBump.minor;
-    const isPatch = bump == VersionBump.patch;
-    return new VersionNumber(
-      isMajor ? this.major + 1 : this.major,
-      isMajor ? 0 : isMinor ? this.minor + 1 : this.minor,
-      (isMajor || isMinor) ? 0 : (isPatch ? this.patch + 1 : this.patch),
-      this.track, this.iteration
-    );
+  public bumped(bump: CategoryBump): VersionNumber {
+    const isMajor = bump === CategoryBump.major;
+    const isMinor = bump === CategoryBump.minor;
+    const isPatch = bump === CategoryBump.patch;
+    const minorBumped = isMinor ? this.minor + 1 : this.minor;
+    const patchBumped = isPatch ? this.patch + 1 : this.patch;
+
+    return new VersionNumber({
+      major: isMajor ? this.major + 1 : this.major,
+      minor: isMajor ? 0 : minorBumped,
+      patch: isMajor || isMinor ? 0 : patchBumped,
+      track: this.track,
+      build: this.build,
+      template: this.template,
+    });
   }
 
-  /**
-   * converts a version string to a VersionNumber object
-   * @param {string} versionString version string to convert
-   * @param {string} track set the track for this version
-   * @param {number} iteration set the build for this version
-   * @return {VersionNumber}
-   */
-  static fromVersionString(
-    versionString: string | undefined = undefined,
-    track: string | undefined = undefined,
-    iteration: number | undefined = undefined
+  public switchTracks(
+    track: string,
+    build: number | null = null,
+    template = '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
   ): VersionNumber {
-    const components = (versionString ?? '').split('.')
-      .flatMap((component: string) => component.split('-')
-        .flatMap((subComponent: string) => subComponent.split('/'))
-      );
-    return new VersionNumber(
-      Number(components[0] != '' ?
-        (components[0]).replace(/[^0-9]/, '') : '1'
-      ),
-      Number((components[1] != '' ?
-        (components[1] || '0').replace(/[^0-9]/, '') : '0')
-      ),
-      Number((components[2] != '' ?
-        (components[2] || '0').replace(/[^0-9]/, '') : '0')
-      ),
-      (track ?? components[3]) ?? settings().releaseTrack,
-      iteration ?? Number((components[4] ?? '1').replace( /[^0-9]/, ''))
-    );
+    return new VersionNumber({
+      major: this.major,
+      minor: this.minor,
+      patch: this.patch,
+      build: build ?? this.build,
+      track,
+      template,
+    });
   }
-
-
 }

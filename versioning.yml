@@ -1,11 +1,9 @@
-releaseTrack: main
-tracks:
-  - main
-majorVersion: 1
-changelogs:
-  external:
-    enabled: true
-    empty: "Bug Fixes:\n- minor bug fixes"
-  internal:
-    enabled: true
-    empty: "- no changes"
+defaults:
+  track: release
+  version: 1.0.0
+  changelog:
+    message:
+      public: |-
+        Bug Fixes:
+        - minor bug fixes
+      private: "- no changes"
