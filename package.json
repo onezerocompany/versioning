@@ -1,10 +1,10 @@
 {
   "name": "versioning-action",
   "bin": {
-    "verify-message": "dist/verify.js"
+    "verify-message": "dist/validate/index.js"
   },
   "scripts": {
-    "build": "ncc build --minify src/main.ts",
+    "build": "ncc build --minify src/main.ts -o dist/action && ncc build --minify src/validate/validate.ts -o dist/validate",
     "test": "mocha -r ts-node/register -p tsconfig.json spec/*.spec.ts spec/**/*.spec.ts",
     "coverage": "nyc -r lcov -r text-summary npm run test",
     "format:prettier": "prettier --write src/*.ts spec/*.ts",
@@ -16,7 +16,7 @@
     "verify-message": "ts-node src/validate/validate.ts",
     "prepare": "husky install"
   },
-  "main": "dist/index.js",
+  "main": "dist/validate/index.js",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "eslint-config-prettier": "^8.3.0",

@@ -22,4 +22,4 @@ outputs:
     description: JSON with version information
 runs:
   using: node12
-  main: 'dist/index.js'
+  main: 'dist/action/index.js'
