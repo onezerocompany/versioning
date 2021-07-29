@@ -1,5 +1,9 @@
 import { describe, it, beforeEach, after } from 'mocha';
-import { generateVersion, run } from '../src/main';
+import {
+  generateDefaultVersionNumber,
+  generateVersion,
+  run,
+} from '../src/main';
 import { expect } from 'chai';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
@@ -12,6 +16,7 @@ import {
   setupReleaseUploadAssetMock,
 } from './mocks/mocks';
 import { CategoryBump } from '../src/categories/categories';
+import { settings } from '../src/settings';
 
 const setupMocks = (): void => {
   process.env.GITHUB_REPOSITORY = 'onezerocompany/test';
@@ -76,6 +81,25 @@ const testFallbackVersion = (): void => {
   });
 };
 
+const testDefaultVersionNumber = (): void => {
+  it('should fallback to a default version when no string', () => {
+    settings({
+      defaults: {
+        version: '',
+        track: 'main',
+        changelog: { message: { public: '', private: '' } },
+      },
+    });
+    const version = generateDefaultVersionNumber(
+      'main',
+      1,
+      '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
+    );
+
+    expect(version.versionString).to.equal('1.0.0-main/#1');
+  });
+};
+
 describe('Main Run', () => {
   beforeEach(setupMocks);
   after(() => {
@@ -90,4 +114,5 @@ describe('Main Run', () => {
   });
   it('should have correct creation flow', creationFlow);
   testFallbackVersion();
+  testDefaultVersionNumber();
 });
