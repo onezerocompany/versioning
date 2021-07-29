@@ -11,7 +11,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
       - name: Run Versioning
-        uses: .
+        uses: ./
         with:
           number_template: '<<VERSION_STRING>>'
           create: true
