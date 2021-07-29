@@ -1,4 +1,4 @@
-import { describe, it, before } from 'mocha';
+import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import { VersionNumber } from '../../src/version-number';
 import { CategoryBump } from '../../src/categories/categories';

@@ -1,7 +1,6 @@
 import { VersionNumber } from './version-number';
 import { context, getOctokit } from '@actions/github';
 import { getInput } from '@actions/core';
-import { settings } from './settings';
 
 export interface RepoInfo {
   owner: string;
@@ -24,7 +23,7 @@ const loopTags = (
       template ?? '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
     );
 
-    if (version && version.track === track) {
+    if (version.track === track) {
       return {
         versionNumber: version,
         commit: tag.commit.sha,
