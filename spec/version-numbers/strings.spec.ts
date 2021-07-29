@@ -17,7 +17,10 @@ const vInString = (): void => {
 
 const noTrackAndBuild = (): void => {
   it('should work with no track and build', () => {
-    const version = VersionNumber.fromVersionString('3.1.6');
+    const version = VersionNumber.fromVersionString(
+      '3.1.6',
+      '<<VERSION_STRING>>'
+    );
 
     expect(version.major).to.equal(3);
     expect(version.minor).to.equal(1);
@@ -65,7 +68,10 @@ const noString = (): void => {
 
 const trackNoBuild = (): void => {
   it('should work with track and no build', () => {
-    const version = VersionNumber.fromVersionString('3.1.6-track');
+    const version = VersionNumber.fromVersionString(
+      '3.1.6-track',
+      '<<VERSION_STRING>>-<<TRACK>>'
+    );
 
     expect(version.major).to.equal(3);
     expect(version.minor).to.equal(1);

@@ -1,6 +1,8 @@
 {
   "name": "versioning-action",
-  "bin": "dist/validate/index.js",
+  "bin": {
+    "verify-message": "dist/validate/index.js"
+  },
   "scripts": {
     "build": "ncc build --minify src/main.ts -o dist/action && ncc build --minify src/validate/validate.ts -o dist/validate",
     "test": "mocha -r ts-node/register -p tsconfig.json spec/*.spec.ts spec/**/*.spec.ts",
@@ -11,7 +13,6 @@
     "lint:prettier": "prettier --check src/*.ts spec/*.ts",
     "lint:eslint": "eslint --ext .js,.ts src/ spec/",
     "lint": "run-s lint:*",
-    "verify-message": "ts-node src/validate/validate.ts",
     "prepare": "husky install"
   },
   "main": "dist/validate/index.js",

@@ -47,28 +47,24 @@ export class VersionNumber {
       .replace('<<BUILD>>', this.build.toString());
   }
 
-  // Extract components from a version string
-  public static extractComponents(versionString: string): string[] {
-    return versionString
-      .split('.')
-      .flatMap((component: string) =>
-        component
-          .split('-')
-          .flatMap((subComponent: string) => subComponent.split('/'))
-      );
+  // Version digit from string
+  public static digitFromString(component: string, fallback: number): number {
+    return parseInt(
+      (component.length > 0 ? component : fallback.toString()).replace(
+        /[^0-9]/u,
+        ''
+      ),
+      10
+    );
   }
 
-  // Version digit from string
-  public static digitFromString(
-    component: string | undefined,
-    fallback: number
-  ): number {
-    return parseInt(
-      ((component ?? fallback.toString()).length > 0
-        ? component ?? fallback.toString()
-        : fallback.toString()
-      ).replace(/[^0-9]/u, ''),
-      10
+  public static convertTemplateToRegex(template: string): RegExp {
+    return new RegExp(
+      template
+        .replace(/<<VERSION_STRING>>/gu, '(?<version>\\d+.\\d+.\\d+)')
+        .replace(/<<TRACK>>/gu, '(?<track>\\w+)')
+        .replace(/<<BUILD>>/gu, '(?<build>\\d+)'),
+      'u'
     );
   }
 
@@ -81,20 +77,23 @@ export class VersionNumber {
    */
   public static fromVersionString(
     versionString: string | null = null,
-    track: string | null = null,
-    build: number | null = null,
     template = '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
   ): VersionNumber {
-    const components = VersionNumber.extractComponents(versionString ?? '');
-    const fallbackTrack =
-      components[3]?.length > 0 ? components[3] : settings().defaults.track;
+    const components: Record<string, string | undefined> =
+      VersionNumber.convertTemplateToRegex(template).exec(versionString ?? '')
+        ?.groups ?? {};
+    const [major, minor, patch] = components.version?.split('.') ?? [
+      '',
+      '',
+      '',
+    ];
 
     return new VersionNumber({
-      major: VersionNumber.digitFromString(components[0], 1),
-      minor: VersionNumber.digitFromString(components[1], 0),
-      patch: VersionNumber.digitFromString(components[2], 0),
-      track: track ?? fallbackTrack,
-      build: build ?? VersionNumber.digitFromString(components[4], 1),
+      major: VersionNumber.digitFromString(major, 1),
+      minor: VersionNumber.digitFromString(minor, 0),
+      patch: VersionNumber.digitFromString(patch, 0),
+      track: components.track ?? settings().defaults.track,
+      build: VersionNumber.digitFromString(components.build ?? '', 1),
       template,
     });
   }

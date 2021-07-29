@@ -1,0 +1,17 @@
+name: Create Release
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Run Versioning
+        uses: .
+        with:
+          number_template: '<<VERSION_STRING>>'
+          create: true

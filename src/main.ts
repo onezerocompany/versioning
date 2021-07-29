@@ -9,6 +9,16 @@ import { commitsFrom } from './commits';
 import { createRelease } from './create-release';
 import { VersionNumber } from './version-number';
 
+export const generateDefaultVersionNumber = (
+  track: string,
+  build: number,
+  template: string
+): VersionNumber =>
+  VersionNumber.fromVersionString(
+    settings().defaults.version,
+    template
+  ).switchTracks(track, build, template);
+
 export const generateVersion = async (
   track: string,
   build: number,
@@ -28,19 +38,17 @@ export const generateVersion = async (
   }
 
   return new Version({
-    version: VersionNumber.fromVersionString(
-      settings().defaults.version,
-      track,
-      build,
-      template
-    ),
+    version: generateDefaultVersionNumber(track, build, template),
     commits: [],
     foundTag: typeof tag !== 'undefined',
   });
 };
 
-export const getTag = async (track: string): Promise<Tag | null> => {
-  const tag = await latestTag(track);
+export const getTag = async (
+  track: string,
+  template: string
+): Promise<Tag | null> => {
+  const tag = await latestTag(track, template);
 
   if (tag?.versionNumber) {
     info(
@@ -72,7 +80,7 @@ export const run = async (
   await reportRateLimits();
 
   // Get the latest tag and generate a version
-  const tag = await getTag(currentTrack);
+  const tag = await getTag(currentTrack, template);
   const version = await generateVersion(currentTrack, build, template, tag);
 
   setOutput('version', version);
