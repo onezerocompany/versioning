@@ -10,29 +10,6 @@ import { createRelease } from './create-release';
 import { VersionNumber } from './version-number';
 import { ArgumentParser } from 'argparse';
 
-const parser = new ArgumentParser({
-  description: 'Versioning Tool',
-  add_help: true,
-});
-
-parser.add_argument('--github-token', {
-  help: 'token for interacting with the GitHub API',
-});
-parser.add_argument('--build-number', {
-  help: 'build number for the release',
-});
-parser.add_argument('--version-template', {
-  help: 'template for the version number',
-});
-parser.add_argument('--create', {
-  help: 'create a new release',
-});
-parser.add_argument('--track', {
-  help: 'release track to use',
-});
-
-const inputs = parser.parse_args() as Record<string, string | null>;
-
 export const generateDefaultVersionNumber = (
   track: string,
   build: number,
@@ -121,10 +98,40 @@ export const run = async (
 };
 
 /* istanbul ignore next */
-// eslint-disable-next-line no-void
-void run(
-  inputs.track ?? settings().defaults.track,
-  Number(inputs.build_number ?? 1),
-  inputs.create === 'true',
-  inputs.version_template ?? '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
-);
+const readInputs = (): Record<string, string | null> => {
+  const parser = new ArgumentParser({
+    description: 'Versioning Tool',
+    add_help: true,
+  });
+
+  parser.add_argument('--github-token', {
+    help: 'token for interacting with the GitHub API',
+  });
+  parser.add_argument('--build-number', {
+    help: 'build number for the release',
+  });
+  parser.add_argument('--version-template', {
+    help: 'template for the version number',
+  });
+  parser.add_argument('--create', {
+    help: 'create a new release',
+  });
+  parser.add_argument('--track', {
+    help: 'release track to use',
+  });
+
+  return parser.parse_args() as Record<string, string | null>;
+};
+
+/* istanbul ignore next */
+if (require.main === module) {
+  const inputs = readInputs();
+
+  // eslint-disable-next-line no-void
+  void run(
+    inputs.track ?? settings().defaults.track,
+    Number(inputs.build_number ?? 1),
+    inputs.create === 'true',
+    inputs.version_template ?? '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
+  );
+}

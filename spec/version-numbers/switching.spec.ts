@@ -8,7 +8,7 @@ describe('Version Number - Track Switching', () => {
       major: 1,
       minor: 0,
       patch: 0,
-      track: 'release',
+      track: 'main',
     });
 
     version = version.switchTracks('alpha');
@@ -20,7 +20,7 @@ describe('Version Number - Track Switching', () => {
       major: 1,
       minor: 0,
       patch: 0,
-      track: 'release',
+      track: 'main',
     });
     const build = 24;
 

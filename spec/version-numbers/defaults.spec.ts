@@ -9,13 +9,13 @@ const majorMinorPath = (): void => {
   expect(version.minor).to.equal(0);
   expect(version.patch).to.equal(0);
   expect(version.build).to.equal(1);
-  expect(version.track).to.equal('release');
+  expect(version.track).to.equal('main');
 };
 
 const mainVersionString = (): void => {
   const version = new VersionNumber({ major: 1, minor: 0, patch: 0 });
 
-  expect(version.versionString).to.equal('1.0.0-release/#1');
+  expect(version.versionString).to.equal('1.0.0-main/#1');
 };
 
 const explicitVersionString = (): void => {

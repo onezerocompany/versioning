@@ -25,7 +25,7 @@ const noTrackAndBuild = (): void => {
     expect(version.major).to.equal(3);
     expect(version.minor).to.equal(1);
     expect(version.patch).to.equal(6);
-    expect(version.track).to.equal('release');
+    expect(version.track).to.equal('main');
     expect(version.build).to.equal(1);
   });
 };
@@ -37,7 +37,7 @@ const empty = (): void => {
     expect(version.major).to.equal(1);
     expect(version.minor).to.equal(0);
     expect(version.patch).to.equal(0);
-    expect(version.track).to.equal('release');
+    expect(version.track).to.equal('main');
     expect(version.build).to.equal(1);
   });
 };
@@ -49,7 +49,7 @@ const onlyDots = (): void => {
     expect(version.major).to.equal(1);
     expect(version.minor).to.equal(0);
     expect(version.patch).to.equal(0);
-    expect(version.track).to.equal('release');
+    expect(version.track).to.equal('main');
     expect(version.build).to.equal(1);
   });
 };
@@ -61,7 +61,7 @@ const noString = (): void => {
     expect(version.major).to.equal(1);
     expect(version.minor).to.equal(0);
     expect(version.patch).to.equal(0);
-    expect(version.track).to.equal('release');
+    expect(version.track).to.equal('main');
     expect(version.build).to.equal(1);
   });
 };
