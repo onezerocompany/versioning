@@ -21,7 +21,7 @@ export class Settings {
    */
   public constructor() {
     this.defaults = {
-      track: 'release',
+      track: 'main',
       version: '1.0.0',
       changelog: {
         message: {
@@ -49,7 +49,7 @@ const ensureDefaultsExists = (inputSettings: Settings): void => {
   // Add default values to settings if they don't exist
   if (typeof inputSettings.defaults === 'undefined') {
     inputSettings.defaults = {
-      track: 'release',
+      track: 'main',
       version: '1.0.0',
       changelog: {
         message: {
@@ -64,7 +64,7 @@ const ensureDefaultsExists = (inputSettings: Settings): void => {
 const ensureDefaultValues = (inputSettings: Settings): void => {
   // Ensure track default is a string and otherwise set it to release
   if (typeof inputSettings.defaults.track !== 'string') {
-    inputSettings.defaults.track = 'release';
+    inputSettings.defaults.track = 'main';
   }
 
   // Ensure version default is a string and otherwise set it to 1.0.0

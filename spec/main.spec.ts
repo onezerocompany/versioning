@@ -29,42 +29,46 @@ const setupMocks = (): void => {
   setupRateLimitMock();
 };
 
-const creationFlow = async (): Promise<void> => {
-  const version = await run(
-    'main',
-    1,
-    true,
-    '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
-  );
+const testCreation = (): void => {
+  it('should have correct creation flow', async () => {
+    const version = await run(
+      'main',
+      1,
+      true,
+      '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
+    );
 
-  expect(version).to.equal(
-    JSON.stringify(
-      JSON.parse(
-        readFileSync(
-          resolve(__dirname, 'outputs', 'version-output.json')
-        ).toString()
+    expect(version).to.equal(
+      JSON.stringify(
+        JSON.parse(
+          readFileSync(
+            resolve(__dirname, 'outputs', 'version-output.json')
+          ).toString()
+        )
       )
-    )
-  );
+    );
+  });
 };
 
-const releaseTrackOutput = async (): Promise<void> => {
-  const version = await run(
-    'main',
-    1,
-    false,
-    '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
-  );
+const testReleaseTrackOutput = (): void => {
+  it('should have correct output for release track', async () => {
+    const version = await run(
+      'main',
+      1,
+      false,
+      '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
+    );
 
-  expect(version).to.equal(
-    JSON.stringify(
-      JSON.parse(
-        readFileSync(
-          resolve(__dirname, 'outputs', 'version-output.json')
-        ).toString()
+    expect(version).to.equal(
+      JSON.stringify(
+        JSON.parse(
+          readFileSync(
+            resolve(__dirname, 'outputs', 'version-output.json')
+          ).toString()
+        )
       )
-    )
-  );
+    );
+  });
 };
 
 const testFallbackVersion = (): void => {
@@ -100,19 +104,44 @@ const testDefaultVersionNumber = (): void => {
   });
 };
 
-describe('Main Run', () => {
-  beforeEach(setupMocks);
-  after(() => {
-    nock.cleanAll();
-  });
+const testEmptyTrack = (): void => {
+  it('should fallback to a default track when empty track', async () => {
+    const version = await run(
+      '',
+      1,
+      false,
+      '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
+    );
 
-  it('should have correct output for release track', releaseTrackOutput);
+    expect(version).to.equal(
+      JSON.stringify(
+        JSON.parse(
+          readFileSync(
+            resolve(__dirname, 'outputs', 'version-output.json')
+          ).toString()
+        )
+      )
+    );
+  });
+};
+
+const testNonExistingTrack = (): void => {
   it('should have correct response for non existent track', () => {
     expect(
       run('non_existent', 1, false, '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>')
     ).to.throw;
   });
-  it('should have correct creation flow', creationFlow);
+};
+
+describe('Main Run', () => {
+  beforeEach(setupMocks);
+  after(() => {
+    nock.cleanAll();
+  });
+  testReleaseTrackOutput();
+  testNonExistingTrack();
+  testCreation();
   testFallbackVersion();
   testDefaultVersionNumber();
+  testEmptyTrack();
 });

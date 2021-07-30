@@ -8,7 +8,7 @@ inputs:
   track:
     description: The version track to use for this version
     required: true
-    default: main
+    default: release
   token:
     description: Token to use for Authentication
     required: true
@@ -17,9 +17,19 @@ inputs:
     description: Create github release and add Version.json
     required: false
     default: 'false'
+  build:
+    description: Build number for the version to create
+    required: false
+    default: ${{ github.run_number }}
 outputs:
   version:
     description: JSON with version information
 runs:
-  using: node12
-  main: 'dist/action/index.js'
+  using: docker
+  image: Dockerfile
+  args:
+    - --github-token ${{ inputs.token }}
+    - --build-number ${{ inputs.build }}
+    - --version-template ${{ inputs.number_template }}
+    - --track ${{ inputs.track }}
+    - --create ${{ inputs.create }}

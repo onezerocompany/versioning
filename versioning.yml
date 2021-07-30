@@ -1,9 +1,9 @@
 defaults:
-  track: release
+  track: main
   version: 1.0.0
   changelog:
     message:
       public: |-
         Bug Fixes:
         - minor bug fixes
-      private: "- no changes"
+      private: '- no changes'

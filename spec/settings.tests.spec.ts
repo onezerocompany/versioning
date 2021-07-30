@@ -71,7 +71,7 @@ export const hasDefaultVersion =
       path,
       stringify({
         defaults: {
-          track: 'release',
+          track: 'main',
           changelog: {
             message: {
               public: 'Bug Fixes:\n- minor bug fixes',

@@ -8,7 +8,7 @@ const defaults = (): void => {
     const settingsOutput = settings({} as unknown as Settings);
 
     expect(settingsOutput.defaults.version).to.equal('1.0.0');
-    expect(settingsOutput.defaults.track).to.equal('release');
+    expect(settingsOutput.defaults.track).to.equal('main');
     expect(settingsOutput.defaults.changelog.message.public).to.equal(
       'Bug Fixes:\n- minor bug fixes'
     );
@@ -32,7 +32,7 @@ const defaultTrack = (): void => {
       },
     } as unknown as Settings);
 
-    expect(settingsOutput.defaults.track).to.equal('release');
+    expect(settingsOutput.defaults.track).to.equal('main');
   });
 };
 

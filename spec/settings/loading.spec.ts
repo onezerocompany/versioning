@@ -50,7 +50,7 @@ const longExtensionLoads = (): void => {
 
 const noSettingsLoads = (): void => {
   it('settings with no settings load', () => {
-    expect(getSettings().defaults.track).to.equal('release');
+    expect(getSettings().defaults.track).to.equal('main');
     expect(getSettings().defaults.version).to.equal('1.0.0');
   });
 };
