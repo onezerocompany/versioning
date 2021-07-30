@@ -1,4 +1,5 @@
 const names = [
+  'Docker',
   'GitHub',
   'GitLab',
   'Bitbucket',

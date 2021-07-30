@@ -2,4 +2,4 @@
 . "$(dirname "$0")/_/husky.sh"
 
 message=$(cat $1)
-./dist/validate/index.js message="$message"
+npm run verify-message -- message="$message"
