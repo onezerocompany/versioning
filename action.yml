@@ -28,7 +28,6 @@ runs:
   using: docker
   image: Dockerfile
   args:
-    - node app/index.js
     - --github-token ${{ inputs.token }}
     - --build-number ${{ inputs.build }}
     - --version-template ${{ inputs.number_template }}

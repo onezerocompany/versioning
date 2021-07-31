@@ -123,15 +123,12 @@ const readInputs = (): Record<string, string | null> => {
   return parser.parse_args() as Record<string, string | null>;
 };
 
-/* istanbul ignore next */
-if (require.main === module) {
-  const inputs = readInputs();
+const inputs = readInputs();
 
-  // eslint-disable-next-line no-void
-  void run(
-    inputs.track ?? settings().defaults.track,
-    Number(inputs.build_number ?? 1),
-    inputs.create === 'true',
-    inputs.version_template ?? '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
-  );
-}
+// eslint-disable-next-line no-void
+void run(
+  inputs.track ?? settings().defaults.track,
+  Number(inputs.build_number ?? 1),
+  inputs.create === 'true',
+  inputs.version_template ?? '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
+);
