@@ -28,8 +28,8 @@ runs:
   using: docker
   image: Dockerfile
   args:
-    - --github-token ${{ inputs.token }}
-    - --build-number ${{ inputs.build }}
-    - --version-template ${{ inputs.number_template }}
-    - --track ${{ inputs.track }}
-    - --create ${{ inputs.create }}
+    - --github-token "${{ inputs.token }}"
+    - --build-number "${{ inputs.build }}"
+    - --version-template "${{ inputs.number_template }}"
+    - --track "${{ inputs.track }}"
+    - --create "${{ inputs.create }}"
