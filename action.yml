@@ -27,4 +27,10 @@ outputs:
 runs:
   using: docker
   image: Dockerfile
-  entrypoint: ./app/index.js --github-token ${{ inputs.token }} --build-number ${{ inputs.build }} --version-template ${{ inputs.number_template }} --track ${{ inputs.track }} --create ${{ inputs.create }}
+  args:
+    - node app/index.js
+    - --github-token ${{ inputs.token }}
+    - --build-number ${{ inputs.build }}
+    - --version-template ${{ inputs.number_template }}
+    - --track ${{ inputs.track }}
+    - --create ${{ inputs.create }}
