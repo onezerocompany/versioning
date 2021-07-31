@@ -75,7 +75,6 @@ export const run = async (
   let currentTrack = track;
 
   if (track.length < 1) currentTrack = settings().defaults.track;
-  info(`driving track: ${track}`);
 
   await reportRateLimits();
 
@@ -96,11 +95,22 @@ export const run = async (
   return JSON.stringify(version);
 };
 
+const options = {
+  track: process.env.TRACK ?? settings().defaults.track,
+  build: Number(process.env.BUILD ?? 1),
+  create: process.env.CREATE === 'true',
+  template:
+    process.env.VERSION_TEMPLATE ?? '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>',
+};
+
+info('\nrunning with options:');
+const minChars = 14;
+
+info(`${'  track:'.padEnd(minChars)} ${options.track}`);
+info(`${'  build:'.padEnd(minChars)} ${options.build}`);
 /* istanbul ignore next */
+info(`${'  create:'.padEnd(minChars)} ${options.create ? 'yes' : 'no'}`);
+info(`${'  template:'.padEnd(minChars)} ${options.template}\n\n`);
+
 // eslint-disable-next-line no-void
-void run(
-  process.env.TRACK ?? settings().defaults.track,
-  Number(process.env.BUILD ?? 1),
-  process.env.CREATE === 'true',
-  process.env.VERSION_TEMPLATE ?? '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
-);
+void run(options.track, options.build, options.create, options.template);
