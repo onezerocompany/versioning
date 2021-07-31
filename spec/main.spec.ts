@@ -20,7 +20,6 @@ import { settings } from '../src/settings';
 
 const setupMocks = (): void => {
   process.env.GITHUB_REPOSITORY = 'onezerocompany/test';
-  process.env.GITHUB_TOKEN = 'test';
   nock.cleanAll();
   setupCommitsListMock();
   setupLatestsTagsMock();
