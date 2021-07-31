@@ -95,7 +95,6 @@ export const run = async (
   return JSON.stringify(version);
 };
 
-/* istanbul ignore next */
 const options = {
   track: process.env.TRACK ?? settings().defaults.track,
   build: Number(process.env.BUILD ?? 1),
@@ -109,6 +108,7 @@ const minChars = 14;
 
 info(`${'  track:'.padEnd(minChars)} ${options.track}`);
 info(`${'  build:'.padEnd(minChars)} ${options.build}`);
+/* istanbul ignore next */
 info(`${'  create:'.padEnd(minChars)} ${options.create ? 'yes' : 'no'}`);
 info(`${'  template:'.padEnd(minChars)} ${options.template}\n\n`);
 
