@@ -8,7 +8,6 @@ import { setupCommitsListMock } from './mocks/mocks';
 describe('Commits List', () => {
   before(() => {
     process.env.GITHUB_REPOSITORY = 'onezerocompany/test';
-    process.env.GITHUB_TOKEN = 'test';
     setupCommitsListMock();
   });
 

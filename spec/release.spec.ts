@@ -19,7 +19,6 @@ const setup = (): void => {
   setupRateLimitMock();
   setupLatestsTagsMock();
   process.env.GITHUB_REPOSITORY = 'onezerocompany/test';
-  process.env.GITHUB_TOKEN = 'test';
 };
 
 const maxTimeout = 10000;

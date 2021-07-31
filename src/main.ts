@@ -8,7 +8,6 @@ import { settings } from './settings';
 import { commitsFrom } from './commits';
 import { createRelease } from './create-release';
 import { VersionNumber } from './version-number';
-import { ArgumentParser } from 'argparse';
 
 export const generateDefaultVersionNumber = (
   track: string,
@@ -98,37 +97,10 @@ export const run = async (
 };
 
 /* istanbul ignore next */
-const readInputs = (): Record<string, string | null> => {
-  const parser = new ArgumentParser({
-    description: 'Versioning Tool',
-    add_help: true,
-  });
-
-  parser.add_argument('--github-token', {
-    help: 'token for interacting with the GitHub API',
-  });
-  parser.add_argument('--build-number', {
-    help: 'build number for the release',
-  });
-  parser.add_argument('--version-template', {
-    help: 'template for the version number',
-  });
-  parser.add_argument('--create', {
-    help: 'create a new release',
-  });
-  parser.add_argument('--track', {
-    help: 'release track to use',
-  });
-
-  return parser.parse_args() as Record<string, string | null>;
-};
-
-const inputs = readInputs();
-
 // eslint-disable-next-line no-void
 void run(
-  inputs.track ?? settings().defaults.track,
-  Number(inputs.build_number ?? 1),
-  inputs.create === 'true',
-  inputs.version_template ?? '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
+  process.env.TRACK ?? settings().defaults.track,
+  Number(process.env.BUILD ?? 1),
+  process.env.CREATE === 'true',
+  process.env.VERSION_TEMPLATE ?? '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
 );

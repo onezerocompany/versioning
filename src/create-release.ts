@@ -1,4 +1,3 @@
-import { getInput } from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import type { Version } from './version';
 
@@ -7,7 +6,7 @@ import type { Version } from './version';
  * @param {Version} version version info to use for the release
  */
 export const createRelease = async (version: Version): Promise<void> => {
-  const github = getOctokit(getInput('token') || 'test');
+  const github = getOctokit(process.env.GITHUB_TOKEN ?? 'test');
   const name = version.version.versionString;
   const release = await github.rest.repos.createRelease({
     ...context.repo,
