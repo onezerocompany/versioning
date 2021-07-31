@@ -30,6 +30,6 @@ runs:
   env:
     TRACK: ${{ inputs.track }}
     GITHUB_TOKEN: ${{ inputs.token }}
-    VERSION_TEMPLATE: ${{ "${{ inputs.version_template }}"
+    VERSION_TEMPLATE: ${{ inputs.version_template }}
     CREATE: ${{ inputs.create }}
     BUILD: ${{ inputs.build }}
