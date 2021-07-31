@@ -13,5 +13,5 @@ jobs:
       - name: Run Versioning
         uses: ./
         with:
-          number_template: '<<VERSION_STRING>>'
+          version_template: '<<VERSION_STRING>>'
           create: true

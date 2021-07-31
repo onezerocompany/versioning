@@ -1,4 +1,3 @@
-import { getInput } from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import type { Commit } from './commit';
 
@@ -11,7 +10,7 @@ export const commitsFrom = async (
   track: string,
   commitSha: string
 ): Promise<Commit[]> => {
-  const github = getOctokit(getInput('token') || 'test');
+  const github = getOctokit(process.env.GITHUB_TOKEN ?? 'test');
   const list = (
     await github.rest.repos.listCommits({
       ...context.repo,

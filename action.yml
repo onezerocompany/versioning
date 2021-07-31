@@ -1,7 +1,7 @@
 name: Versioning
 description: Generates a JSON file
 inputs:
-  number_template:
+  version_template:
     description: Template for generating version numbers
     required: true
     default: '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
@@ -27,9 +27,9 @@ outputs:
 runs:
   using: docker
   image: Dockerfile
-  args:
-    - --github-token "${{ inputs.token }}"
-    - --build-number "${{ inputs.build }}"
-    - --version-template "${{ inputs.number_template }}"
-    - --track "${{ inputs.track }}"
-    - --create "${{ inputs.create }}"
+  env:
+    TRACK: ${{ inputs.track }}
+    GITHUB_TOKEN: ${{ inputs.token }}
+    VERSION_TEMPLATE: ${{ "${{ inputs.version_template }}"
+    CREATE: ${{ inputs.create }}
+    BUILD: ${{ inputs.build }}

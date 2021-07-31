@@ -1,6 +1,5 @@
 import { VersionNumber } from './version-number';
 import { context, getOctokit } from '@actions/github';
-import { getInput } from '@actions/core';
 
 export interface RepoInfo {
   owner: string;
@@ -43,7 +42,7 @@ export const latestTag = async (
   track: string,
   template: string | null = null
 ): Promise<Tag | null> => {
-  const github = getOctokit(getInput('token') || 'test');
+  const github = getOctokit(process.env.GITHUB_TOKEN ?? 'test');
 
   // eslint-disable-next-line require-jsdoc
   const loop = async (page = 1): Promise<Tag | null> => {
