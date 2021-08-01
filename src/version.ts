@@ -64,7 +64,7 @@ export class Version {
     }
 
     if (!input.foundTag && !breaking) {
-      triggers.bump = CategoryBump.minor;
+      triggers.bump = CategoryBump.none;
       triggers.release = true;
       triggers.tests = true;
     }

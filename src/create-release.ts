@@ -1,3 +1,4 @@
+import { info } from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import type { Version } from './version';
 
@@ -16,11 +17,15 @@ export const createRelease = async (version: Version): Promise<void> => {
     target_commitish: version.version.track,
   });
 
-  await github.rest.repos.uploadReleaseAsset({
+  info(`creating ${version.version.versionString}: status ${release.status}`);
+
+  const asset = await github.rest.repos.uploadReleaseAsset({
     ...context.repo,
     release_id: release.data.id,
     name: 'version.json',
     // eslint-disable-next-line id-denylist
     data: JSON.stringify(version),
   });
+
+  info(`attaching version.json: status ${asset.status}`);
 };

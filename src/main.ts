@@ -33,14 +33,14 @@ export const generateVersion = async (
     return new Version({
       version: tag.versionNumber.switchTracks(track, build, template),
       commits,
-      foundTag: typeof tag === 'object',
+      foundTag: true,
     });
   }
 
   return new Version({
     version: generateDefaultVersionNumber(track, build, template),
     commits: [],
-    foundTag: typeof tag === 'object',
+    foundTag: false,
   });
 };
 
