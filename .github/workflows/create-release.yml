@@ -15,3 +15,4 @@ jobs:
         with:
           version_template: '<<VERSION_STRING>>'
           create: true
+          track: main
