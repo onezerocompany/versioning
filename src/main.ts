@@ -76,8 +76,6 @@ export const run = async (
 
   if (track.length < 1) currentTrack = settings().defaults.track;
 
-  await reportRateLimits();
-
   // Get the latest tag and generate a version
   const tag = await getTag(currentTrack, template);
   const version = await generateVersion(currentTrack, build, template, tag);

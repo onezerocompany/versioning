@@ -42,7 +42,7 @@ export const latestTag = async (
   track: string,
   template: string | null = null
 ): Promise<Tag | null> => {
-  const github = getOctokit(process.env.GITHUB_TOKEN ?? 'test');
+  const github = getOctokit(process.env.TOKEN ?? 'test');
 
   // eslint-disable-next-line require-jsdoc
   const loop = async (page = 1): Promise<Tag | null> => {
