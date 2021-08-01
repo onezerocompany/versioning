@@ -29,7 +29,7 @@ runs:
   image: Dockerfile
   env:
     TRACK: ${{ inputs.track }}
-    GITHUB_TOKEN: ${{ inputs.token }}
+    TOKEN: ${{ inputs.token }}
     VERSION_TEMPLATE: ${{ inputs.version_template }}
     CREATE: ${{ inputs.create }}
     BUILD: ${{ inputs.build }}

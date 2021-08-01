@@ -10,7 +10,7 @@ export const commitsFrom = async (
   track: string,
   commitSha: string
 ): Promise<Commit[]> => {
-  const github = getOctokit(process.env.GITHUB_TOKEN ?? 'test');
+  const github = getOctokit(process.env.TOKEN ?? 'test');
   const list = (
     await github.rest.repos.listCommits({
       ...context.repo,
