@@ -1,16 +1,11 @@
-import { info } from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import type { Version } from './version';
-
-const jsonSpacing = 2;
 
 /**
  * Creates a github release from a Version
  * @param {Version} version version info to use for the release
  */
 export const createRelease = async (version: Version): Promise<void> => {
-  info(`\ncreating release:\n${JSON.stringify(version, null, jsonSpacing)}\n`);
-
   const github = getOctokit(process.env.TOKEN ?? 'test');
   const release = await github.rest.repos.createRelease({
     ...context.repo,

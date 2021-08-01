@@ -33,14 +33,14 @@ export const generateVersion = async (
     return new Version({
       version: tag.versionNumber.switchTracks(track, build, template),
       commits,
-      foundTag: typeof tag !== 'undefined',
+      foundTag: typeof tag === 'object',
     });
   }
 
   return new Version({
     version: generateDefaultVersionNumber(track, build, template),
     commits: [],
-    foundTag: typeof tag !== 'undefined',
+    foundTag: typeof tag === 'object',
   });
 };
 
@@ -58,6 +58,8 @@ export const getTag = async (
 
   return tag;
 };
+
+const jsonSpacing = 2;
 
 /**
  * Run the main program
@@ -80,6 +82,7 @@ export const run = async (
   const tag = await getTag(currentTrack, template);
   const version = await generateVersion(currentTrack, build, template, tag);
 
+  info(`\ngenerated version:\n${JSON.stringify(version, null, jsonSpacing)}\n`);
   setOutput('version', version);
 
   // Create release
