@@ -69,7 +69,6 @@
       "node": true
     }
   },
-  "private": true,
   "dependencies": {
     "@actions/core": "^1.4.0",
     "@actions/github": "^5.0.0",
