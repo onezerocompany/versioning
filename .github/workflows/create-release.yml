@@ -16,3 +16,4 @@ jobs:
           version_template: '<<VERSION_STRING>>'
           create: true
           track: main
+          token: ${{ secrets.TOKEN_GITHUB_RELEASES }}
