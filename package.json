@@ -93,6 +93,7 @@
   },
   "files": [
     "dist/index.js",
+    "dist/categories.yml",
     "LICENSE",
     "README.md"
   ]
