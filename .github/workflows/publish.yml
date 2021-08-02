@@ -1,0 +1,36 @@
+name: Publish
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    name: NPM & GitHub Packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install Dependencies
+        run: npm install
+      - name: Set Version
+        run: npm --no-git-tag-version version "${{ github.event.release.name }}"
+      - name: Build Message Validator
+        run: npm run build:message
+      - name: Publish to NPM
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.TOKEN_NPM }}
+      - name: Setup for GitHub Packages
+        uses: actions/setup-node@v2
+        with:
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@onezerocompany'
+      - name: Publish to GitHub Packages
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.TOKEN_GITHUB_RELEASES }}
