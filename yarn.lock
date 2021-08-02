@@ -391,20 +391,6 @@
   dependencies:
     "@tsconfig/node14" "^1.0.1"
 
-"@sinonjs/commons@^1.7.0":
-  "integrity" "sha512-xkNcLAn/wZaX14RPlwizcKicDk9G3F8m2nU3L7Ukm5zBgTwiT0wsoFAHx9Jq56fJA1z/7uKGtCRu16sOUCLIHQ=="
-  "resolved" "https://registry.npmjs.org/@sinonjs/commons/-/commons-1.8.3.tgz"
-  "version" "1.8.3"
-  dependencies:
-    "type-detect" "4.0.8"
-
-"@sinonjs/fake-timers@^7.1.0":
-  "integrity" "sha512-iQADsW4LBMISqZ6Ci1dupJL9pprqwcVFTcOsEmQOEhW+KLCVn/Y4Jrvg2k19fIHCp+iFprriYPTdRcQR8NbUPg=="
-  "resolved" "https://registry.npmjs.org/@sinonjs/fake-timers/-/fake-timers-7.1.2.tgz"
-  "version" "7.1.2"
-  dependencies:
-    "@sinonjs/commons" "^1.7.0"
-
 "@tsconfig/node10@^1.0.7":
   "integrity" "sha512-aBvUmXLQbayM4w3A8TrjwrXs4DZ8iduJnuJLLRGdkWlyakCf1q6uHZJBzXoRA/huAEknG5tcUyQxN3A+In5euQ=="
   "resolved" "https://registry.npmjs.org/@tsconfig/node10/-/node10-1.0.7.tgz"
@@ -424,11 +410,6 @@
   "integrity" "sha512-FTgBI767POY/lKNDNbIzgAX6miIDBs6NTCbdlDb8TrWovHsSvaVIZDlTqym29C6UqhzwcJx4CYr+AlrMywA0cA=="
   "resolved" "https://registry.npmjs.org/@tsconfig/node16/-/node16-1.0.1.tgz"
   "version" "1.0.1"
-
-"@types/argparse@^2.0.10":
-  "integrity" "sha512-C4wahC3gz3vQtvPazrJ5ONwmK1zSDllQboiWvpMM/iOswCYfBREFnjFbq/iWKIVOCl8+m5Pk6eva6/ZSsDuIGA=="
-  "resolved" "https://registry.npmjs.org/@types/argparse/-/argparse-2.0.10.tgz"
-  "version" "2.0.10"
 
 "@types/body-parser@*":
   "integrity" "sha512-W98JrE0j2K78swW4ukqMleo8R7h/pFETjM2DQ90MF6XK2i4LO4W3gQ71Lt4w3bfm2EvVSyWHplECvB5sK22yFQ=="
@@ -518,13 +499,6 @@
   dependencies:
     "@types/mime" "^1"
     "@types/node" "*"
-
-"@types/sinon@^10.0.2":
-  "integrity" "sha512-BHn8Bpkapj8Wdfxvh2jWIUoaYB/9/XhsL0oOvBfRagJtKlSl9NWPcFOz2lRukI9szwGxFtYZCTejJSqsGDbdmw=="
-  "resolved" "https://registry.npmjs.org/@types/sinon/-/sinon-10.0.2.tgz"
-  "version" "10.0.2"
-  dependencies:
-    "@sinonjs/fake-timers" "^7.1.0"
 
 "@typescript-eslint/eslint-plugin@^4.28.0", "@typescript-eslint/eslint-plugin@^4.28.5":
   "integrity" "sha512-m31cPEnbuCqXtEZQJOXAHsHvtoDi9OVaeL5wZnO2KZTnkvELk+u6J6jHg+NzvWQxk+87Zjbc4lJS4NHmgImz6Q=="
@@ -2903,7 +2877,7 @@
   dependencies:
     "prelude-ls" "^1.2.1"
 
-"type-detect@^4.0.0", "type-detect@^4.0.5", "type-detect@4.0.8":
+"type-detect@^4.0.0", "type-detect@^4.0.5":
   "integrity" "sha512-0fr/mIH1dlO+x7TlcMy+bIDqKPsw/70tVyeHW787goQjhmqaZe10uwLujubK9q9Lg6Fiho1KUKDYz0Z7k7g5/g=="
   "resolved" "https://registry.npmjs.org/type-detect/-/type-detect-4.0.8.tgz"
   "version" "4.0.8"

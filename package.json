@@ -1,11 +1,25 @@
 {
-  "name": "versioning-action",
+  "name": "@onezerocompany/versioning",
   "bin": {
-    "verify-message": "dist/validate/index.js"
+    "verify-message": "dist/index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/onezerocompany/versioning.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": {
+    "name": "OneZero Company",
+    "email": "support@onezero.company",
+    "url": "https://github.com/onezerocompany"
+  },
+  "license": "MIT",
   "scripts": {
     "test": "mocha -r ts-node/register -p tsconfig.json spec/*.spec.ts spec/**/*.spec.ts",
     "build:action": "ncc build src/main.ts -o dist",
+    "build:message": "ncc build src/validate/validate.ts -o dist",
     "coverage": "nyc -r lcov -r text-summary npm run test",
     "format:prettier": "prettier --write src/*.ts spec/*.ts",
     "format:eslint": "eslint --fix --ext .js,.ts src/ spec/",
@@ -77,5 +91,10 @@
       "es6",
       "node"
     ]
-  }
+  },
+  "files": [
+    "dist/index.js",
+    "LICENSE",
+    "README.md"
+  ]
 }
