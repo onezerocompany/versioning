@@ -1,0 +1,13 @@
+{
+  "extends": "@onezerocompany/tsconfig-node/tsconfig.json",
+  "include": ["src/main.ts"],
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "listEmittedFiles": true,
+    "declarationMap": false,
+    "declaration": false,
+    "sourceMap": false,
+    "outDir": "dist"
+  }
+}

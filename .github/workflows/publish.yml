@@ -20,7 +20,7 @@ jobs:
       - name: Set Version
         run: npm --no-git-tag-version version "${{ github.event.release.name }}"
       - name: Build Message Validator
-        run: npm run build:message
+        run: npm run build:validator
       - name: Publish to NPM
         run: npm publish
         env:
