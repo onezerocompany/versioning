@@ -1,4 +1,4 @@
 {
   "extends": "@onezerocompany/tsconfig-node/tsconfig.json",
-  "include": ["src/**/*.ts", "spec/**/*.ts"]
+  "include": ["spec/**/*.spec.ts"]
 }
