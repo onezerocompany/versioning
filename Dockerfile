@@ -10,7 +10,7 @@ FROM node:16-alpine as app
 
 WORKDIR /app
 COPY --from=builder /app/dist /app/dist
-RUN chmod +x /app/main.js
+RUN chmod +x /app/dist/main.js
 COPY ./package.json /app
 COPY ./categories.yml /app
 RUN npm install --only=prod --ignore-scripts
