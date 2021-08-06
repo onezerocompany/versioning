@@ -1,8 +1,6 @@
 {
   "name": "@onezerocompany/versioning",
-  "bin": {
-    "verify-message": "dist/main.js"
-  },
+  "bin": "dist/validate/validate.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/onezerocompany/versioning.git"
@@ -18,8 +16,8 @@
   "license": "MIT",
   "scripts": {
     "test": "mocha -r ts-node/register -p tsconfig.json spec/*.spec.ts spec/**/*.spec.ts",
-    "build:action": "tsc -p tsconfig.action.json",
-    "build:validator": "tsc -p tsconfig.validate.json",
+    "build:action": "rm -r dist || true && tsc -p tsconfig.action.json",
+    "build:validator": "rm -r dist || true && tsc -p tsconfig.validate.json",
     "coverage": "nyc -r lcov -r text-summary npm run test",
     "format:prettier": "prettier --write src/*.ts spec/*.ts",
     "format:eslint": "eslint --fix --ext .js,.ts src/ spec/",
@@ -30,7 +28,6 @@
     "prepare": "husky install",
     "verify-message": "ts-node src/validate/validate.ts"
   },
-  "main": "dist/validate/index.js",
   "devDependencies": {
     "@onezerocompany/eslint-config": "^1.4.0",
     "@onezerocompany/prettier-config": "^1.0.1",
