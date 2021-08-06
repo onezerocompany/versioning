@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { parse } from 'yaml';
 
-const file = `${__dirname}/categories.yml`;
+const file = `${__dirname}/../../categories.yml`;
 
 export enum CategoryScope {
   public = 'public',
