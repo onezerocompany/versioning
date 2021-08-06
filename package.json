@@ -1,7 +1,7 @@
 {
   "name": "@onezerocompany/versioning",
   "bin": {
-    "verify-message": "dist/index.js"
+    "verify-message": "dist/main.js"
   },
   "repository": {
     "type": "git",
