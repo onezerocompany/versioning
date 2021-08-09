@@ -22,6 +22,6 @@ jobs:
         run: |
           node .github/scripts/action-yaml.js "v${{ fromJson(steps.versioning.outputs.version).version.major }}"
           git add .
-          git ci -m "generated action"
+          git commit -m "generated action"
           git tag v${{ fromJson(steps.versioning.outputs.version).version.major }}
           git push origin :v${{ fromJson(steps.versioning.outputs.version).version.major }}
