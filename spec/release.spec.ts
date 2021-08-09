@@ -23,11 +23,7 @@ const setup = (): void => {
 
 const maxTimeout = 10000;
 
-describe('Create Release', () => {
-  before(setup);
-  after(() => {
-    nock.cleanAll();
-  });
+const shouldCreateRelease = (): void => {
   it('should create release', async () => {
     const create = setupReleaseCreateMock();
     const upload = setupReleaseUploadAssetMock();
@@ -38,7 +34,8 @@ describe('Create Release', () => {
       ),
       commits: [
         {
-          message: '[feat]> new feature\n[fix]> a fix\n[doc]> added a doc',
+          message:
+            'feat(new) -> new feature\nfeat(fix) -> a fix\ndoc -> added a doc',
           ref: 'commit-ref',
         },
       ],
@@ -49,4 +46,12 @@ describe('Create Release', () => {
     expect(create.isDone()).to.equal(true);
     expect(upload.isDone()).to.equal(true);
   }).timeout(maxTimeout);
+};
+
+describe('Create Release', () => {
+  before(setup);
+  after(() => {
+    nock.cleanAll();
+  });
+  shouldCreateRelease();
 });
