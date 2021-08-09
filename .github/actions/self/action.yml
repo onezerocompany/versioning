@@ -1,0 +1,38 @@
+name: Versioning
+description: Generates a JSON file
+inputs:
+  version_template:
+    description: Template for generating version numbers
+    required: true
+    default: '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
+  track:
+    description: The version track to use for this version
+    required: true
+    default: release
+  token:
+    description: Token to use for Authentication
+    required: true
+    default: ${{ github.token }}
+  create:
+    description: Create github release and add Version.json
+    required: false
+    default: 'false'
+  build:
+    description: Build number for the version to create
+    required: false
+    default: ${{ github.run_number }}
+  version:
+    description: Which version of the versioning tool to use
+    required: true
+outputs:
+  version:
+    description: JSON with version information
+runs:
+  using: docker
+  image: ../../../Dockerfile
+  env:
+    TRACK: ${{ inputs.track }}
+    TOKEN: ${{ inputs.token }}
+    VERSION_TEMPLATE: ${{ inputs.version_template }}
+    CREATE: ${{ inputs.create }}
+    BUILD: ${{ inputs.build }}

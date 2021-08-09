@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Run Versioning
         id: versioning
-        uses: ./
+        uses: ../actions/self
         with:
           version_template: '<<VERSION_STRING>>'
           create: true
