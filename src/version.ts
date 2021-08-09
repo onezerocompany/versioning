@@ -29,6 +29,11 @@ export interface Triggers {
   tests: boolean;
 }
 
+export interface VersionChangelog {
+  content: string;
+  hasChanges: boolean;
+}
+
 /**
  * Contains all the information
  */
@@ -36,8 +41,8 @@ export class Version {
   public version: VersionNumber;
   public changes: Change[];
   public changelogs: {
-    public: string;
-    private: string;
+    public: VersionChangelog;
+    private: VersionChangelog;
   };
 
   public triggers: Triggers;

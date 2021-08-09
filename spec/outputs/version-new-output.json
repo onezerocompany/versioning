@@ -1,8 +1,14 @@
 {
   "changes": [],
   "changelogs": {
-    "public": "Bug Fixes:\n- minor bug fixes",
-    "private": "- no changes"
+    "public": {
+      "content": "Bug Fixes:\n- minor bug fixes",
+      "hasChanges": false
+    },
+    "private": {
+      "content": "- no changes",
+      "hasChanges": false
+    }
   },
   "triggers": { "bump": "none", "release": true, "tests": true },
   "version": {

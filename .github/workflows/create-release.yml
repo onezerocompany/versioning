@@ -11,9 +11,17 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
       - name: Run Versioning
+        id: versioning
         uses: ./
         with:
           version_template: '<<VERSION_STRING>>'
           create: true
           track: main
           token: ${{ secrets.TOKEN_GITHUB_RELEASES }}
+      - name: Generate Major Tag
+        run: |
+          node .github/scripts/action-yaml.js "v${{ fromJson(steps.versioning.outputs.version).version.major }}"
+          git add .
+          git ci -m "generated action"
+          git tag v${{ fromJson(steps.versioning.outputs.version).version.major }}
+          git push origin :v${{ fromJson(steps.versioning.outputs.version).version.major }}

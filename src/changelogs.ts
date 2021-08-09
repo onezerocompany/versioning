@@ -6,6 +6,7 @@ import {
 } from './categories/categories';
 import type { Change } from './change';
 import { settings } from './settings';
+import type { VersionChangelog } from './version';
 
 const generateList = (
   changes: Change[],
@@ -28,14 +29,9 @@ const generateList = (
   }));
 };
 
-/**
- * Generates a changelog for a list of changes
- * @param {ChangelogType} scope the scope of this changelog
- * @param {Change[]} changes a list of changes to include in this changelog
- * @return {string} the generated changelog
- */
-export const changelog = (scope: CategoryScope, changes: Change[]): string => {
-  const list = generateList(changes, scope);
+const generateContent = (
+  list: Array<{ category: Category; changes: Change[] }>
+): string => {
   let output = '';
 
   // Loop through the items in the list
@@ -52,13 +48,34 @@ export const changelog = (scope: CategoryScope, changes: Change[]): string => {
     }
   }
 
+  return output;
+};
+
+/**
+ * Generates a changelog for a list of changes
+ * @param {ChangelogType} scope the scope of this changelog
+ * @param {Change[]} changes a list of changes to include in this changelog
+ * @return {string} the generated changelog
+ */
+export const changelog = (
+  scope: CategoryScope,
+  changes: Change[]
+): VersionChangelog => {
+  const content = generateContent(generateList(changes, scope)).trim();
+
   // Add default changelog message if no changes were found
-  if (output.length === 0) {
+  if (content.length === 0) {
     if (scope === CategoryScope.public)
-      output = settings().defaults.changelog.message.public;
-    if (scope === CategoryScope.private)
-      output = settings().defaults.changelog.message.private;
+      return {
+        content: settings().defaults.changelog.message.public,
+        hasChanges: false,
+      };
+
+    return {
+      content: settings().defaults.changelog.message.private,
+      hasChanges: false,
+    };
   }
 
-  return output.trim();
+  return { content, hasChanges: true };
 };

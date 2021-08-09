@@ -17,17 +17,17 @@ describe('Public Categories', () => {
       .map(category => category.title);
 
     for (const title of unwantedTitles) {
-      expect(external).to.not.contain(`${title}:`);
+      expect(external.content).to.not.contain(`${title}:`);
     }
   });
   it('should not begin or end with whitelines', () => {
-    expect(external[0]).to.not.equal('\n').and.to.not.equal('\r');
-    expect(external[external.length - 1])
+    expect(external.content[0]).to.not.equal('\n').and.to.not.equal('\r');
+    expect(external.content[external.content.length - 1])
       .to.not.equal('\n')
       .and.to.not.equal('\r');
   });
   it('should have correct empty response', () => {
-    expect(changelog(CategoryScope.public, [])).to.equal(
+    expect(changelog(CategoryScope.public, []).content).to.equal(
       'Bug Fixes:\n- minor bug fixes'
     );
   });
@@ -46,16 +46,18 @@ describe('Private Categories', () => {
       .map(category => category.title);
 
     for (const title of unwantedTitles) {
-      expect(internal).to.not.contain(`${title}:`);
+      expect(internal.content).to.not.contain(`${title}:`);
     }
   });
   it('should not begin or end with whitelines', () => {
-    expect(internal[0]).to.not.equal('\n').and.to.not.equal('\r');
-    expect(internal[internal.length - 1])
+    expect(internal.content[0]).to.not.equal('\n').and.to.not.equal('\r');
+    expect(internal.content[internal.content.length - 1])
       .to.not.equal('\n')
       .and.to.not.equal('\r');
   });
   it('should have correct empty response', () => {
-    expect(changelog(CategoryScope.private, [])).to.equal('- no changes');
+    expect(changelog(CategoryScope.private, []).content).to.equal(
+      '- no changes'
+    );
   });
 });

@@ -13,7 +13,11 @@ export const createRelease = async (version: Version): Promise<void> => {
     name: version.version.versionString,
     tag_name: version.version.versionString,
     // eslint-disable-next-line id-denylist
-    body: `## Public Changelog:\n${version.changelogs.public}\n\n---\n## Private Changelog:\n${version.changelogs.private}`,
+    body: `${version.changelogs.public.content}${
+      version.changelogs.private.hasChanges
+        ? `\n---\n${version.changelogs.private.content}`
+        : ''
+    }`,
     target_commitish: version.version.track,
   });
 
