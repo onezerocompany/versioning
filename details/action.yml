@@ -1,0 +1,32 @@
+name: Version Details
+description: Fetches version details from a release
+inputs:
+  version:
+    required: true
+    description: Specifies which release to get the details for
+outputs:
+  triggers_bump:
+    description: Type of bump this version received
+  triggers_release:
+    description: Whether this version caused a release
+  triggers_tests:
+    description: Whether this version caused tests to run
+  version_major:
+    description: The major version number
+  version_minor:
+    description: The minor version number
+  version_patch:
+    description: The patch version number
+  version_track:
+    description: The track this version is on
+  version_build:
+    description: The build numer of this version
+  version_template:
+    description: The template used to generate the version string
+  version_versionString:
+    description: The generated version string
+  json:
+    description: The raw version JSON
+runs:
+  using: node12
+  main: details/details.js

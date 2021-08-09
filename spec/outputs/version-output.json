@@ -17,8 +17,14 @@
     }
   ],
   "changelogs": {
-    "public": "Added Features:\n- added a feature",
-    "private": "- no changes"
+    "public": {
+      "content": "Added Features:\n- added a feature",
+      "hasChanges": true
+    },
+    "private": {
+      "content": "- no changes",
+      "hasChanges": false
+    }
   },
   "triggers": { "bump": "minor", "release": true, "tests": true },
   "version": {

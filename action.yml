@@ -21,12 +21,15 @@ inputs:
     description: Build number for the version to create
     required: false
     default: ${{ github.run_number }}
+  version:
+    description: Which version of the versioning tool to use
+    required: true
 outputs:
   version:
     description: JSON with version information
 runs:
   using: docker
-  image: Dockerfile
+  image: ghcr.io/onezerocompany/versioning:latest
   env:
     TRACK: ${{ inputs.track }}
     TOKEN: ${{ inputs.token }}
