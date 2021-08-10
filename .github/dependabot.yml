@@ -1,0 +1,17 @@
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+      time: '05:00'
+      timezone: 'Europe/Amsterdam'
+    # Add assignees
+    open-pull-requests-limit: 100
+    assignees:
+      - 'lucasilverentand'
+    labels:
+      - dependencies
+      - npm
+    commit-message:
+      prefix: dependencies -> updated dependencies

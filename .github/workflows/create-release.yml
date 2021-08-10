@@ -15,13 +15,6 @@ jobs:
         uses: ./.github/actions/self
         with:
           version_template: '<<VERSION_STRING>>'
-          create: true
+          create: false
           track: main
           token: ${{ secrets.TOKEN_GITHUB_RELEASES }}
-      - name: Generate Major Tag
-        run: |
-          node .github/scripts/action-yaml.js "v${{ fromJson(steps.versioning.outputs.version).version.major }}"
-          git add .
-          git commit -m "generated action"
-          git tag v${{ fromJson(steps.versioning.outputs.version).version.major }}
-          git push origin :v${{ fromJson(steps.versioning.outputs.version).version.major }}

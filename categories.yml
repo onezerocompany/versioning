@@ -297,6 +297,19 @@
   triggers:
     test: true
     release: true
+- id: dependencies
+  title: Dependencies
+  description: Changes to dependency versions
+  color: '#FFEFD0'
+  label: dependencies
+  tags:
+    - dependency
+    - dependencies
+  scope: private
+  bump: patch
+  triggers:
+    test: true
+    release: true
 - id: misc
   title: Miscellaneous
   description: Other changes that do not fit any other categories
