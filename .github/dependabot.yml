@@ -14,4 +14,4 @@ updates:
       - dependencies
       - npm
     commit-message:
-      prefix: dependencies -> updated dependencies
+      prefix: dependencies ->
