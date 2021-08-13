@@ -10,5 +10,6 @@
   "editor.autoClosingBrackets": "always",
   "mochaExplorer.files": "spec/**/*.spec.ts",
   "mochaExplorer.require": "ts-node/register",
-  "mochaExplorer.autoload": true
+  "mochaExplorer.autoload": true,
+  "git.enableCommitSigning": true
 }
