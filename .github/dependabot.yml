@@ -1,32 +1,24 @@
 version: 2
 updates:
-  - package-ecosystem: npm
+  - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: daily
-      time: 05:00
-      timezone: Europe/Amsterdam
+      interval: 'daily'
+      time: '05:00'
+      timezone: 'Europe/Amsterdam'
     open-pull-requests-limit: 100
-    assignees:
-      - lucasilverentand
-    reviewers:
-      - lucasilverentand
     labels:
-      - dependencies
+      - 'dependencies'
     commit-message:
-      prefix: dependencies ->
-  - package-ecosystem: github-actions
+      prefix: 'dependencies ->'
+  - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
-      interval: daily
-      time: 05:00
-      timezone: Europe/Amsterdam
+      interval: 'daily'
+      time: '05:00'
+      timezone: 'Europe/Amsterdam'
     open-pull-requests-limit: 100
-    assignees:
-      - lucasilverentand
-    reviewers:
-      - lucasilverentand
     labels:
-      - dependencies
+      - 'dependencies'
     commit-message:
-      prefix: ci-other ->
+      prefix: 'ci-other ->'
