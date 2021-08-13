@@ -22,6 +22,9 @@ jobs:
         run: node .github/scripts/action-yaml.js ${{ fromJSON(steps.versioning.outputs.version).version.versionString }}
       - name: Create Tag
         run: |
+          git add action.yml
+          git config --global user.email "luca@onezero.company"
+          git config --global user.name "Luca Silverentand"
           git commit -m "set docker image in action.yml"
           git tag ${{ fromJSON(steps.versioning.outputs.version).version.versionString }}
           git tag v${{ fromJSON(steps.versioning.outputs.version).version.major }}
