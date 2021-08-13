@@ -32,8 +32,10 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags:
-            ghcr.io/onezerocompany/versioning:${{ github.event.release.name }}
-            ghcr.io/onezerocompany/versioning:v${{ steps.run_tests.outputs.version_major }}
+
+            ghcr.io/onezerocompany/versioning-action:${{ github.event.release.name }}
+            ghcr.io/onezerocompany/versioning-action:v${{ steps.run_tests.outputs.version_major }}
+            ghcr.io/onezerocompany/versioning-action:latest
   npm:
     name: NPM & GitHub Packages
     runs-on: ubuntu-latest
@@ -49,12 +51,10 @@ jobs:
         run: npm install
       - name: Set Version
         run: npm --no-git-tag-version version "${{ github.event.release.name }}"
+      - name: Set Name
+        run: npm config set name="@onezerocompany/verify-commit-message"
       - name: Build Message Validator
         run: npm run build:validator
-      - name: Publish to NPM
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.TOKEN_NPM }}
       - name: Setup for GitHub Packages
         uses: actions/setup-node@v2
         with:
