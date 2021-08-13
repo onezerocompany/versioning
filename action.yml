@@ -29,7 +29,7 @@ outputs:
     description: JSON with version information
 runs:
   using: docker
-  image: ghcr.io/onezerocompany/versioning:latest
+  image: ghcr.io/onezerocompany/versioning-action:latest
   env:
     TRACK: ${{ inputs.track }}
     TOKEN: ${{ inputs.token }}
