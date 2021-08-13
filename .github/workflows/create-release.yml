@@ -19,20 +19,20 @@ jobs:
           track: main
           token: ${{ secrets.TOKEN_GITHUB_RELEASES }}
       - name: Generate action.yml
-        run: node .github/scripts/action-yaml.js ${{ fromJSON(steps.versioning.version).version.versionString }}
+        run: node .github/scripts/action-yaml.js ${{ fromJSON(steps.versioning.outputs.version).version.versionString }}
       - name: Create Tag
         run: |
           git commit -m "set docker image in action.yml"
-          git tag ${{ fromJSON(steps.versioning.version).version.versionString }}
-          git tag v${{ fromJSON(steps.versioning.version).version.major }}
-          git push origin ${{ fromJSON(steps.versioning.version).version.versionString }}
-          git push origin :v${{ fromJSON(steps.versioning.version).version.major }}
-          git push origin v${{ fromJSON(steps.versioning.version).version.major }}
+          git tag ${{ fromJSON(steps.versioning.outputs.version).version.versionString }}
+          git tag v${{ fromJSON(steps.versioning.outputs.version).version.major }}
+          git push origin ${{ fromJSON(steps.versioning.outputs.version).version.versionString }}
+          git push origin :v${{ fromJSON(steps.versioning.outputs.version).version.major }}
+          git push origin v${{ fromJSON(steps.versioning.outputs.version).version.major }}
       - name: Create Release
         uses: actions/github-script@v4
         with:
           script: |
-            const version = JSON.parse("${{ steps.versioning.version }}")
+            const version = JSON.parse("${{ steps.versioning.outputs.version }}")
             const release = await github.rest.repos.createRelease({
               ...context.repo,
               name: version.version.versionString,
