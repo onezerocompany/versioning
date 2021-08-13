@@ -1046,9 +1046,9 @@ eslint-config-prettier@^8.3.0:
   version "8.3.0"
   resolved "https://registry.npmjs.org/eslint-config-prettier/-/eslint-config-prettier-8.3.0.tgz"
 
-eslint-plugin-chai-friendly@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.npmjs.org/eslint-plugin-chai-friendly/-/eslint-plugin-chai-friendly-0.7.1.tgz"
+eslint-plugin-chai-friendly@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-chai-friendly/-/eslint-plugin-chai-friendly-0.7.2.tgz#0ebfbb2c1244f5de2997f3963d155758234f2b0f"
 
 eslint-scope@^5.0.0, eslint-scope@^5.1.1:
   version "5.1.1"
