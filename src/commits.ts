@@ -1,6 +1,12 @@
 import { context, getOctokit } from '@actions/github';
 import type { Commit } from './commit';
 
+const commitIsMerge = (message: string): boolean => {
+  const title = message.split('\n')[0].toLowerCase();
+
+  return title.includes('merge pull request') || title.includes('merge branch');
+};
+
 /**
  * Get commits from commit sha on
  * @param {string} track name of track
@@ -22,10 +28,13 @@ export const commitsFrom = async (
 
   for (const commit of list) {
     if (commit.sha === commitSha) break;
-    commits.push({
-      ref: commit.sha,
-      message: commit.commit.message,
-    });
+
+    if (!commitIsMerge(commit.commit.message)) {
+      commits.push({
+        ref: commit.sha,
+        message: commit.commit.message,
+      });
+    }
   }
 
   return commits;
