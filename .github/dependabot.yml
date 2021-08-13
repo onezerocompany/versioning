@@ -1,17 +1,32 @@
 version: 2
 updates:
-  - package-ecosystem: 'npm'
+  - package-ecosystem: npm
     directory: '/'
     schedule:
-      interval: 'daily'
-      time: '05:00'
-      timezone: 'Europe/Amsterdam'
-    # Add assignees
+      interval: daily
+      time: 05:00
+      timezone: Europe/Amsterdam
     open-pull-requests-limit: 100
     assignees:
-      - 'lucasilverentand'
+      - lucasilverentand
+    reviewers:
+      - lucasilverentand
     labels:
       - dependencies
-      - npm
     commit-message:
       prefix: dependencies ->
+  - package-ecosystem: github-actions
+    directory: '/'
+    schedule:
+      interval: daily
+      time: 05:00
+      timezone: Europe/Amsterdam
+    open-pull-requests-limit: 100
+    assignees:
+      - lucasilverentand
+    reviewers:
+      - lucasilverentand
+    labels:
+      - dependencies
+    commit-message:
+      prefix: ci-other ->
