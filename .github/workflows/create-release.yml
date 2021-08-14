@@ -22,7 +22,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
-            const version = JSON.parse("${{ steps.versioning.outputs.version }}")
+            const version = JSON.parse('${{ steps.versioning.outputs.version }}')
             const { readFileSync } = require('fs');
             const { resolve } = require('path');
 
@@ -43,10 +43,10 @@ jobs:
               sha: mainBranch.object.sha
             })
 
-            const fileSha = await github.rest.repos.getContent({
+            const fileSha = (await github.rest.repos.getContent({
               ...context.repo,
               path: 'action.yml'
-            }).sha
+            })).sha
 
             await github.rest.repos.createOrUpdateFileContents({
               ...context.repo,
