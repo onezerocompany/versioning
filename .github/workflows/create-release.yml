@@ -55,7 +55,7 @@ jobs:
               message: 'updated docker version',
               content: Buffer.from(content).toString('base64'),
               sha: file.data.sha,
-              branch: version.version.versionString
+              branch: `${ version.version.versionString }-action-create`
             })
 
             const release = await github.repos.createRelease({
