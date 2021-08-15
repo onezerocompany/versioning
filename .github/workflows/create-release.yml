@@ -23,6 +23,7 @@ jobs:
       - name: Create Release
         uses: actions/github-script@v4
         with:
+          github-token: ${{ secrets.TOKEN_GITHUB_RELEASES }}
           script: |
             const { readFileSync } = require('fs');
             const version = JSON.parse(readFileSync('version.json', 'utf-8'))
@@ -42,17 +43,17 @@ jobs:
               sha: mainBranch.object.sha
             })
 
-            const fileSha = (await github.repos.getContent({
+            const file = await github.repos.getContent({
               ...context.repo,
               path: 'action.yml'
-            })).sha
+            })
 
             await github.repos.createOrUpdateFileContents({
               ...context.repo,
               path: 'action.yml',
               message: 'updated docker version',
               content,
-              sha: fileSha,
+              sha: file.sha,
               branch: version.version.versionString
             })
 
