@@ -67,7 +67,7 @@ jobs:
                   ? `\n---\n${version.changelogs.private.content}`
                   : ''
               }`,
-              target_commitish: version.version.versionString,
+              target_commitish: `${ version.version.versionString }-action-create`,
             });
 
             await github.repos.uploadReleaseAsset({
