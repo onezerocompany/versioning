@@ -37,12 +37,10 @@ jobs:
               ref: 'heads/main'
             })
 
-            console.log(mainBranch)
-
             await github.git.createRef({
               ...context.repo,
               ref: `refs/heads/${ version.version.versionString }`,
-              sha: mainBranch.object.sha
+              sha: mainBranch.data.object.sha
             })
 
             const file = await github.repos.getContent({
@@ -50,14 +48,12 @@ jobs:
               path: 'action.yml'
             })
 
-            console.log(file)
-
             await github.repos.createOrUpdateFileContents({
               ...context.repo,
               path: 'action.yml',
               message: 'updated docker version',
               content,
-              sha: file.sha,
+              sha: file.data.sha,
               branch: version.version.versionString
             })
 
