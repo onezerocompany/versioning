@@ -37,6 +37,8 @@ jobs:
               ref: 'heads/main'
             })
 
+            console.log(mainBranch)
+
             await github.git.createRef({
               ...context.repo,
               ref: `refs/heads/${ version.version.versionString }`,
@@ -47,6 +49,8 @@ jobs:
               ...context.repo,
               path: 'action.yml'
             })
+
+            console.log(file)
 
             await github.repos.createOrUpdateFileContents({
               ...context.repo,
