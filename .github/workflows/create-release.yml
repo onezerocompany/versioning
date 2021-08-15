@@ -25,10 +25,8 @@ jobs:
         with:
           script: |
             const { readFileSync } = require('fs');
-            const { resolve } = require('path');
-
-            const version = JSON.parse(readFileSync(resolve(__dirname, '../..', 'version.json')))
-            const content = readFileSync(resolve(__dirname, '../..', 'action.yml'), 'utf-8').replace(
+            const version = JSON.parse(readFileSync('version.json', 'utf-8'))
+            const content = readFileSync('action.yml', 'utf-8').replace(
               'ghcr.io/onezerocompany/versioning-action:latest',
               `ghcr.io/onezerocompany/versioning-action:${version.version.versionString}`
             );
