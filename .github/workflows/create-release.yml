@@ -39,7 +39,7 @@ jobs:
             })
 
             await github.git.createRef({
-              ...context.repo, ref,
+              ...context.repo, ref: `refs/${ref}`,
               sha: mainBranch.data.object.sha
             })
 
