@@ -52,7 +52,7 @@ jobs:
               ...context.repo,
               path: 'action.yml',
               message: 'updated docker version',
-              content,
+              content: btoa(content),
               sha: file.data.sha,
               branch: version.version.versionString
             })
