@@ -18,16 +18,17 @@ jobs:
           create: false
           track: main
           token: ${{ secrets.TOKEN_GITHUB_RELEASES }}
+      - name: Write version.json
+        run: echo '${{ steps.versioning.outputs.version }}' > version.json
       - name: Create Release
         uses: actions/github-script@v4
         with:
           script: |
-            const version = JSON.parse('${{ steps.versioning.outputs.version }}')
             const { readFileSync } = require('fs');
             const { resolve } = require('path');
 
-            const file = resolve(__dirname, '../..', 'action.yml');
-            const content = readFileSync(file, 'utf-8').replace(
+            const version = JSON.parse(readFileSync(resolve(__dirname, '../..', 'version.json')))
+            const content = readFileSync(resolve(__dirname, '../..', 'action.yml'), 'utf-8').replace(
               'ghcr.io/onezerocompany/versioning-action:latest',
               `ghcr.io/onezerocompany/versioning-action:${version.version.versionString}`
             );
