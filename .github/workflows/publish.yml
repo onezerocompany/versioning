@@ -22,7 +22,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Fetch Version Details
         id: version
-        uses: ../../details
+        uses: ./../../details
         with:
           version: ${{ github.event.release.name }}
       - name: Build and push
@@ -32,7 +32,6 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags:
-
             ghcr.io/onezerocompany/versioning-action:${{ github.event.release.name }}
             ghcr.io/onezerocompany/versioning-action:v${{ steps.run_tests.outputs.version_major }}
             ghcr.io/onezerocompany/versioning-action:latest

@@ -48,13 +48,25 @@ jobs:
               path: 'action.yml'
             })
 
-            await github.repos.createOrUpdateFileContents({
+            const tree = await github.git.createTree({
               ...context.repo,
-              path: 'action.yml',
-              message: 'updated docker version',
-              content: Buffer.from(content).toString('base64'),
-              sha: file.data.sha,
-              branch: `${ version.version.versionString }-action-create`
+              tree: [
+                {
+                  path: 'action.yml',
+                  mode: '100644',
+                  type: 'blob',
+                  content
+                }
+              ],
+              base_tree: mainBranch.data.object.sha
+            })
+
+            await github.git.createCommit({
+              ...context.repo,
+              message: 'updated docker image to latest version',
+              tree: tree.data.sha,
+              parents: [mainBranch.data.object.sha]
+              signature: ${{ secrets.RELEASE_GPG_KEY }}
             })
 
             const release = await github.repos.createRelease({

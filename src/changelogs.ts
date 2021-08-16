@@ -36,7 +36,7 @@ const generateContent = (
 
   // Loop through the items in the list
   for (const item of list) {
-    output += `${item.category.title}:\n`;
+    output += `\n${item.category.title}:\n`;
 
     // Loop through the changes in this category
     for (const change of item.changes) {
@@ -48,7 +48,7 @@ const generateContent = (
     }
   }
 
-  return output;
+  return output.trim();
 };
 
 /**
