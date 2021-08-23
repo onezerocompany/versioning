@@ -49,18 +49,18 @@ jobs:
               path: 'action.yml'
             })
 
-  # const tree = await github.git.createTree({
-  #   ...context.repo,
-  #   tree: [
-  #     {
-  #       path: 'action.yml',
-  #       mode: '100644',
-  #       type: 'blob',
-  #       content
-  #     }
-  #   ],
-  #   base_tree: mainBranch.data.object.sha
-  # })
+            const tree = await github.git.createTree({
+              ...context.repo,
+              tree: [
+                {
+                  path: 'action.yml',
+                  mode: '100644',
+                  type: 'blob',
+                  content
+                }
+              ],
+              base_tree: mainBranch.data.object.sha
+            })
 
   # await github.git.createCommit({
   #   ...context.repo,
