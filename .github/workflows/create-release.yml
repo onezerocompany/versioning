@@ -34,59 +34,59 @@ jobs:
               `ghcr.io/onezerocompany/versioning-action:${version.version.versionString}`
             );
 
-            const mainBranch = await github.git.getRef({
-              ...context.repo,
-              ref: 'heads/main'
-            })
+  # const mainBranch = await github.git.getRef({
+  #   ...context.repo,
+  #   ref: 'heads/main'
+  # })
 
-            await github.git.createRef({
-              ...context.repo, ref: `refs/${ref}`,
-              sha: mainBranch.data.object.sha
-            })
+  # await github.git.createRef({
+  #   ...context.repo, ref: `refs/${ref}`,
+  #   sha: mainBranch.data.object.sha
+  # })
 
-            const file = await github.repos.getContent({
-              ...context.repo,
-              path: 'action.yml'
-            })
+  # const file = await github.repos.getContent({
+  #   ...context.repo,
+  #   path: 'action.yml'
+  # })
 
-            const tree = await github.git.createTree({
-              ...context.repo,
-              tree: [
-                {
-                  path: 'action.yml',
-                  mode: '100644',
-                  type: 'blob',
-                  content
-                }
-              ],
-              base_tree: mainBranch.data.object.sha
-            })
+  # const tree = await github.git.createTree({
+  #   ...context.repo,
+  #   tree: [
+  #     {
+  #       path: 'action.yml',
+  #       mode: '100644',
+  #       type: 'blob',
+  #       content
+  #     }
+  #   ],
+  #   base_tree: mainBranch.data.object.sha
+  # })
 
-            await github.git.createCommit({
-              ...context.repo,
-              message: 'updated docker image to latest version',
-              tree: tree.data.sha,
-              parents: [mainBranch.data.object.sha],
-              signature: '${{ secrets.RELEASE_GPG_KEY }}'
-            })
+  # await github.git.createCommit({
+  #   ...context.repo,
+  #   message: 'updated docker image to latest version',
+  #   tree: tree.data.sha,
+  #   parents: [mainBranch.data.object.sha],
+  #   signature: '${{ secrets.RELEASE_GPG_KEY }}'
+  # })
 
-            const release = await github.repos.createRelease({
-              ...context.repo,
-              name: version.version.versionString,
-              tag_name: version.version.versionString,
-              body: `${version.changelogs.public.content}${
-                version.changelogs.private.hasChanges
-                  ? `\n---\n${version.changelogs.private.content}`
-                  : ''
-              }`,
-              target_commitish: `${ version.version.versionString }-action-create`,
-            });
+  # const release = await github.repos.createRelease({
+  #   ...context.repo,
+  #   name: version.version.versionString,
+  #   tag_name: version.version.versionString,
+  #   body: `${version.changelogs.public.content}${
+  #     version.changelogs.private.hasChanges
+  #       ? `\n---\n${version.changelogs.private.content}`
+  #       : ''
+  #   }`,
+  #   target_commitish: `${ version.version.versionString }-action-create`,
+  # });
 
-            await github.repos.uploadReleaseAsset({
-              ...context.repo,
-              release_id: release.data.id,
-              name: 'version.json',
-              data: JSON.stringify(version),
-            });
+  # await github.repos.uploadReleaseAsset({
+  #   ...context.repo,
+  #   release_id: release.data.id,
+  #   name: 'version.json',
+  #   data: JSON.stringify(version),
+  # });
 
-            await github.git.deleteRef({ ...context.repo, ref })
+  # await github.git.deleteRef({ ...context.repo, ref })
