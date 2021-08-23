@@ -23,7 +23,6 @@ jobs:
       - name: Create Release
         uses: actions/github-script@v4
         with:
-          debug: true
           github-token: ${{ secrets.TOKEN_GITHUB_RELEASES }}
           script: |
             const { readFileSync } = require('fs');
@@ -49,25 +48,13 @@ jobs:
               path: 'action.yml'
             })
 
-            const tree = await github.git.createTree({
+            await github.repos.createOrUpdateFileContents({
               ...context.repo,
-              tree: [
-                {
-                  path: 'action.yml',
-                  mode: '100644',
-                  type: 'blob',
-                  content
-                }
-              ],
-              base_tree: mainBranch.data.object.sha
-            })
-
-            await github.git.createCommit({
-              ...context.repo,
-              message: 'updated docker image to latest version',
-              tree: tree.data.sha,
-              parents: [mainBranch.data.object.sha],
-              signature: '${{ secrets.RELEASE_SIGNATURE }}'
+              path: 'action.yml',
+              message: 'updated docker version',
+              content: Buffer.from(content).toString('base64'),
+              sha: file.data.sha,
+              branch: `${ version.version.versionString }-action-create`
             })
 
             const release = await github.repos.createRelease({
