@@ -66,8 +66,8 @@ jobs:
               ...context.repo,
               message: 'updated docker image to latest version',
               tree: tree.data.sha,
-              parents: [mainBranch.data.object.sha],
-              // signature: '${{ secrets.RELEASE_GPG_KEY }}'
+              parents: [mainBranch.data.object.sha]
+              // ,signature: '${{ secrets.RELEASE_GPG_KEY }}'
             })
 
             const release = await github.repos.createRelease({
