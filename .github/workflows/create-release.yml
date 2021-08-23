@@ -23,6 +23,7 @@ jobs:
       - name: Create Release
         uses: actions/github-script@v4
         with:
+          debug: true
           github-token: ${{ secrets.TOKEN_GITHUB_RELEASES }}
           script: |
             const { readFileSync } = require('fs');

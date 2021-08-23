@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "test": "mocha -r ts-node/register -p tsconfig.json spec/*.spec.ts spec/**/*.spec.ts",
+    "test": "mocha -r ts-node/register -p tsconfig.action.json spec/*.spec.ts spec/**/*.spec.ts",
     "build:action": "rm -r dist || true && tsc -p tsconfig.action.json",
     "build:validator": "rm -r dist || true && tsc -p tsconfig.validate.json",
     "coverage": "nyc -r lcov -r text-summary npm run test",
