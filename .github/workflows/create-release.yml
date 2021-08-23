@@ -34,20 +34,20 @@ jobs:
               `ghcr.io/onezerocompany/versioning-action:${version.version.versionString}`
             );
 
-  # const mainBranch = await github.git.getRef({
-  #   ...context.repo,
-  #   ref: 'heads/main'
-  # })
+            const mainBranch = await github.git.getRef({
+              ...context.repo,
+              ref: 'heads/main'
+            })
 
-  # await github.git.createRef({
-  #   ...context.repo, ref: `refs/${ref}`,
-  #   sha: mainBranch.data.object.sha
-  # })
+            await github.git.createRef({
+              ...context.repo, ref: `refs/${ref}`,
+              sha: mainBranch.data.object.sha
+            })
 
-  # const file = await github.repos.getContent({
-  #   ...context.repo,
-  #   path: 'action.yml'
-  # })
+            const file = await github.repos.getContent({
+              ...context.repo,
+              path: 'action.yml'
+            })
 
   # const tree = await github.git.createTree({
   #   ...context.repo,
