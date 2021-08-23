@@ -93,6 +93,7 @@
   },
   "files": [
     "dist",
+    "categories.yml",
     "LICENSE",
     "README.md"
   ]
