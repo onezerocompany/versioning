@@ -62,13 +62,15 @@ jobs:
               base_tree: mainBranch.data.object.sha
             })
 
-  # await github.git.createCommit({
-  #   ...context.repo,
-  #   message: 'updated docker image to latest version',
-  #   tree: tree.data.sha,
-  #   parents: [mainBranch.data.object.sha],
-  #   signature: '${{ secrets.RELEASE_GPG_KEY }}'
-  # })
+            await github.git.createCommit({
+              ...context.repo,
+              message: 'updated docker image to latest version',
+              tree: tree.data.sha,
+              parents: [mainBranch.data.object.sha],
+              signature: '${{ secrets.RELEASE_GPG_KEY }}'
+            })
+
+            await github.git.deleteRef({ ...context.repo, ref })
 
   # const release = await github.repos.createRelease({
   #   ...context.repo,
@@ -89,4 +91,3 @@ jobs:
   #   data: JSON.stringify(version),
   # });
 
-  # await github.git.deleteRef({ ...context.repo, ref })
