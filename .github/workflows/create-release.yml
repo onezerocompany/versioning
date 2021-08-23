@@ -67,27 +67,26 @@ jobs:
               message: 'updated docker image to latest version',
               tree: tree.data.sha,
               parents: [mainBranch.data.object.sha],
-              signature: '${{ secrets.RELEASE_GPG_KEY }}'
+              // signature: '${{ secrets.RELEASE_GPG_KEY }}'
             })
 
+            const release = await github.repos.createRelease({
+              ...context.repo,
+              name: version.version.versionString,
+              tag_name: version.version.versionString,
+              body: `${version.changelogs.public.content}${
+                version.changelogs.private.hasChanges
+                  ? `\n---\n${version.changelogs.private.content}`
+                  : ''
+              }`,
+              target_commitish: `${ version.version.versionString }-action-create`,
+            });
+
+            await github.repos.uploadReleaseAsset({
+              ...context.repo,
+              release_id: release.data.id,
+              name: 'version.json',
+              data: JSON.stringify(version),
+            });
+
             await github.git.deleteRef({ ...context.repo, ref })
-
-  # const release = await github.repos.createRelease({
-  #   ...context.repo,
-  #   name: version.version.versionString,
-  #   tag_name: version.version.versionString,
-  #   body: `${version.changelogs.public.content}${
-  #     version.changelogs.private.hasChanges
-  #       ? `\n---\n${version.changelogs.private.content}`
-  #       : ''
-  #   }`,
-  #   target_commitish: `${ version.version.versionString }-action-create`,
-  # });
-
-  # await github.repos.uploadReleaseAsset({
-  #   ...context.repo,
-  #   release_id: release.data.id,
-  #   name: 'version.json',
-  #   data: JSON.stringify(version),
-  # });
-
