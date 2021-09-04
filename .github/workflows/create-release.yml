@@ -29,8 +29,8 @@ jobs:
             const version = JSON.parse(readFileSync('version.json', 'utf-8'))
             const ref = `heads/${ version.version.versionString }-action-create`
             const content = readFileSync('action.yml', 'utf-8').replace(
-              'ghcr.io/onezerocompany/versioning-action:latest',
-              `ghcr.io/onezerocompany/versioning-action:${version.version.versionString}`
+              'docker://ghcr.io/onezerocompany/versioning-action:latest',
+              `docker://ghcr.io/onezerocompany/versioning-action:${version.version.versionString}`
             );
 
             const mainBranch = await github.git.getRef({
