@@ -7,6 +7,19 @@ const commitIsMerge = (message: string): boolean => {
   return title.includes('merge pull request') || title.includes('merge branch');
 };
 
+const commitSorter = (
+  lhs: {
+    commit: { author: { date?: string } | null };
+  },
+  rhs: {
+    commit: { author: { date?: string } | null };
+  }
+): number =>
+  new Date(lhs.commit.author?.date ?? '').getTime() <
+  new Date(rhs.commit.author?.date ?? '').getTime()
+    ? 1
+    : -1;
+
 /**
  * Get commits from commit sha on
  * @param {string} track name of track
@@ -23,7 +36,7 @@ export const commitsFrom = async (
       per_page: 100,
       sha: track,
     })
-  ).data;
+  ).data.sort((lhs, rhs) => commitSorter(lhs, rhs));
   const commits: Commit[] = [];
 
   for (const commit of list) {

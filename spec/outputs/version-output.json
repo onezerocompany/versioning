@@ -1,17 +1,17 @@
 {
   "changes": [
     {
-      "ref": "7Hq1aicQG9crKr+KGDlB1g==",
-      "content": "added a feature",
-      "category": "feat-new"
-    },
-    {
       "ref": "ke6wCOqf69vOx6jGuvRDig==",
       "content": "added a feature",
       "category": "feat-new"
     },
     {
       "ref": "tRSDFynqHNGnHid+Js9oTQ==",
+      "content": "added a feature",
+      "category": "feat-new"
+    },
+    {
+      "ref": "7Hq1aicQG9crKr+KGDlB1g==",
       "content": "added a feature",
       "category": "feat-new"
     }

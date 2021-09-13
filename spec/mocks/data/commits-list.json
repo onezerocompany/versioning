@@ -10,14 +10,14 @@
       "author": {
         "name": "Monalisa Octocat",
         "email": "support@github.com",
-        "date": "2011-04-14T16:00:49Z"
+        "date": "2011-04-15T16:00:49Z"
       },
       "committer": {
         "name": "Monalisa Octocat",
         "email": "support@github.com",
-        "date": "2011-04-14T16:00:49Z"
+        "date": "2011-04-15T16:00:49Z"
       },
-      "message": "Merge pull request #41 into main\nThis is the title.\nfeat(new) -> added a feature",
+      "message": "This is the title.\nfeat(new) -> added a feature",
       "tree": {
         "url": "https://api.github.com/repos/octocat/Hello-World/tree/01F73JR3N31A5YAP89A8NVMTWG",
         "sha": "01F73JR3N31A5YAP89A8NVMTWG"
@@ -95,7 +95,7 @@
         "email": "support@github.com",
         "date": "2011-04-14T16:00:49Z"
       },
-      "message": "This is the title.\nfeat(new) -> added a feature",
+      "message": "Merge pull request #41 into main\nThis is the title.\nfeat(new) -> added a feature",
       "tree": {
         "url": "https://api.github.com/repos/octocat/Hello-World/tree/01F73JR3N31A5YAP89A8NVMTWG",
         "sha": "01F73JR3N31A5YAP89A8NVMTWG"
@@ -165,13 +165,11 @@
       "url": "https://api.github.com/repos/octocat/Hello-World/git/commits/6dcb09b5b57875f334f61aebed695e2e4193db5e",
       "author": {
         "name": "Monalisa Octocat",
-        "email": "support@github.com",
-        "date": "2011-04-14T16:00:49Z"
+        "email": "support@github.com"
       },
       "committer": {
         "name": "Monalisa Octocat",
-        "email": "support@github.com",
-        "date": "2011-04-14T16:00:49Z"
+        "email": "support@github.com"
       },
       "message": "This is the title.\nfeat(new) -> added a feature",
       "tree": {
@@ -244,12 +242,12 @@
       "author": {
         "name": "Monalisa Octocat",
         "email": "support@github.com",
-        "date": "2011-04-14T16:00:49Z"
+        "date": "2011-04-17T16:00:49Z"
       },
       "committer": {
         "name": "Monalisa Octocat",
         "email": "support@github.com",
-        "date": "2011-04-14T16:00:49Z"
+        "date": "2011-04-17T16:00:49Z"
       },
       "message": "This is the title.\nfeat(new) -> added a feature",
       "tree": {
@@ -322,12 +320,12 @@
       "author": {
         "name": "Monalisa Octocat",
         "email": "support@github.com",
-        "date": "2011-04-14T16:00:49Z"
+        "date": "2011-04-18T16:00:49Z"
       },
       "committer": {
         "name": "Monalisa Octocat",
         "email": "support@github.com",
-        "date": "2011-04-14T16:00:49Z"
+        "date": "2011-04-18T16:00:49Z"
       },
       "message": "This is the title.\nfeat(new) -> added a feature",
       "tree": {
