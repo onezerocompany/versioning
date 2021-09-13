@@ -15,7 +15,7 @@ const commitSorter = (
     commit: { author: { date?: string } | null };
   }
 ): number =>
-  new Date(lhs.commit.author?.date ?? '').getTime() <
+  new Date(lhs.commit.author?.date ?? '').getTime() >
   new Date(rhs.commit.author?.date ?? '').getTime()
     ? 1
     : -1;
