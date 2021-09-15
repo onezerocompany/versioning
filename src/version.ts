@@ -92,11 +92,7 @@ export class Version {
 
       return messageChanges.changes;
     })) {
-      if (
-        typeof changes.find(item => item.ref === change.ref) === 'undefined'
-      ) {
-        changes.push(change);
-      }
+      changes.push(change);
     }
 
     return { breaking, changes };

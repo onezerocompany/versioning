@@ -15,7 +15,7 @@ const commitSorter = (
     commit: { author: { date?: string } | null };
   }
 ): number =>
-  new Date(lhs.commit.author?.date ?? '').getTime() >
+  new Date(lhs.commit.author?.date ?? '').getTime() <
   new Date(rhs.commit.author?.date ?? '').getTime()
     ? 1
     : -1;
@@ -36,7 +36,9 @@ export const commitsFrom = async (
       per_page: 100,
       sha: track,
     })
-  ).data.sort((lhs, rhs) => commitSorter(lhs, rhs));
+  ).data
+    .sort((lhs, rhs) => commitSorter(lhs, rhs))
+    .filter(commit => commit.commit.author?.date);
   const commits: Commit[] = [];
 
   for (const commit of list) {
@@ -50,5 +52,5 @@ export const commitsFrom = async (
     }
   }
 
-  return commits;
+  return commits.reverse();
 };

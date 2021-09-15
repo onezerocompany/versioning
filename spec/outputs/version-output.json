@@ -1,24 +1,24 @@
 {
   "changes": [
     {
-      "ref": "ke6wCOqf69vOx6jGuvRDig==",
-      "content": "added a feature",
+      "ref": "pv9HZv2Uj3O3DZxKcz4Spg==",
+      "content": "fixed the auth screen",
+      "category": "bug-fix"
+    },
+    {
+      "ref": "Y0kz+u62Hy839jV9P81+pg==",
+      "content": "added a logout button",
       "category": "feat-new"
     },
     {
-      "ref": "tRSDFynqHNGnHid+Js9oTQ==",
-      "content": "added a feature",
-      "category": "feat-new"
-    },
-    {
-      "ref": "7Hq1aicQG9crKr+KGDlB1g==",
-      "content": "added a feature",
+      "ref": "AsCDtI2zQ7z0bX0X4ZKCgw==",
+      "content": "added a new login button",
       "category": "feat-new"
     }
   ],
   "changelogs": {
     "public": {
-      "content": "Added Features:\n- added a feature",
+      "content": "Added Features:\n- added a logout button\n- added a new login button\n\nBug Fixes:\n- fixed the auth screen",
       "hasChanges": true
     },
     "private": {
@@ -26,7 +26,11 @@
       "hasChanges": false
     }
   },
-  "triggers": { "bump": "minor", "release": true, "tests": true },
+  "triggers": {
+    "bump": "minor",
+    "release": true,
+    "tests": true
+  },
   "version": {
     "major": 1,
     "minor": 1,

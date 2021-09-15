@@ -1,7 +1,11 @@
-import { readFileSync } from 'fs';
 import nock from 'nock';
-import { resolve } from 'path';
 import type { ParsedUrlQuery } from 'querystring';
+
+import type { RateLimitMock } from './ratelimit.mock';
+import { MockTag } from './tag.mock';
+import { MockCommit } from './commit.mock';
+import { Release } from './release.mock';
+import { ReleaseUpload } from './release.upload.moc';
 
 enum Method {
   get = 'get',
@@ -11,7 +15,7 @@ enum Method {
 interface MockParams {
   origin?: string;
   url: string;
-  file: string;
+  content: unknown;
   status?: number;
   method?: Method;
   query?: ParsedUrlQuery;
@@ -28,9 +32,7 @@ const setupMock = (params: MockParams): nock.Scope => {
       .query(params.query ?? {})
       .reply(
         params.status ?? responseSuccess,
-        JSON.parse(
-          readFileSync(resolve(__dirname, 'data', params.file)).toString()
-        ) as Array<[key: string, value: unknown]>
+        params.content as Record<string, unknown>
       );
   }
 
@@ -39,38 +41,87 @@ const setupMock = (params: MockParams): nock.Scope => {
     .get(params.url)
     .reply(
       params.status ?? createdSuccessfully,
-      JSON.parse(
-        readFileSync(resolve(__dirname, 'data', params.file)).toString()
-      ) as Array<[key: string, value: unknown]>
+      params.content as Record<string, unknown>
     );
 };
+
+const commitList = [
+  new MockCommit(
+    '8F2C95D248F540178A48333F3BACB153',
+    'Added a login button.\nfeat(new) -> added a new login button',
+    '2021-02-27T19:35:32Z'
+  ),
+  new MockCommit(
+    '646972F1D97145C98501D61944137CE7',
+    'Fixed the authentication screen.\nfeat(fix) -> fixed the auth screen',
+    '2021-02-25T19:35:32Z'
+  ),
+  new MockCommit(
+    'E4A319A07AB140E89AE6F1EB6E6C0F90',
+    'Added a logout button.\nfeat(new) -> added a logout button',
+    '2021-02-26T19:35:32Z'
+  ),
+  new MockCommit(
+    '41854F48FFEC48EB8C1FFB5CC756D3DE',
+    'merge pull request -> merged a feature',
+    '2021-02-21T19:35:32Z'
+  ),
+  new MockCommit(
+    '64ABC247B3AB4B12B577BB3D6E637BCB',
+    'Fixed an error.\nfeat(fix) -> fixed an error'
+  ),
+  new MockCommit(
+    'F4D1FB0C55144F248DFF6850F783A34E',
+    'Fixed a lang error.\nlang(fix) -> fixed a language error'
+  ),
+] as MockCommit[];
 
 export const setupCommitsListMock = (): nock.Scope =>
   setupMock({
     url: '/repos/onezerocompany/test/commits?per_page=100&sha=main',
-    file: 'commits-list.json',
+    content: commitList,
   });
 
 export const setupRateLimitMock = (): nock.Scope =>
   setupMock({
     url: '/rate_limit',
-    file: 'rate-limit.json',
+    content: {
+      rate: {
+        limit: 5000,
+        remaining: 4998,
+        reset: 1580294800,
+      },
+    } as RateLimitMock,
     status: createdSuccessfully,
   });
+
+const releaseId = 85907412234;
 
 export const setupReleaseCreateMock = (): nock.Scope =>
   setupMock({
     url: '/repos/onezerocompany/test/releases',
-    file: 'release-create.json',
+    content: new Release(
+      releaseId,
+      'v1.0.0',
+      'Changes:\n- made some changes',
+      '2021-02-25T19:35:32Z'
+    ),
     status: createdSuccessfully,
     method: Method.post,
   });
 
+const releaseUploadId = 5267893253489;
+
 export const setupReleaseUploadAssetMock = (): nock.Scope =>
   setupMock({
     origin: 'https://uploads.github.com',
-    url: '/repos/onezerocompany/test/releases/52347890/assets',
-    file: 'release-upload.json',
+    url: `/repos/onezerocompany/test/releases/${releaseId}/assets`,
+    content: new ReleaseUpload(
+      'version.json',
+      releaseUploadId,
+      'v1.0.0',
+      '2021-02-25T19:35:32Z'
+    ),
     query: { name: 'version.json' },
     status: createdSuccessfully,
     method: Method.post,
@@ -79,14 +130,26 @@ export const setupReleaseUploadAssetMock = (): nock.Scope =>
 export const setupLatestsTagsMock = (): void => {
   setupMock({
     url: '/repos/onezerocompany/test/tags?page=1',
-    file: 'latest-tags-page1.json',
+    content: [
+      new MockTag('v2.0.0/#11', '2C967C52975A4E38AF8F599CEFCBDB58'),
+      new MockTag('v1.1.2/#10', '4E5FDC8941B648198CECA23845305B04'),
+      new MockTag('v1.1.1-alpha/#9', '763A5D7398AF4F308CE3CF861C3E94D6'),
+      new MockTag('v1.1.0-alpha/#8', 'E59C36965CE04F9AAF5B80501085A404'),
+      new MockTag('v1.0.0-alpha/#7', '82A436EE30EE42F4B23A9A88785EF796'),
+    ] as MockTag[],
   });
   setupMock({
     url: '/repos/onezerocompany/test/tags?page=2',
-    file: 'latest-tags-page2.json',
+    content: [
+      new MockTag('v0.2.0', 'D6927F16ACC34F23A032D9D61EE6EC35'),
+      new MockTag('v0.1.1', 'B8E71C516CC24192B258F739EFCE3F0E'),
+      new MockTag('v0.1.0', 'FAB82BCFFF63478CBEF3E47419BCFFAE'),
+      new MockTag('v0.0.2', '531979003D6F49E39336F33001FC22A7'),
+      new MockTag('v0.0.1', '6A42D5D13E6B46DA920D0AF7275C7FE9'),
+    ] as MockTag[],
   });
   setupMock({
     url: '/repos/onezerocompany/test/tags?page=3',
-    file: 'empty-list.json',
+    content: [] as MockTag[],
   });
 };

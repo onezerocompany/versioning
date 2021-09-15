@@ -16,7 +16,7 @@ describe('Tags', () => {
   it('getting latest tags', async () => {
     setupLatestsTagsMock();
     expect((await latestTag('main'))?.commit).to.equal(
-      '01F70VNMB8F0TFKQJ0X1A56DK4'
+      '2C967C52975A4E38AF8F599CEFCBDB58'
     );
   });
 

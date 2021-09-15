@@ -10,7 +10,11 @@
       "hasChanges": false
     }
   },
-  "triggers": { "bump": "none", "release": true, "tests": true },
+  "triggers": {
+    "bump": "none",
+    "release": true,
+    "tests": true
+  },
   "version": {
     "major": 1,
     "minor": 0,

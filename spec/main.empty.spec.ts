@@ -35,7 +35,7 @@ const testCreation = (): void => {
       JSON.stringify(
         JSON.parse(
           readFileSync(
-            resolve(__dirname, 'outputs', 'version-new-output.json')
+            resolve(__dirname, 'outputs', 'version-output-empty.json')
           ).toString()
         )
       )
