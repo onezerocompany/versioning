@@ -1,4 +1,4 @@
-# OneZero Versioning Action
+# OneZero Versioning
 
 > Welcome to OneZero's versioning tool! :rocket:
 
