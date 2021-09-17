@@ -77,8 +77,8 @@ export const run = async (
   let currentTrack = track;
 
   if (track.length < 1) currentTrack = settings().defaults.track;
+  info(`generating version for track: ${currentTrack}`);
 
-  // Get the latest tag and generate a version
   const tag = await getTag(currentTrack, template);
   const version = await generateVersion(currentTrack, build, template, tag);
 
