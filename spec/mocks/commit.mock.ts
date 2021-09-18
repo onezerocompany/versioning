@@ -16,7 +16,7 @@ export class MockCommit {
     sha: string;
   }>;
 
-  public constructor(sha: string, message: string, date?: string) {
+  public constructor(sha: string, message: string, date: string | null) {
     this.url = `https://api.github.com/repos/onezerocompany/test/commits/${sha}`;
     this.sha = sha;
     const lengthOfId = 7;

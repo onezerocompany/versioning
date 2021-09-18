@@ -1,4 +1,4 @@
-import { describe, it, before, after } from 'mocha';
+import { describe, it, beforeEach, afterEach } from 'mocha';
 import { expect } from 'chai';
 import nock from 'nock';
 
@@ -49,8 +49,8 @@ const shouldCreateRelease = (): void => {
 };
 
 describe('Create Release', () => {
-  before(setup);
-  after(() => {
+  beforeEach(setup);
+  afterEach(() => {
     nock.cleanAll();
   });
   shouldCreateRelease();

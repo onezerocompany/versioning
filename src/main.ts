@@ -9,6 +9,14 @@ import { commitsFrom } from './commits';
 import { createRelease } from './create-release';
 import { VersionNumber } from './version-number';
 
+interface GenerateVersionOptions {
+  track: string;
+  build: number;
+  template: string;
+  tag?: Tag;
+  date: Date;
+}
+
 export const generateDefaultVersionNumber = (
   track: string,
   build: number,
@@ -20,43 +28,23 @@ export const generateDefaultVersionNumber = (
   ).switchTracks(track, build, template);
 
 export const generateVersion = async (
-  track: string,
-  build: number,
-  template: string,
-  tag: Tag | null
+  inputs: GenerateVersionOptions
 ): Promise<Version> => {
-  if (tag && typeof tag.versionNumber !== 'undefined') {
-    // Fetch list of commits
-    const commits = await commitsFrom(track, tag.commit);
+  if (!inputs.tag?.versionNumber) throw Error('No tag provided');
 
-    // Generate version
-    return new Version({
-      version: tag.versionNumber.switchTracks(track, build, template),
-      commits,
-      foundTag: true,
-    });
-  }
+  // Fetch list of commits
+  const commits = await commitsFrom(inputs.track, inputs.date);
 
+  // Generate version
   return new Version({
-    version: generateDefaultVersionNumber(track, build, template),
-    commits: [],
-    foundTag: false,
+    version: inputs.tag.versionNumber.switchTracks(
+      inputs.track,
+      inputs.build,
+      inputs.template
+    ),
+    commits,
+    foundTag: true,
   });
-};
-
-export const getTag = async (
-  track: string,
-  template: string
-): Promise<Tag | null> => {
-  const tag = await latestTag(track, template);
-
-  if (tag?.versionNumber) {
-    info(
-      `found tag -> commit: ${tag.commit} version: ${tag.versionNumber.versionString}`
-    );
-  }
-
-  return tag;
 };
 
 const jsonSpacing = 2;
@@ -77,20 +65,23 @@ export const run = async (
   let currentTrack = track;
 
   if (track.length < 1) currentTrack = settings().defaults.track;
-  info(`generating version for track: ${currentTrack}`);
 
-  const tag = await getTag(currentTrack, template);
-  const version = await generateVersion(currentTrack, build, template, tag);
+  // Get the latest tag and generate a version
+  const tag = await latestTag(track, template);
+
+  if (!tag) throw Error('No tag found');
+
+  const version = await generateVersion({
+    track: currentTrack,
+    build,
+    template,
+    ...tag,
+  });
 
   info(`\ngenerated version:\n${JSON.stringify(version, null, jsonSpacing)}\n`);
   setOutput('version', version);
 
-  // Create release
-  if (create && version.triggers.release) {
-    info(`creating new release: ${version.version.versionString}`);
-    await createRelease(version);
-  }
-
+  if (create && version.triggers.release) await createRelease(version);
   await reportRateLimits();
 
   return JSON.stringify(version);

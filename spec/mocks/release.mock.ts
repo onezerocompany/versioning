@@ -10,11 +10,13 @@ export class Release {
   public zipball_url: string;
   public discussion_url =
     'https://github.com/onezerocompany/test/discussions/90';
+
   public id: number;
   public node_id: string;
   public tag_name: string;
   public target_commitish: string;
   public name: string;
+  // eslint-disable-next-line id-denylist
   public body: string;
   public draft = false;
   public prerelease = false;
@@ -23,6 +25,7 @@ export class Release {
   public author: AuthorCommiter;
   public assets: ReleaseAsset[];
 
+  // eslint-disable-next-line id-denylist
   public constructor(id: number, tag: string, body: string, date: string) {
     this.url = `https://api.github.com/repos/onezerocompany/test/releases/${id}`;
     this.html_url = `https://github.com/onezerocompany/test/releases/${tag}`;
@@ -35,6 +38,7 @@ export class Release {
     this.tag_name = tag;
     this.target_commitish = 'main';
     this.name = tag;
+    // eslint-disable-next-line id-denylist
     this.body = body;
     this.created_at = date;
     this.published_at = date;

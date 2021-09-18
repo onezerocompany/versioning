@@ -9,7 +9,9 @@ export class ReleaseUpload {
   public label: string;
   public state = 'uploaded';
   public content_type = 'application/zip';
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   public size = 1024;
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   public download_count = 42;
   public created_at: string;
   public updated_at: string;

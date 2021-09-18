@@ -1,21 +1,32 @@
-import { describe, it, before, after } from 'mocha';
+import { describe, it, beforeEach, afterEach } from 'mocha';
 import { expect } from 'chai';
 import { latestTag } from '../src/tags';
 import nock from 'nock';
-import { setupLatestsTagsMock } from './mocks/mocks';
+import { setupCommitMock, setupLatestsTagsMock } from './mocks/mocks';
+
+const testTagWithNoDate = (): void => {
+  it('tag with no date should use now date', async () => {
+    setupLatestsTagsMock();
+    setupCommitMock(true);
+    expect((await latestTag('main'))?.date).to.be.a('date');
+  });
+};
 
 describe('Tags', () => {
-  before(() => {
+  beforeEach(() => {
     process.env.GITHUB_REPOSITORY = 'onezerocompany/test';
   });
 
-  after(() => {
+  afterEach(() => {
     nock.cleanAll();
   });
 
+  testTagWithNoDate();
+
   it('getting latest tags', async () => {
     setupLatestsTagsMock();
-    expect((await latestTag('main'))?.commit).to.equal(
+    setupCommitMock();
+    expect((await latestTag('main'))?.tag.commit).to.equal(
       '2C967C52975A4E38AF8F599CEFCBDB58'
     );
   });

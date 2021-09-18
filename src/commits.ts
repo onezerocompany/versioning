@@ -1,5 +1,4 @@
 import { context, getOctokit } from '@actions/github';
-import { parseAllDocuments } from 'yaml';
 import type { Commit } from './commit';
 
 const commitIsMerge = (message: string): boolean => {
@@ -21,31 +20,47 @@ const commitSorter = (
     ? 1
     : -1;
 
+// eslint-disable-next-line max-lines-per-function
 const getCommitsList = async (
-  track: string
+  track: string,
+  since: Date
 ): Promise<
   Array<{
     sha: string;
     parents: string[];
     message: string;
+    date: Date | undefined;
   }>
 > => {
   const github = getOctokit(process.env.TOKEN ?? 'test');
+  let date = new Date().toISOString();
+
+  try {
+    date = since.toISOString();
+  } catch {
+    /**/
+  }
 
   return (
     await github.rest.repos.listCommits({
       ...context.repo,
       per_page: 100,
       sha: track,
+      since: date,
     })
   ).data
     .sort((lhs, rhs) => commitSorter(lhs, rhs))
-    .filter(commit => commit.commit.author?.date)
     .map(commit => ({
       sha: commit.sha,
       parents: commit.parents.map(parent => parent.sha),
       message: commit.commit.message,
-    }));
+      date:
+        typeof commit.commit.author?.date === 'string'
+          ? new Date(commit.commit.author.date)
+          : // eslint-disable-next-line no-undefined
+            undefined,
+    }))
+    .filter(commit => commit.date);
 };
 
 /**
@@ -55,14 +70,12 @@ const getCommitsList = async (
  */
 export const commitsFrom = async (
   track: string,
-  commitSha: string
+  since: Date
 ): Promise<Commit[]> => {
-  const list = await getCommitsList(track);
+  const list = await getCommitsList(track, since);
   const commits: Commit[] = [];
 
   for (const commit of list) {
-    if (commit.sha === commitSha || commit.parents.includes(commitSha)) break;
-
     if (!commitIsMerge(commit.message)) {
       commits.push({
         ref: commit.sha,

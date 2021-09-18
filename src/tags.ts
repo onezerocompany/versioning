@@ -33,6 +33,19 @@ const loopTags = (
   return null;
 };
 
+const getCommitDate = async (sha: string): Promise<Date> => {
+  const github = getOctokit(process.env.TOKEN ?? 'test');
+
+  return new Date(
+    (
+      await github.rest.repos.getCommit({
+        ...context.repo,
+        ref: sha,
+      })
+    ).data.commit.author?.date ?? ''
+  );
+};
+
 /**
  * Get latest release for track
  * @param {VersionTrack} track track to search release in
@@ -41,21 +54,26 @@ const loopTags = (
 export const latestTag = async (
   track: string,
   template: string | null = null
-): Promise<Tag | null> => {
+): Promise<{ tag: Tag; date: Date } | null> => {
   const github = getOctokit(process.env.TOKEN ?? 'test');
 
-  // eslint-disable-next-line require-jsdoc
   const loop = async (page = 1): Promise<Tag | null> => {
     const tags = (await github.rest.repos.listTags({ ...context.repo, page }))
       .data;
 
     if (tags.length === 0) return null;
-    const tag = loopTags(track, tags, template);
+    const foundTag = loopTags(track, tags, template);
 
-    if (tag) return tag;
+    if (foundTag) return foundTag;
 
     return loop(page + 1);
   };
 
-  return loop();
+  const tag = await loop();
+
+  if (!tag) return null;
+
+  const date = await getCommitDate(tag.commit);
+
+  return { tag, date };
 };

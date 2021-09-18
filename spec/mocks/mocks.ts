@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import nock from 'nock';
 import type { ParsedUrlQuery } from 'querystring';
 
@@ -18,7 +19,7 @@ interface MockParams {
   content: unknown;
   status?: number;
   method?: Method;
-  query?: ParsedUrlQuery;
+  query?: ParsedUrlQuery | boolean;
 }
 
 const createdSuccessfully = 201;
@@ -39,6 +40,7 @@ const setupMock = (params: MockParams): nock.Scope => {
   return nock(params.origin ?? 'https://api.github.com')
     .persist()
     .get(params.url)
+    .query(params.query ?? {})
     .reply(
       params.status ?? createdSuccessfully,
       params.content as Record<string, unknown>
@@ -68,19 +70,33 @@ const commitList = [
   ),
   new MockCommit(
     '64ABC247B3AB4B12B577BB3D6E637BCB',
-    'Fixed an error.\nfeat(fix) -> fixed an error'
+    'Fixed an error.\nfeat(fix) -> fixed an error',
+    null
   ),
   new MockCommit(
     'F4D1FB0C55144F248DFF6850F783A34E',
-    'Fixed a lang error.\nlang(fix) -> fixed a language error'
+    'Fixed a lang error.\nlang(fix) -> fixed a language error',
+    null
   ),
 ] as MockCommit[];
 
 export const setupCommitsListMock = (): nock.Scope =>
   setupMock({
-    url: '/repos/onezerocompany/test/commits?per_page=100&sha=main',
+    url: '/repos/onezerocompany/test/commits',
+    query: true,
     content: commitList,
   });
+
+export const setupCommitMock = (emptyDate = false): void => {
+  setupMock({
+    url: '/repos/onezerocompany/test/commits/2C967C52975A4E38AF8F599CEFCBDB58',
+    content: new MockCommit(
+      '2C967C52975A4E38AF8F599CEFCBDB58',
+      'Fixed a bug.\nfix(bug) -> fixed a bug',
+      emptyDate ? null : '2021-02-27T19:35:32Z'
+    ),
+  });
+};
 
 export const setupRateLimitMock = (): nock.Scope =>
   setupMock({
@@ -129,7 +145,8 @@ export const setupReleaseUploadAssetMock = (): nock.Scope =>
 
 export const setupLatestsTagsMock = (): void => {
   setupMock({
-    url: '/repos/onezerocompany/test/tags?page=1',
+    url: '/repos/onezerocompany/test/tags',
+    query: { page: '1' },
     content: [
       new MockTag('v2.0.0/#11', '2C967C52975A4E38AF8F599CEFCBDB58'),
       new MockTag('v1.1.2/#10', '4E5FDC8941B648198CECA23845305B04'),
@@ -139,7 +156,8 @@ export const setupLatestsTagsMock = (): void => {
     ] as MockTag[],
   });
   setupMock({
-    url: '/repos/onezerocompany/test/tags?page=2',
+    url: '/repos/onezerocompany/test/tags',
+    query: { page: '2' },
     content: [
       new MockTag('v0.2.0', 'D6927F16ACC34F23A032D9D61EE6EC35'),
       new MockTag('v0.1.1', 'B8E71C516CC24192B258F739EFCE3F0E'),
@@ -149,7 +167,8 @@ export const setupLatestsTagsMock = (): void => {
     ] as MockTag[],
   });
   setupMock({
-    url: '/repos/onezerocompany/test/tags?page=3',
+    url: '/repos/onezerocompany/test/tags',
+    query: { page: '3' },
     content: [] as MockTag[],
   });
 };

@@ -1,27 +1,27 @@
-import { describe, it, beforeEach, after } from 'mocha';
-import {
-  generateDefaultVersionNumber,
-  generateVersion,
-  run,
-} from '../src/main';
-import { expect } from 'chai';
+import { describe, it, beforeEach, afterEach } from 'mocha';
+import { generateDefaultVersionNumber, run } from '../src/main';
+import { expect, use } from 'chai';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import promised from 'chai-as-promised';
 import * as nock from 'nock';
 import {
+  setupCommitMock,
   setupCommitsListMock,
   setupLatestsTagsMock,
   setupRateLimitMock,
   setupReleaseCreateMock,
   setupReleaseUploadAssetMock,
 } from './mocks/mocks';
-import { CategoryBump } from '../src/categories/categories';
+
 import { settings } from '../src/settings';
+
+use(promised);
 
 const setupMocks = (): void => {
   process.env.GITHUB_REPOSITORY = 'onezerocompany/test';
-  nock.cleanAll();
   setupCommitsListMock();
+  setupCommitMock();
   setupLatestsTagsMock();
   setupReleaseCreateMock();
   setupReleaseUploadAssetMock();
@@ -70,20 +70,6 @@ const testReleaseTrackOutput = (): void => {
   });
 };
 
-const testFallbackVersion = (): void => {
-  it('should fallback to a default version when no tag', async () => {
-    const version = await generateVersion(
-      'main',
-      1,
-      '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>',
-      null
-    );
-
-    expect(version.triggers.bump).to.equal(CategoryBump.none);
-    expect(version.version.versionString).to.equal('1.0.0-main/#1');
-  });
-};
-
 const testDefaultVersionNumber = (): void => {
   it('should fallback to a default version when no string', () => {
     settings({
@@ -104,23 +90,11 @@ const testDefaultVersionNumber = (): void => {
 };
 
 const testEmptyTrack = (): void => {
-  it('should fallback to a default track when empty track', async () => {
-    const version = await run(
-      '',
-      1,
-      false,
-      '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>'
-    );
-
-    expect(version).to.equal(
-      JSON.stringify(
-        JSON.parse(
-          readFileSync(
-            resolve(__dirname, 'outputs', 'version-output.json')
-          ).toString()
-        )
-      )
-    );
+  it('should fallback to a default track when empty track', () => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    expect(
+      run('', 1, false, '<<VERSION_STRING>>-<<TRACK>>/#<<BUILD>>')
+    ).to.eventually.throw();
   });
 };
 
@@ -134,13 +108,12 @@ const testNonExistingTrack = (): void => {
 
 describe('Main Run', () => {
   beforeEach(setupMocks);
-  after(() => {
+  afterEach(() => {
     nock.cleanAll();
   });
   testReleaseTrackOutput();
   testNonExistingTrack();
   testCreation();
-  testFallbackVersion();
   testDefaultVersionNumber();
   testEmptyTrack();
 });

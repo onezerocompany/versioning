@@ -6,4 +6,4 @@ defaults:
       public: |-
         Bug Fixes:
         - minor bug fixes
-      private: '- no changes'
+      private: "- no changes"

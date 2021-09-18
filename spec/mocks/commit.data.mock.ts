@@ -28,17 +28,19 @@ export class CommitData {
     payload: null,
   };
 
-  public constructor(sha: string, message: string, date?: string) {
+  public constructor(sha: string, message: string, date: string | null) {
     this.url = `https://api.github.com/repos/onezerocompany/test/git/commits/${sha}`;
     this.author = {
       name: 'Monalisa Octocat',
       email: 'support@github.com',
-      date,
+      // eslint-disable-next-line no-undefined
+      date: date === null ? undefined : date,
     };
     this.committer = {
       name: 'Monalisa Octocat',
       email: 'support@github.com',
-      date,
+      // eslint-disable-next-line no-undefined
+      date: date === null ? undefined : date,
     };
     this.message = message;
     this.tree = {
