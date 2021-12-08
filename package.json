@@ -32,7 +32,7 @@
     "@onezerocompany/eslint-config": "^1.4.0",
     "@onezerocompany/prettier-config": "^1.0.1",
     "@onezerocompany/tsconfig-node": "^1.1.0",
-    "@types/chai": "^4.2.21",
+    "@types/chai": "^4.3.0",
     "@types/express": "^4.17.13",
     "@types/mocha": "^9.0.0",
     "@types/nock": "^11.1.0",
