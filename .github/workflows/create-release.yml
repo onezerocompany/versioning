@@ -21,7 +21,7 @@ jobs:
       - name: Write version.json
         run: echo '${{ steps.versioning.outputs.version }}' > version.json
       - name: Create Release
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.TOKEN_GITHUB_RELEASES }}
           script: |
