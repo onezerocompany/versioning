@@ -42,7 +42,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 14
           registry-url: 'https://registry.npmjs.org'
@@ -55,7 +55,7 @@ jobs:
       - name: Build Message Validator
         run: npm run build:validator
       - name: Setup for GitHub Packages
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           registry-url: 'https://npm.pkg.github.com'
           scope: '@onezerocompany'
